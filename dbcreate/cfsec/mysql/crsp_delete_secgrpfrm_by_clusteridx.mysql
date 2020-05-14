@@ -1,0 +1,113 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_delete_secgrpfrm_by_clusteridx.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_delete_secgrpfrm_by_clusteridx(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClusterId bigint )
+not deterministic
+modifies sql data
+begin
+	declare curRevision int;
+	declare subret boolean;
+	declare curClusterId bigint;
+	declare curSecGroupFormId bigint;
+	declare done int default false;
+	declare cur_clusteridx cursor for
+		select
+			a00d.clusid as clusid,
+			a00d.secgrpfrmid as secgrpfrmid,
+			a00d.revision as revision
+		from cfsec213.SecGrpFrm as a00d
+		where
+			a00d.clusid = argClusterId;
+	declare cur_clusteridx_system cursor for
+			select
+			a00d.clusid as clusid,
+			a00d.secgrpfrmid as secgrpfrmid,
+					a00d.revision as revision
+			from cfsec213.SecGrpFrm as a00d
+			where
+					a00d.clusid = argClusterId;
+	declare cur_clusteridx_restricted cursor for
+			select
+			a00d.clusid as clusid,
+			a00d.secgrpfrmid as secgrpfrmid,
+					a00d.revision as revision
+			from cfsec213.SecGrpFrm as a00d
+			where
+					a00d.clusid = argClusterId
+					and a00d.ClusId = secClusterId;
+	declare continue handler for not found set done = true;
+
+	select cfsec213.sp_is_system_user( argAuditUserId ) into subret;
+	if( subret )
+	then
+		open cur_clusteridx_system;
+		read_loop_clusteridx_system: loop
+			fetch cur_clusteridx_system into
+				curClusterId,
+				curSecGroupFormId,
+				curRevision;
+			if done then
+				leave read_loop_clusteridx_system;
+			end if;
+			call cfsec213.sp_delete_secgrpfrm( argAuditClusterId,
+						argAuditUserId,
+						argAuditSessionId,
+						secClusterId,
+						secTenantId,
+						curClusterId,
+						curSecGroupFormId,
+						curRevision );
+		end loop;
+		close cur_clusteridx_system;
+	else
+		open cur_clusteridx_restricted;
+		read_loop_clusteridx_restricted: loop
+			fetch cur_clusteridx_restricted into
+				curClusterId,
+				curSecGroupFormId,
+				curRevision;
+			if done then
+				leave read_loop_clusteridx_restricted;
+			end if;
+			call cfsec213.sp_delete_secgrpfrm( argAuditClusterId,
+						argAuditUserId,
+						argAuditSessionId,
+						secClusterId,
+						secTenantId,
+						curClusterId,
+						curSecGroupFormId,
+						curRevision );
+		end loop;
+		close cur_clusteridx_restricted;
+	end if;
+end;////

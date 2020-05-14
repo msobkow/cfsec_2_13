@@ -1,0 +1,124 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_create_secform.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_create_secform
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClassCode CFSec213ClassCode,
+	@argClusterId decimal(21,0),
+	@argSecAppId integer,
+	@argJEEServletMapName varchar(192)
+as
+	declare @rc int
+	declare @permissionFlag int
+	declare @argSecFormId integer
+begin
+	if( @argClassCode = 'a00b' )
+	begin
+		exec sp_is_cluster_user @permissionFlag output, @argClusterId, 'CreateSecForm', @argAuditUserId
+		if( @permissionFlag = 0 )
+		begin
+			raiserror( 'Permission denied -- User not found in cluster SecGroup for CreateSecForm',
+				15,
+				1 )
+		end
+	end
+
+	exec sp_next_clus_secformidgen @argSecFormId output,
+		@argClusterId
+
+	insert into cfsec213..SecForm(
+			forcesynclock,
+			createdby,
+			createdat,
+			updatedby,
+			updatedat,
+			clusterid,
+			secformid,
+			secappid,
+			jeeservletmapname,
+			revision )
+	values (
+			0,
+			@argAuditUserId,
+			sysdatetime(),
+			@argAuditUserId,
+			sysdatetime(),
+			@argClusterId,
+			@argSecFormId,
+			@argSecAppId,
+			@argJEEServletMapName,
+			1 )
+
+	insert into cfsec213..SecForm_h (
+			clusterid,
+			secformid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			secappid,
+			jeeservletmapname,
+			revision,
+			auditaction )
+		select
+			a00b.clusterid,
+			a00b.secformid,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a00b.secappid,
+			a00b.jeeservletmapname,
+			a00b.revision,
+			0
+		from cfsec213..SecForm as a00b
+		where
+			a00b.clusterid = @argClusterId
+			and a00b.secformid = @argSecFormId
+
+	select
+			a00b.createdby,
+			convert( varchar, a00b.createdat, 120 ) as createdat,
+			a00b.updatedby,
+			convert( varchar, a00b.updatedat, 120 ) as updatedat,
+			a00b.clusterid as clusterid,
+			a00b.secformid as secformid,
+			a00b.secappid as secappid,
+			a00b.jeeservletmapname as jeeservletmapname,
+			a00b.revision as revision
+	from cfsec213..SecForm as a00b
+	where
+			a00b.clusterid = @argClusterId
+			and a00b.secformid = @argSecFormId
+end
+go
+
+quit

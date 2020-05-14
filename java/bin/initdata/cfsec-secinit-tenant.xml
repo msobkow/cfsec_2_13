@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CFSec
+		xmlns="uri://cfsec/cfsecloader"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xsi:schemaLocation="uri://cfsec/cfsecloader file:/usr/share/xsd/cfsec-structured.xsd" >
+	<Cluster FullDomName="system" Description="system">
+		<Tenant TenantName="tenant">
+			<TSecGroup Name="TenantAdmin" IsVisible="true" >
+				<TSecGroupMember User="system" />
+			</TSecGroup>
+			<TSecGroup Name="CFSecAdmin" IsVisible="true" >
+				<TSecGroupInclude SubGroup="TenantAdmin" />
+			</TSecGroup>
+			<TSecGroup Name="CFSecReader" IsVisible="true" >
+				<TSecGroupInclude SubGroup="CFSecAdmin" />
+			</TSecGroup>
+			<TSecGroup Name="CFSecCreator" IsVisible="true" >
+				<TSecGroupInclude SubGroup="CFSecAdmin" />
+			</TSecGroup>
+			<TSecGroup Name="CFSecUpdater" IsVisible="true" >
+				<TSecGroupInclude SubGroup="CFSecAdmin" />
+			</TSecGroup>
+			<TSecGroup Name="CFSecDeleter" IsVisible="true" >
+				<TSecGroupInclude SubGroup="CFSecAdmin" />
+			</TSecGroup>
+			<TSecGroup Name="ReadTSecGroup" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecReader" />
+			</TSecGroup>
+			<TSecGroup Name="CreateTSecGroup" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecCreator" />
+			</TSecGroup>
+			<TSecGroup Name="UpdateTSecGroup" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecUpdater" />
+			</TSecGroup>
+			<TSecGroup Name="DeleteTSecGroup" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecDeleter" />
+			</TSecGroup>
+			<TSecGroup Name="ReadTSecGrpInc" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecReader" />
+			</TSecGroup>
+			<TSecGroup Name="CreateTSecGrpInc" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecCreator" />
+			</TSecGroup>
+			<TSecGroup Name="UpdateTSecGrpInc" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecUpdater" />
+			</TSecGroup>
+			<TSecGroup Name="DeleteTSecGrpInc" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecDeleter" />
+			</TSecGroup>
+			<TSecGroup Name="ReadTSecGrpMemb" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecReader" />
+			</TSecGroup>
+			<TSecGroup Name="CreateTSecGrpMemb" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecCreator" />
+			</TSecGroup>
+			<TSecGroup Name="UpdateTSecGrpMemb" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecUpdater" />
+			</TSecGroup>
+			<TSecGroup Name="DeleteTSecGrpMemb" IsVisible="false" >
+				<TSecGroupInclude SubGroup="CFSecDeleter" />
+			</TSecGroup>
+		</Tenant>
+	</Cluster>
+</CFSec>

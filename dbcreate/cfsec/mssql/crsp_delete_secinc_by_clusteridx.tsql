@@ -1,0 +1,113 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_secinc_by_clusteridx.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_secinc_by_clusteridx(
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClusterId decimal(21,0) )
+as
+	declare @varClusterId CFSec213ClusterIdGenSeq
+	declare @varSecGrpIncId CFSec213SecGrpIncIdGen
+	declare @varRevision int
+	declare @retval int
+	declare cursNormalSecIncClusterIdx cursor local for
+		select
+			a00e.clusid as clusid,
+			a00e.secgrpincid as secgrpincid,
+			a00e.revision as revision
+		from cfsec213..SecInc as a00e
+		where
+			a00e.clusid = @argClusterId
+	declare cursRestrictSecIncClusterIdx cursor local for
+		select
+			a00e.clusid as clusid,
+			a00e.secgrpincid as secgrpincid,
+			a00e.revision as revision
+		from cfsec213..SecInc as a00e
+		where
+			a00e.clusid = @argClusterId
+			and a00e.clusid = @secClusterId
+begin
+	exec sp_is_system_user @retval output, @argAuditUserId
+	if( @retval = 1 )
+	begin
+		open cursNormalSecIncClusterIdx
+		fetch next from cursNormalSecIncClusterIdx into
+				@varClusterId,
+				@varSecGrpIncId,
+				@varRevision
+		while ( @@fetch_status = 0 )
+		begin
+				exec sp_delete_secinc @argAuditClusterId,
+						@argAuditUserId,
+						@argAuditSessionId,
+						@secClusterId,
+						@secTenantId,
+						@varClusterId,
+						@varSecGrpIncId,
+						@varRevision
+			fetch next from cursNormalSecIncClusterIdx into
+				@varClusterId,
+				@varSecGrpIncId,
+				@varRevision
+		end
+		close cursNormalSecIncClusterIdx
+		deallocate cursNormalSecIncClusterIdx
+	end
+	else begin
+		open cursRestrictSecIncClusterIdx
+		fetch next from cursRestrictSecIncClusterIdx into
+				@varClusterId,
+				@varSecGrpIncId,
+				@varRevision
+		while ( @@fetch_status = 0 )
+		begin
+				exec sp_delete_secinc @argAuditClusterId,
+						@argAuditUserId,
+						@argAuditSessionId,
+						@secClusterId,
+						@secTenantId,
+						@varClusterId,
+						@varSecGrpIncId,
+						@varRevision
+			fetch next from cursRestrictSecIncClusterIdx into
+				@varClusterId,
+				@varSecGrpIncId,
+				@varRevision
+		end
+		close cursRestrictSecIncClusterIdx
+		deallocate cursRestrictSecIncClusterIdx
+	end
+end
+go
+
+quit

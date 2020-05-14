@@ -1,0 +1,117 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_secgrpfrm.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_secgrpfrm
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClusterId decimal(21,0),
+	@argSecGroupFormId decimal(21,0),
+	@argRevision int
+as
+	declare @oldRevision int
+	declare @oldClusterId decimal(21,0)
+	declare @oldAuditCreatedAt datetime2
+	declare @oldAuditCreatedBy varchar(36)
+	declare @oldAuditUpdatedAt datetime2
+	declare @oldAuditUpdatedBy varchar(36)
+	declare @permissionFlag int
+begin
+	update cfsec213..SecGrpFrm
+	set forcesynclock = forcesynclock + 1
+	where
+			clusid = @argClusterId
+		and secgrpfrmid = @argSecGroupFormId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	select
+		@oldClusterId = a00d.clusid,
+		@oldRevision = a00d.revision
+	from cfsec213..SecGrpFrm as a00d
+	where
+			a00d.clusid = @argClusterId
+			and a00d.secgrpfrmid = @argSecGroupFormId
+
+	exec sp_is_cluster_user @permissionFlag output, @secClusterId, 'DeleteSecGroupForm', @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- User not found in cluster SecGroup for DeleteSecGroupForm',
+			15,
+			1 )
+	end
+
+	insert into cfsec213..SecGrpFrm_h (
+			clusid,
+			secgrpfrmid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			secgrpid,
+			secappid,
+			secfrmid,
+			revision,
+			auditaction )
+		select
+			a00d.clusid,
+			a00d.secgrpfrmid,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a00d.secgrpid,
+			a00d.secappid,
+			a00d.secfrmid,
+			@argRevision + 1,
+			2
+		from cfsec213..SecGrpFrm as a00d
+		where
+			a00d.clusid = @argClusterId
+			and a00d.secgrpfrmid = @argSecGroupFormId
+
+	delete from cfsec213..SecGrpFrm
+	where
+		clusid = @argClusterId
+		and secgrpfrmid = @argSecGroupFormId
+	if @@rowcount != 1
+	begin
+		raiserror( 'sp_delete_secgrpfrm() Data collision detected',
+			15,
+			1 )
+	end
+
+end
+go
+
+quit

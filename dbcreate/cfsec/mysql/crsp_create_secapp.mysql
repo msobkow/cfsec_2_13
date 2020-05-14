@@ -1,0 +1,119 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_create_secapp.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_create_secapp(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argClusterId bigint,
+	argJEEMountName varchar(192) )
+not deterministic
+modifies sql data
+begin
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare argSecAppId integer;
+	if( argClassCode = 'a009' )
+	then
+		select cfsec213.sp_is_cluster_user( argClusterId,
+				'CreateSecApp',
+				argAuditUserId ),
+			cfsec213.sp_is_system_user( argAuditUserId )
+		into permissionFlag, isSystemUser;
+
+		if( ( permissionFlag = false ) and ( isSystemUser = false ) )
+		then
+			signal sqlstate '45002'
+			set message_text = 'sp_create_secapp() Permission denied, not granted access to current cluster',
+				schema_name = 'cfsec213',
+				table_name = 'SecApp';
+		end if;
+	end if;
+
+	select cfsec213.sp_next_secappidgen( argClusterId )
+	into argSecAppId;
+
+	insert into cfsec213.SecApp(
+		createdby,
+		createdat,
+		updatedby,
+		updatedat,
+		clusterid,
+		secappid,
+		jeemountname,
+		revision )
+	values (
+		argAuditUserId,
+		now(),
+		argAuditUserId,
+		now(),
+		argClusterId,
+		argSecAppId,
+		argJEEMountName,
+		1 );
+
+	insert into cfsec213.SecApp_h (
+			clusterid,
+			secappid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			jeemountname,
+			revision,
+			auditaction )
+		select
+			a009.clusterid,
+			a009.secappid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a009.jeemountname,
+			a009.revision,
+			1
+		from cfsec213.SecApp as a009
+		where
+			a009.clusterid = argClusterId
+		and a009.secappid = argSecAppId;
+
+	select
+
+			date_format( a009.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a009.createdby as createdby,
+			date_format( a009.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a009.updatedby as updatedby,
+			a009.clusterid as clusterid,
+			a009.secappid as secappid,
+			a009.jeemountname as jeemountname,
+			a009.revision as revision
+	from cfsec213.SecApp as a009
+	where
+		a009.clusterid = argClusterId
+		and a009.secappid = argSecAppId;
+end;////

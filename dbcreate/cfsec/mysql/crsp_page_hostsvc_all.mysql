@@ -1,0 +1,141 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_page_hostsvc_all.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_page_hostsvc_all(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	priorClusterId bigint,
+	priorServiceId bigint )
+not deterministic
+reads sql data
+begin
+	declare done boolean default false;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare continue handler for not found set done = true;
+	select cfsec213.sp_is_cluster_user( secClusterId,
+			'ReadService',
+			argAuditUserId ),
+		cfsec213.sp_is_system_user( argAuditUserId )
+	into permissionFlag, isSystemUser;
+	if( permissionFlag = false )
+	then
+		signal sqlstate '45002'
+		set message_text = 'sp_read_hostsvc() Permission denied for ReadService access for current Cluster',
+			schema_name = 'cfsec213',
+			table_name = 'HostSvc';
+	end if;
+	if( ( isSystemUser ) and ( ( priorClusterId is not null )and ( priorServiceId is not null ) ) )
+	then
+		select
+
+			date_format( a012.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a012.createdby as createdby,
+			date_format( a012.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a012.updatedby as updatedby,
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+			a012.hostnodeid as hostnodeid,
+			a012.servicetypeid as servicetypeid,
+			a012.hostport as hostport,
+			a012.revision as revision
+		from cfsec213.HostSvc as a012
+			where ( ( ( a012.ClusterId = priorClusterId )
+					and ( a012.ServiceId < priorServiceId ) )
+				or ( ( a012.ClusterId < priorClusterId ) ) )
+		order by ClusterId desc,
+			ServiceId desc
+			limit 25;
+	end if;
+	if( ( isSystemUser ) and ( not ( ( priorClusterId is not null )and ( priorServiceId is not null ) ) ) )
+	then
+		select
+
+			date_format( a012.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a012.createdby as createdby,
+			date_format( a012.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a012.updatedby as updatedby,
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+			a012.hostnodeid as hostnodeid,
+			a012.servicetypeid as servicetypeid,
+			a012.hostport as hostport,
+			a012.revision as revision
+		from cfsec213.HostSvc as a012
+		order by ClusterId desc,
+			ServiceId desc
+			limit 25;
+	end if;
+	if( ( not isSystemUser ) and ( ( priorClusterId is not null )and ( priorServiceId is not null ) ) )
+	then
+		select
+
+			date_format( a012.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a012.createdby as createdby,
+			date_format( a012.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a012.updatedby as updatedby,
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+			a012.hostnodeid as hostnodeid,
+			a012.servicetypeid as servicetypeid,
+			a012.hostport as hostport,
+			a012.revision as revision
+		from cfsec213.HostSvc as a012
+		where
+			a012.ClusterId = secClusterId
+			and ( ( ( a012.ClusterId = priorClusterId )
+					and ( a012.ServiceId < priorServiceId ) )
+				or ( ( a012.ClusterId < priorClusterId ) ) )
+		order by ClusterId desc,
+			ServiceId desc
+			limit 25;
+	end if;
+	if( ( not isSystemUser ) and ( not ( ( priorClusterId is not null )and ( priorServiceId is not null ) ) ) )
+	then
+		select
+
+			date_format( a012.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a012.createdby as createdby,
+			date_format( a012.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a012.updatedby as updatedby,
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+			a012.hostnodeid as hostnodeid,
+			a012.servicetypeid as servicetypeid,
+			a012.hostport as hostport,
+			a012.revision as revision
+		from cfsec213.HostSvc as a012
+		where
+			a012.ClusterId = secClusterId
+		order by ClusterId desc,
+			ServiceId desc
+			limit 25;
+	end if;
+end;////

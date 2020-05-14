@@ -1,0 +1,121 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_delete_hostsvc_by_utypeidx.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_delete_hostsvc_by_utypeidx(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClusterId bigint,
+	argHostNodeId bigint,
+	argServiceTypeId integer )
+not deterministic
+modifies sql data
+begin
+	declare curRevision int;
+	declare subret boolean;
+	declare curClusterId bigint;
+	declare curServiceId bigint;
+	declare done int default false;
+	declare cur_utypeidx cursor for
+		select
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+			a012.revision as revision
+		from cfsec213.HostSvc as a012
+		where
+			a012.clusterid = argClusterId
+		and a012.hostnodeid = argHostNodeId
+		and a012.servicetypeid = argServiceTypeId;
+	declare cur_utypeidx_system cursor for
+			select
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+					a012.revision as revision
+			from cfsec213.HostSvc as a012
+			where
+					a012.clusterid = argClusterId
+		and a012.hostnodeid = argHostNodeId
+		and a012.servicetypeid = argServiceTypeId;
+	declare cur_utypeidx_restricted cursor for
+			select
+			a012.clusterid as clusterid,
+			a012.serviceid as serviceid,
+					a012.revision as revision
+			from cfsec213.HostSvc as a012
+			where
+					a012.clusterid = argClusterId
+		and a012.hostnodeid = argHostNodeId
+		and a012.servicetypeid = argServiceTypeId
+					and a012.ClusterId = secClusterId;
+	declare continue handler for not found set done = true;
+
+	select cfsec213.sp_is_system_user( argAuditUserId ) into subret;
+	if( subret )
+	then
+		open cur_utypeidx_system;
+		read_loop_utypeidx_system: loop
+			fetch cur_utypeidx_system into
+				curClusterId,
+				curServiceId,
+				curRevision;
+			if done then
+				leave read_loop_utypeidx_system;
+			end if;
+			call cfsec213.sp_delete_hostsvc( argAuditClusterId,
+						argAuditUserId,
+						argAuditSessionId,
+						secClusterId,
+						secTenantId,
+						curClusterId,
+						curServiceId,
+						curRevision );
+		end loop;
+		close cur_utypeidx_system;
+	else
+		open cur_utypeidx_restricted;
+		read_loop_utypeidx_restricted: loop
+			fetch cur_utypeidx_restricted into
+				curClusterId,
+				curServiceId,
+				curRevision;
+			if done then
+				leave read_loop_utypeidx_restricted;
+			end if;
+			call cfsec213.sp_delete_hostsvc( argAuditClusterId,
+						argAuditUserId,
+						argAuditSessionId,
+						secClusterId,
+						secTenantId,
+						curClusterId,
+						curServiceId,
+						curRevision );
+		end loop;
+		close cur_utypeidx_restricted;
+	end if;
+end;////

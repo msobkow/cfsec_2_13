@@ -1,0 +1,76 @@
+--
+--	@(#) dbcreate/cfsec/mssql/reorg_cfsec213.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+REORG TABLE cfsec213.clus index cfsec213.cluster_pk
+go
+REORG TABLE cfsec213.HostNode index cfsec213.HostNode_pidx
+go
+REORG TABLE cfsec213.iso_ccy index cfsec213.isocurrency_pk
+go
+REORG TABLE cfsec213.iso_cntry index cfsec213.isocountry_pk
+go
+REORG TABLE cfsec213.iso_cntryccy index cfsec213.isocountryccy_pk
+go
+REORG TABLE cfsec213.iso_cntrylng index cfsec213.isocountrylang_pk
+go
+REORG TABLE cfsec213.iso_lang index cfsec213.isolang_pk
+go
+REORG TABLE cfsec213.ISOTz index cfsec213.ITz_pidx
+go
+REORG TABLE cfsec213.SecApp index cfsec213.SecApp_pidx
+go
+REORG TABLE cfsec213.SecDev index cfsec213.SecDev_pidx
+go
+REORG TABLE cfsec213.SecForm index cfsec213.SecForm_pidx
+go
+REORG TABLE cfsec213.SecGrp index cfsec213.SecGroup_pidx
+go
+REORG TABLE cfsec213.SecGrpFrm index cfsec213.SecGroupForm_pidx
+go
+REORG TABLE cfsec213.SecInc index cfsec213.SecInclude_pidx
+go
+REORG TABLE cfsec213.SecMemb index cfsec213.SecMember_pidx
+go
+REORG TABLE cfsec213.SecSess index cfsec213.Session_pidx
+go
+REORG TABLE cfsec213.SecUser index cfsec213.SecUser_pidx
+go
+REORG TABLE cfsec213.HostSvc index cfsec213.Service_pidx
+go
+REORG TABLE cfsec213.SvcType index cfsec213.ServiceType_pidx
+go
+REORG TABLE cfsec213.sysclus index cfsec213.syscluster_pk
+go
+REORG TABLE cfsec213.TSecGrp index cfsec213.TSecGroup_pidx
+go
+REORG TABLE cfsec213.TSecInc index cfsec213.TSecInclude_pidx
+go
+REORG TABLE cfsec213.TSecMemb index cfsec213.TSecMember_pidx
+go
+REORG TABLE cfsec213.tenant index cfsec213.tenant_pk
+go
+
+quit

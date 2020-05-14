@@ -1,0 +1,45 @@
+*.gitattributes text eol=lf diff
+*.gitignore text eol=lf diff
+*.md text eol=lf diff
+*.txt text eol=lf diff
+*.java text eol=lf diff
+*.cs text eol=lf diff
+*.xsd text eol=lf diff
+*.xml text eol=lf diff
+*.html text eol=lf diff
+*.pgsql text eol=lf diff
+*.sql text eol=lf diff
+*.plsql text eol=lf diff
+*.isql text eol=lf diff
+*.mysql text eol=lf diff
+*.tsql text eol=lf diff
+*.bash text eol=lf diff
+*.bat text eol=crlf diff
+*.rc text eol=lf diff
+*.db -text -diff
+*.ipch -text -diff
+*.jar -text -diff
+*.zip -text -diff
+*.ico -text -diff
+*.jpg -text -diff
+*.jpeg -text -diff
+*.gif -text -diff
+*.png -text -diff
+*.xsd text eol=lf diff
+*.xml text eol=lf diff
+*.html text eol=lf diff
+*.makefile text eol=lf diff
+*.am text eol=lf diff
+*.dat text eol=lf diff
+*.cs text eol=lf diff
+*.cpp text eol=lf diff
+*.hpp text eol=lf diff
+*.c text eol=lf diff
+*.h text eol=lf diff
+*.ac text eol=lf diff
+*.am text eol=lf diff
+*.sln text eol=crlf diff
+*.vcxproj text eol=crlf diff
+*.csproj text eol=crlf diff
+*.user text eol=crlf diff
+*.filters text eol=crlf diff

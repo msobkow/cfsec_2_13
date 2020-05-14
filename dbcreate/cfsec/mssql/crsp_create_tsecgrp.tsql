@@ -1,0 +1,124 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_create_tsecgrp.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_create_tsecgrp
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClassCode CFSec213ClassCode,
+	@argTenantId decimal(21,0),
+	@argName varchar(64),
+	@argIsVisible char(1)
+as
+	declare @rc int
+	declare @permissionFlag int
+	declare @argTSecGroupId integer
+begin
+	if( @argClassCode = 'a016' )
+	begin
+		exec sp_is_tenant_user @permissionFlag output, @argTenantId, 'CreateTSecGroup', @argAuditUserId
+		if( @permissionFlag = 0 )
+		begin
+			raiserror( 'Permission denied -- User not found in tenant TSecGroup for CreateTSecGroup',
+				15,
+				1 )
+		end
+	end
+
+	exec sp_next_tenant_tsecgroupidgen @argTSecGroupId output,
+		@argTenantId
+
+	insert into cfsec213..TSecGrp(
+			forcesynclock,
+			createdby,
+			createdat,
+			updatedby,
+			updatedat,
+			tenantid,
+			tsecgroupid,
+			safe_name,
+			isvisible,
+			revision )
+	values (
+			0,
+			@argAuditUserId,
+			sysdatetime(),
+			@argAuditUserId,
+			sysdatetime(),
+			@argTenantId,
+			@argTSecGroupId,
+			@argName,
+			@argIsVisible,
+			1 )
+
+	insert into cfsec213..TSecGrp_h (
+			tenantid,
+			tsecgroupid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			safe_name,
+			isvisible,
+			revision,
+			auditaction )
+		select
+			a016.tenantid,
+			a016.tsecgroupid,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a016.safe_name,
+			a016.isvisible,
+			a016.revision,
+			0
+		from cfsec213..TSecGrp as a016
+		where
+			a016.tenantid = @argTenantId
+			and a016.tsecgroupid = @argTSecGroupId
+
+	select
+			a016.createdby,
+			convert( varchar, a016.createdat, 120 ) as createdat,
+			a016.updatedby,
+			convert( varchar, a016.updatedat, 120 ) as updatedat,
+			a016.tenantid as tenantid,
+			a016.tsecgroupid as tsecgroupid,
+			a016.safe_name as safe_name,
+			a016.isvisible as isvisible,
+			a016.revision as revision
+	from cfsec213..TSecGrp as a016
+	where
+			a016.tenantid = @argTenantId
+			and a016.tsecgroupid = @argTSecGroupId
+end
+go
+
+quit

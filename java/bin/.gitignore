@@ -1,0 +1,6 @@
+*.jar
+*.war
+*.zip
+lib
+tomcatlib
+xsd

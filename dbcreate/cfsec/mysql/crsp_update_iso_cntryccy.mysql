@@ -1,0 +1,137 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_update_iso_cntryccy.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+
+create procedure cfsec213.sp_update_iso_cntryccy(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argISOCtryId smallint,
+	argISOCcyId smallint,
+	argRevision integer )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldISOCtryId smallint;
+	declare oldISOCcyId smallint;
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	if( argClassCode = 'a005' )
+	then
+		select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+		if( permissionFlag = false )
+		then
+			signal sqlstate '45001'
+			set message_text = 'sp_update_iso_cntryccy() Permission denied, not identified as system',
+				schema_name = 'cfsec213',
+				table_name = 'iso_cntryccy';
+		end if;
+	end if;
+
+	select
+			ISOCtryId,
+		ISOCcyId,
+			revision
+	into
+		oldISOCtryId,
+			oldISOCcyId,
+		oldRevision
+	from cfsec213.iso_cntryccy
+	where
+		ISOCtryId = argISOCtryId
+		and ISOCcyId = argISOCcyId
+	for update;
+	if argRevision != oldRevision
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_update_iso_cntryccy() Data collision detected',
+			schema_name = 'cfsec213',
+			table_name = 'iso_cntryccy';
+	end if;
+
+	update cfsec213.iso_cntryccy
+	set
+		revision = argRevision + 1,
+		updatedby = argAuditUserId,
+		updatedat = now()
+	where
+		ISOCtryId = argISOCtryId
+		and ISOCcyId = argISOCcyId
+		and revision = oldRevision;
+
+	select row_count()
+	into RowsAffected;
+	if RowsAffected != 1
+	then
+		signal sqlstate '02003'
+		set message_text = 'sp_update_iso_cntryccy() Expected to affect 1 iso_cntryccy',
+			schema_name = 'cfsec213',
+			table_name = 'iso_cntryccy';
+	end if;
+
+
+	insert into cfsec213.iso_cntryccy_h (
+			isoctryid,
+			isoccyid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			revision,
+			auditaction )
+		select
+			a005.isoctryid,
+			a005.isoccyid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a005.revision,
+			2
+		from cfsec213.iso_cntryccy as a005
+		where
+			a005.isoctryid = argISOCtryId
+		and a005.isoccyid = argISOCcyId;
+
+	select
+
+			date_format( a005.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a005.createdby as createdby,
+			date_format( a005.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a005.updatedby as updatedby,
+			a005.isoctryid as isoctryid,
+			a005.isoccyid as isoccyid,
+		a005.revision as revision
+	from cfsec213.iso_cntryccy as a005
+	where
+		a005.isoctryid = argISOCtryId
+		and a005.isoccyid = argISOCcyId;
+end;////
+

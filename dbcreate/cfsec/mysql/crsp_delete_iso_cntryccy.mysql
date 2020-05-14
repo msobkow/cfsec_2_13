@@ -1,0 +1,107 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_delete_iso_cntryccy.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_delete_iso_cntryccy(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argISOCtryId smallint,
+	argISOCcyId smallint,
+	argRevision int )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldISOCtryId smallint;
+	declare oldISOCcyId smallint;
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare done int default false;
+	declare continue handler for not found set done = true;
+	select
+			ISOCtryId,
+		ISOCcyId,
+			revision
+	into
+		oldISOCtryId,
+			oldISOCcyId,
+		oldRevision
+	from cfsec213.iso_cntryccy
+	where
+		ISOCtryId = argISOCtryId
+		and ISOCcyId = argISOCcyId
+	for update;
+	select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+
+	if( permissionFlag = false )
+	then
+		signal sqlstate '45001'
+		set message_text = 'sp_delete_iso_cntryccy() Permission denied, not identified as system',
+			schema_name = 'cfsec213',
+			table_name = 'iso_cntryccy';
+	end if;
+
+	insert into cfsec213.iso_cntryccy_h (
+			isoctryid,
+			isoccyid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			revision,
+			auditaction )
+		select
+			a005.isoctryid,
+			a005.isoccyid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a005.revision + 1,
+			3
+		from cfsec213.iso_cntryccy as a005
+		where
+			a005.isoctryid = argISOCtryId
+		and a005.isoccyid = argISOCcyId;
+
+	delete from cfsec213.iso_cntryccy
+	where
+		isoctryid = argISOCtryId
+		and isoccyid = argISOCcyId;
+	select row_count()
+	into RowsAffected;
+
+	if RowsAffected != 1 and RowsAffected != 0
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_delete_iso_cntryccy() Expected to affect 1 iso_cntryccy',
+			schema_name = 'cfsec213',
+			table_name = 'iso_cntryccy';
+	end if;
+
+end;////

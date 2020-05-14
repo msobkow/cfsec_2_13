@@ -1,0 +1,101 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_lock_tsecgrp.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+
+use cfsec213
+go
+
+create proc sp_lock_tsecgrp
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argTenantId decimal(21,0),
+	@argTSecGroupId integer
+as
+	declare @permissionFlag int
+	declare @isSystemUser int
+begin
+	exec sp_is_tenant_user @permissionFlag output, @secTenantId, 'UpdateTSecGroup', @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- User not found in tenant TSecGroup for UpdateTSecGroup',
+			15,
+			1 )
+	end
+	exec sp_is_system_user @isSystemUser output, @argAuditUserId
+
+	update cfsec213..TSecGrp
+	set forcesynclock = forcesynclock + 1
+	where
+			tenantid = @argTenantId
+		and tsecgroupid = @argTSecGroupId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	if( @isSystemUser = 1 )
+	begin
+		select
+			a016.createdby,
+			convert( varchar, a016.createdat, 120 ) as createdat,
+			a016.updatedby,
+			convert( varchar, a016.updatedat, 120 ) as updatedat,
+			a016.tenantid as tenantid,
+			a016.tsecgroupid as tsecgroupid,
+			a016.safe_name as safe_name,
+			a016.isvisible as isvisible,
+			a016.revision as revision
+		from cfsec213..TSecGrp as a016
+		where
+			a016.tenantid = @argTenantId
+			and a016.tsecgroupid = @argTSecGroupId
+	end
+	else begin
+		select
+			a016.createdby,
+			convert( varchar, a016.createdat, 120 ) as createdat,
+			a016.updatedby,
+			convert( varchar, a016.updatedat, 120 ) as updatedat,
+			a016.tenantid as tenantid,
+			a016.tsecgroupid as tsecgroupid,
+			a016.safe_name as safe_name,
+			a016.isvisible as isvisible,
+			a016.revision as revision
+		from cfsec213..TSecGrp as a016
+		where
+			a016.tenantid = @argTenantId
+			and a016.tsecgroupid = @argTSecGroupId
+			and a016.tenantid = @secTenantId
+	end
+end
+go
+
+quit

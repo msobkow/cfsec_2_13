@@ -1,0 +1,125 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_create_secgrp.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_create_secgrp(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argClusterId bigint,
+	argName varchar(64),
+	argIsVisible boolean )
+not deterministic
+modifies sql data
+begin
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare argSecGroupId integer;
+	if( argClassCode = 'a00c' )
+	then
+		select cfsec213.sp_is_cluster_user( argClusterId,
+				'CreateSecGroup',
+				argAuditUserId ),
+			cfsec213.sp_is_system_user( argAuditUserId )
+		into permissionFlag, isSystemUser;
+
+		if( ( permissionFlag = false ) and ( isSystemUser = false ) )
+		then
+			signal sqlstate '45002'
+			set message_text = 'sp_create_secgrp() Permission denied, not granted access to current cluster',
+				schema_name = 'cfsec213',
+				table_name = 'SecGrp';
+		end if;
+	end if;
+
+	select cfsec213.sp_next_secgroupidgen( argClusterId )
+	into argSecGroupId;
+
+	insert into cfsec213.SecGrp(
+		createdby,
+		createdat,
+		updatedby,
+		updatedat,
+		clusterid,
+		secgroupid,
+		safe_name,
+		isvisible,
+		revision )
+	values (
+		argAuditUserId,
+		now(),
+		argAuditUserId,
+		now(),
+		argClusterId,
+		argSecGroupId,
+		argName,
+		argIsVisible,
+		1 );
+
+	insert into cfsec213.SecGrp_h (
+			clusterid,
+			secgroupid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			safe_name,
+			isvisible,
+			revision,
+			auditaction )
+		select
+			a00c.clusterid,
+			a00c.secgroupid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a00c.safe_name,
+			a00c.isvisible,
+			a00c.revision,
+			1
+		from cfsec213.SecGrp as a00c
+		where
+			a00c.clusterid = argClusterId
+		and a00c.secgroupid = argSecGroupId;
+
+	select
+
+			date_format( a00c.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a00c.createdby as createdby,
+			date_format( a00c.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a00c.updatedby as updatedby,
+			a00c.clusterid as clusterid,
+			a00c.secgroupid as secgroupid,
+			a00c.safe_name as safe_name,
+			a00c.isvisible as isvisible,
+			a00c.revision as revision
+	from cfsec213.SecGrp as a00c
+	where
+		a00c.clusterid = argClusterId
+		and a00c.secgroupid = argSecGroupId;
+end;////

@@ -1,0 +1,95 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_read_secgrp_by_clustervisidx.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_read_secgrp_by_clustervisidx
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClusterId decimal(21,0),
+	@argIsVisible char(1)
+as
+	declare @rc int
+	declare @permissionFlag int
+	declare @isSystemUser int
+begin
+	exec sp_is_cluster_user @permissionFlag output, @secClusterId, 'ReadSecGroup', @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- User not found in cluster SecGroup for ReadSecGroup',
+			15,
+			1 )
+	end
+	exec sp_is_system_user @isSystemUser output, @argAuditUserId
+
+	if( @isSystemUser = 1 )
+	begin
+		select
+			a00c.createdby,
+			convert( varchar, a00c.createdat, 120 ) as createdat,
+			a00c.updatedby,
+			convert( varchar, a00c.updatedat, 120 ) as updatedat,
+			a00c.clusterid as clusterid,
+			a00c.secgroupid as secgroupid,
+			a00c.safe_name as safe_name,
+			a00c.isvisible as isvisible,
+			a00c.revision as revision
+		from cfsec213..SecGrp as a00c
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.isvisible = @argIsVisible
+			and a00c.clusterid = @secClusterId
+		order by ClusterId desc,
+			SecGroupId desc
+	end
+	else begin
+		select
+			a00c.createdby,
+			convert( varchar, a00c.createdat, 120 ) as createdat,
+			a00c.updatedby,
+			convert( varchar, a00c.updatedat, 120 ) as updatedat,
+			a00c.clusterid as clusterid,
+			a00c.secgroupid as secgroupid,
+			a00c.safe_name as safe_name,
+			a00c.isvisible as isvisible,
+			a00c.revision as revision
+		from cfsec213..SecGrp as a00c
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.isvisible = @argIsVisible
+			and a00c.clusterid = @secClusterId
+			and a00c.clusterid = @secClusterId
+		order by ClusterId desc,
+			SecGroupId desc
+	end
+end
+go
+
+quit

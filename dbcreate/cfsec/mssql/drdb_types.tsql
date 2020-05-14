@@ -1,0 +1,208 @@
+--
+--	@(#) dbcreate/cfsec/mssql/drdb_types.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+if exists ( select * from systypes where name = 'OmxClassCode' )
+begin
+	exec sp_droptype OmxClassCode
+end
+if exists ( select * from systypes where name = 'cfsec213ClassCode' )
+begin
+	exec sp_droptype cfsec213ClassCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213AuditActionEnum' )
+begin
+	exec sp_droptype CFSec213AuditActionEnum
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ClusterIdGenSeq' )
+begin
+	exec sp_droptype CFSec213ClusterIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213DeviceName' )
+begin
+	exec sp_droptype CFSec213DeviceName
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISO6391LangCode' )
+begin
+	exec sp_droptype CFSec213ISO6391LangCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISO6392LangCode' )
+begin
+	exec sp_droptype CFSec213ISO6392LangCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOCcyCode' )
+begin
+	exec sp_droptype CFSec213ISOCcyCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOCcyIdGenSeq' )
+begin
+	exec sp_droptype CFSec213ISOCcyIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOCtryCode' )
+begin
+	exec sp_droptype CFSec213ISOCtryCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOCtryCode3' )
+begin
+	exec sp_droptype CFSec213ISOCtryCode3
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOCtryIdGenSeq' )
+begin
+	exec sp_droptype CFSec213ISOCtryIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOLangIdGenSeq' )
+begin
+	exec sp_droptype CFSec213ISOLangIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ISOTZoneIdGenSeq' )
+begin
+	exec sp_droptype CFSec213ISOTZoneIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SHA512HexHash' )
+begin
+	exec sp_droptype CFSec213SHA512HexHash
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecSessionIdGen' )
+begin
+	exec sp_droptype CFSec213SecSessionIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecUserIdGen' )
+begin
+	exec sp_droptype CFSec213SecUserIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ServiceTypeIdGenSeq' )
+begin
+	exec sp_droptype CFSec213ServiceTypeIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213TenantIdGenSeq' )
+begin
+	exec sp_droptype CFSec213TenantIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213HostNodeIdGen' )
+begin
+	exec sp_droptype CFSec213HostNodeIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecAppIdGen' )
+begin
+	exec sp_droptype CFSec213SecAppIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecFormIdGen' )
+begin
+	exec sp_droptype CFSec213SecFormIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecGroupFormIdGen' )
+begin
+	exec sp_droptype CFSec213SecGroupFormIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecGroupIdGen' )
+begin
+	exec sp_droptype CFSec213SecGroupIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecGrpIncIdGen' )
+begin
+	exec sp_droptype CFSec213SecGrpIncIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213SecGrpMembIdGen' )
+begin
+	exec sp_droptype CFSec213SecGrpMembIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213ServiceIdGen' )
+begin
+	exec sp_droptype CFSec213ServiceIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213TSecGroupIdGen' )
+begin
+	exec sp_droptype CFSec213TSecGroupIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213TSecGrpIncIdGen' )
+begin
+	exec sp_droptype CFSec213TSecGrpIncIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFSec213TSecGrpMembIdGen' )
+begin
+	exec sp_droptype CFSec213TSecGrpMembIdGen
+end
+go
+
+quit

@@ -1,0 +1,10 @@
+marktemp
+installer
+*.log
+*.swp
+*~
+.metadata
+build
+RemoteSystemsTempFiles
+Servers
+*.log

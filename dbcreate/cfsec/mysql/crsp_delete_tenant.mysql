@@ -1,0 +1,233 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_delete_tenant.mysql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_delete_tenant(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argId bigint,
+	argRevision int )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldClusterId bigint;
+	declare oldId bigint;
+	declare oldTenantName varchar(192);
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare done int default false;
+	declare delincludedbygroupTenantId bigint;
+	declare delincludedbygroupTSecGrpIncId bigint;
+	declare delgrpmembsTenantId bigint;
+	declare delgrpmembsTSecGrpMembId bigint;
+	declare delgrpincsTenantId bigint;
+	declare delgrpincsTSecGrpIncId bigint;
+	declare deltsecgroupsTenantId bigint;
+	declare deltsecgroupsTSecGroupId integer;
+	declare cur_delincludedbygroup cursor for
+		select
+			a017.tenantid,
+			a017.tsecgrpincid
+		from cfsec213.tenant as a015
+			inner join cfsec213.TSecGrp a016 on
+				a015.id = a016.tenantid
+			inner join cfsec213.TSecInc a017 on
+				a016.tenantid = a017.tenantid
+				and a016.tsecgroupid = a017.incgrpid
+		where
+			a015.id = argId;
+	declare cur_delgrpmembs cursor for
+		select
+			a018.tenantid,
+			a018.tsecgrpmembid
+		from cfsec213.tenant as a015
+			inner join cfsec213.TSecGrp a016 on
+				a015.id = a016.tenantid
+			inner join cfsec213.TSecMemb a018 on
+				a016.tenantid = a018.tenantid
+				and a016.tsecgroupid = a018.tsecgroupid
+		where
+			a015.id = argId;
+	declare cur_delgrpincs cursor for
+		select
+			a017.tenantid,
+			a017.tsecgrpincid
+		from cfsec213.tenant as a015
+			inner join cfsec213.TSecGrp a016 on
+				a015.id = a016.tenantid
+			inner join cfsec213.TSecInc a017 on
+				a016.tenantid = a017.tenantid
+				and a016.tsecgroupid = a017.tsecgrpid
+		where
+			a015.id = argId;
+	declare cur_deltsecgroups cursor for
+		select
+			a016.tenantid,
+			a016.tsecgroupid
+		from cfsec213.tenant as a015
+			inner join cfsec213.TSecGrp a016 on
+				a015.id = a016.tenantid
+		where
+			a015.id = argId;
+	declare continue handler for not found set done = true;
+	select
+			ClusterId,
+		Id,
+		TenantName,
+			revision
+	into
+		oldClusterId,
+			oldId,
+			oldTenantName,
+		oldRevision
+	from cfsec213.tenant
+	where
+		Id = argId
+	for update;
+	select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+
+	if( permissionFlag = false )
+	then
+		signal sqlstate '45001'
+		set message_text = 'sp_delete_tenant() Permission denied, not identified as system',
+			schema_name = 'cfsec213',
+			table_name = 'tenant';
+	end if;
+
+	insert into cfsec213.tenant_h (
+			id,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			clusterid,
+			tenantname,
+			revision,
+			auditaction )
+		select
+			a015.id,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a015.clusterid,
+			a015.tenantname,
+			a015.revision + 1,
+			3
+		from cfsec213.tenant as a015
+		where
+			a015.id = argId;
+
+	set done = false;
+	open cur_delincludedbygroup;
+	read_loop_delincludedbygroup: loop
+		fetch cur_delincludedbygroup into
+			delincludedbygroupTenantId,
+			delincludedbygroupTSecGrpIncId;
+		if done then
+			leave read_loop_delincludedbygroup;
+		end if;
+		call cfsec213.sp_delete_tsecinc_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delincludedbygroupTenantId,
+			delincludedbygroupTSecGrpIncId );
+	end loop;
+	close cur_delincludedbygroup;
+	set done = false;
+	open cur_delgrpmembs;
+	read_loop_delgrpmembs: loop
+		fetch cur_delgrpmembs into
+			delgrpmembsTenantId,
+			delgrpmembsTSecGrpMembId;
+		if done then
+			leave read_loop_delgrpmembs;
+		end if;
+		call cfsec213.sp_delete_tsecmemb_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delgrpmembsTenantId,
+			delgrpmembsTSecGrpMembId );
+	end loop;
+	close cur_delgrpmembs;
+	set done = false;
+	open cur_delgrpincs;
+	read_loop_delgrpincs: loop
+		fetch cur_delgrpincs into
+			delgrpincsTenantId,
+			delgrpincsTSecGrpIncId;
+		if done then
+			leave read_loop_delgrpincs;
+		end if;
+		call cfsec213.sp_delete_tsecinc_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delgrpincsTenantId,
+			delgrpincsTSecGrpIncId );
+	end loop;
+	close cur_delgrpincs;
+	set done = false;
+	open cur_deltsecgroups;
+	read_loop_deltsecgroups: loop
+		fetch cur_deltsecgroups into
+			deltsecgroupsTenantId,
+			deltsecgroupsTSecGroupId;
+		if done then
+			leave read_loop_deltsecgroups;
+		end if;
+		call cfsec213.sp_delete_tsecgrp_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			deltsecgroupsTenantId,
+			deltsecgroupsTSecGroupId );
+	end loop;
+	close cur_deltsecgroups;
+	delete from cfsec213.tenant
+	where
+		id = argId;
+	select row_count()
+	into RowsAffected;
+
+	if RowsAffected != 1 and RowsAffected != 0
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_delete_tenant() Expected to affect 1 tenant',
+			schema_name = 'cfsec213',
+			table_name = 'tenant';
+	end if;
+
+end;////

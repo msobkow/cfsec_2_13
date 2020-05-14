@@ -1,0 +1,3195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="uri://cfsec/cfsecrqst" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="uri://cfsec/cfsecrqst" version="$Revision$">
+
+<xsd:annotation>
+	<xsd:documentation xml:lang="en">
+		CFSec request messages for schema CFSec
+	</xsd:documentation>
+</xsd:annotation>
+
+<!-- ************************************************************************
+ *
+ *	Schema Atomic Types
+ *
+ **************************************************************************-->
+
+<xsd:simpleType name="AuditActionEnumType">
+	<xsd:restriction base="xsd:token">
+		<xsd:minLength value="1"/>
+		<xsd:maxLength value="127"/>
+		<xsd:whiteSpace value="collapse"/>
+		<xsd:enumeration value="Create"/>
+		<xsd:enumeration value="Update"/>
+		<xsd:enumeration value="Delete"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ClusterIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="DeviceNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="127"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISO6391LangCodeType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISO6392LangCodeType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="3"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyCodeType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="3"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyIdGenType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryCodeType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryCode3Type">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="3"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryIdGenType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOLangIdGenType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneIdGenType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SHA512HexHashType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="256"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionIdGenType">
+	<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserIdGenType">
+	<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceTypeIdGenType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TenantIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="HostNodeIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecAppIdGenType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecFormIdGenType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupIdGenType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpIncIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpMembIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGroupIdGenType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpIncIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpMembIdGenType">
+	<xsd:restriction base="xsd:long"/>
+</xsd:simpleType>
+
+<!-- ************************************************************************
+ *
+ *	Table Column Types
+ *
+ **************************************************************************-->
+
+<xsd:simpleType name="ClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ClusterFullDomNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ClusterDescriptionType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="128"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ClusterRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="HostNodeClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="HostNodeHostNodeIdType">
+	<xsd:restriction base="HostNodeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="HostNodeDescriptionType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="255"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="HostNodeHostNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="HostNodeRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyISOCcyIdType">
+	<xsd:restriction base="ISOCcyIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyISOCodeType">
+	<xsd:restriction base="ISOCcyCodeType">
+		<xsd:maxLength value="3"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="64"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyUnitSymbolType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="4"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyPrecisType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCcyRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryISOCtryIdType">
+	<xsd:restriction base="ISOCtryIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryISOCodeType">
+	<xsd:restriction base="ISOCtryCodeType">
+		<xsd:maxLength value="2"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="64"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryCcyISOCtryIdType">
+	<xsd:restriction base="ISOCtryIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryCcyISOCcyIdType">
+	<xsd:restriction base="ISOCcyIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryCcyRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryLangISOCtryIdType">
+	<xsd:restriction base="ISOCtryIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryLangISOLangIdType">
+	<xsd:restriction base="ISOLangIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOCtryLangRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOLangISOLangIdType">
+	<xsd:restriction base="ISOLangIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOLangISO6392CodeType">
+	<xsd:restriction base="ISO6392LangCodeType">
+		<xsd:maxLength value="3"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOLangISO6391CodeType">
+	<xsd:restriction base="ISO6391LangCodeType">
+		<xsd:maxLength value="2"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOLangEnglishNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="64"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOLangRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneISOTZoneIdType">
+	<xsd:restriction base="ISOTZoneIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneIso8601Type">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="6"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneTZNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="64"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneTZHourOffsetType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneTZMinOffsetType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneDescriptionType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="128"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneVisibleType">
+	<xsd:restriction base="xsd:boolean"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ISOTZoneRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecAppClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecAppSecAppIdType">
+	<xsd:restriction base="SecAppIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecAppJEEMountNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecAppRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecDeviceSecUserIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecDeviceDevNameType">
+	<xsd:restriction base="DeviceNameType">
+		<xsd:maxLength value="127"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecDevicePubKeyType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="10000"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecDeviceRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecFormClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecFormSecFormIdType">
+	<xsd:restriction base="SecFormIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecFormSecAppIdType">
+	<xsd:restriction base="SecAppIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecFormJEEServletMapNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecFormRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupSecGroupIdType">
+	<xsd:restriction base="SecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="64"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupIsVisibleType">
+	<xsd:restriction base="xsd:boolean"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormSecGroupFormIdType">
+	<xsd:restriction base="SecGroupFormIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormSecGroupIdType">
+	<xsd:restriction base="SecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormSecAppIdType">
+	<xsd:restriction base="SecAppIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormSecFormIdType">
+	<xsd:restriction base="SecFormIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGroupFormRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpIncClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpIncSecGrpIncIdType">
+	<xsd:restriction base="SecGrpIncIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpIncSecGroupIdType">
+	<xsd:restriction base="SecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpIncIncludeGroupIdType">
+	<xsd:restriction base="SecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpIncRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpMembClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpMembSecGrpMembIdType">
+	<xsd:restriction base="SecGrpMembIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpMembSecGroupIdType">
+	<xsd:restriction base="SecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpMembSecUserIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecGrpMembRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionSecSessionIdType">
+	<xsd:restriction base="SecSessionIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionSecUserIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionSecDevNameType">
+	<xsd:restriction base="DeviceNameType">
+		<xsd:maxLength value="127"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionStartType">
+	<xsd:restriction base="xsd:dateTime"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionFinishType">
+	<xsd:restriction base="xsd:dateTime"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionSecProxyIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecSessionRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserSecUserIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserLoginIdType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="32"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserEMailAddressType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserEMailConfirmUuidType">
+	<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserDfltDevUserIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserDfltDevNameType">
+	<xsd:restriction base="DeviceNameType">
+		<xsd:maxLength value="127"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserPasswordHashType">
+	<xsd:restriction base="SHA512HexHashType">
+		<xsd:maxLength value="256"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserPasswordResetUuidType">
+	<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SecUserRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceServiceIdType">
+	<xsd:restriction base="ServiceIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceHostNodeIdType">
+	<xsd:restriction base="HostNodeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceServiceTypeIdType">
+	<xsd:restriction base="ServiceTypeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceHostPortType">
+	<xsd:restriction base="xsd:short"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceTypeServiceTypeIdType">
+	<xsd:restriction base="ServiceTypeIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceTypeDescriptionType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="50"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ServiceTypeRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SysClusterSingletonIdType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="SysClusterClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="SysClusterRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGroupTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGroupTSecGroupIdType">
+	<xsd:restriction base="TSecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGroupNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="64"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGroupIsVisibleType">
+	<xsd:restriction base="xsd:boolean"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGroupRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpIncTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpIncTSecGrpIncIdType">
+	<xsd:restriction base="TSecGrpIncIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpIncTSecGroupIdType">
+	<xsd:restriction base="TSecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpIncIncludeGroupIdType">
+	<xsd:restriction base="TSecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpIncRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpMembTenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpMembTSecGrpMembIdType">
+	<xsd:restriction base="TSecGrpMembIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpMembTSecGroupIdType">
+	<xsd:restriction base="TSecGroupIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpMembSecUserIdType">
+	<xsd:restriction base="SecUserIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TSecGrpMembRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="TenantClusterIdType">
+	<xsd:restriction base="ClusterIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TenantIdType">
+	<xsd:restriction base="TenantIdGenType">
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TenantTenantNameType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="192"/>
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="TenantRevisionType">
+	<xsd:restriction base="xsd:integer"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="FileImportFileName">
+	<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="FileImportFileContent">
+	<xsd:restriction base="xsd:string">
+		<xsd:whiteSpace value="preserve"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="LogInDevEncPWHashType">
+	<xsd:restriction base="xsd:base64Binary"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="LogOutSecSessionIdType">
+	<xsd:restriction base="SecSessionIdGenType"/>
+</xsd:simpleType>
+
+<!-- ************************************************************************
+ *
+ *	Schema Request Primary Index Types
+ *
+ **************************************************************************-->
+
+<xsd:complexType name="ClusterIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="Id" type="ClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="HostNodeHostNodeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ISOCcyId" type="ISOCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ISOCtryId" type="ISOCtryISOCtryIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ISOLangId" type="ISOLangISOLangIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ISOTZoneId" type="ISOTZoneISOTZoneIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecAppSecAppIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecFormSecFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="SecSessionId" type="SecSessionSecSessionIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="SecUserId" type="SecUserSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="ServiceId" type="ServiceServiceIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="ServiceTypeId" type="ServiceTypeServiceTypeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="SingletonId" type="SysClusterSingletonIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGroupTSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantIdIdxType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="Id" type="TenantIdType" use="required"/>
+</xsd:complexType>
+
+<!-- ************************************************************************
+ *
+ *	Schema Table Request Object Types
+ *
+ **************************************************************************-->
+
+<xsd:complexType name="ClusterRqstCreateType" mixed="true">
+	<xsd:attribute name="Id" type="ClusterIdType" use="required"/>
+	<xsd:attribute name="FullDomName" type="ClusterFullDomNameType" use="required"/>
+	<xsd:attribute name="Description" type="ClusterDescriptionType" use="required"/>
+	<xsd:attribute name="Revision" type="ClusterRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstReadType" mixed="true">
+	<xsd:attribute name="Id" type="ClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstLockType" mixed="true">
+	<xsd:attribute name="Id" type="ClusterIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ClusterRqstUpdateType" mixed="true">
+	<xsd:attribute name="Id" type="ClusterIdType" use="required"/>
+	<xsd:attribute name="FullDomName" type="ClusterFullDomNameType" use="required"/>
+	<xsd:attribute name="Description" type="ClusterDescriptionType" use="required"/>
+	<xsd:attribute name="Revision" type="ClusterRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstDeleteType" mixed="true">
+	<xsd:attribute name="Id" type="ClusterIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ClusterRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorId" type="ClusterIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstRdByUDomNameIdxType" mixed="true">
+	<xsd:attribute name="FullDomName" type="ClusterFullDomNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstRdByUDescrIdxType" mixed="true">
+	<xsd:attribute name="Description" type="ClusterDescriptionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstDelByUDomNameIdxType" mixed="true">
+	<xsd:attribute name="FullDomName" type="ClusterFullDomNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ClusterRqstDelByUDescrIdxType" mixed="true">
+	<xsd:attribute name="Description" type="ClusterDescriptionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="HostNodeHostNodeIdType" use="required"/>
+	<xsd:attribute name="Description" type="HostNodeDescriptionType" use="required"/>
+	<xsd:attribute name="HostName" type="HostNodeHostNameType" use="required"/>
+	<xsd:attribute name="Revision" type="HostNodeRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="HostNodeHostNodeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="HostNodeHostNodeIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="HostNodeRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="HostNodeHostNodeIdType" use="required"/>
+	<xsd:attribute name="Description" type="HostNodeDescriptionType" use="required"/>
+	<xsd:attribute name="HostName" type="HostNodeHostNameType" use="required"/>
+	<xsd:attribute name="Revision" type="HostNodeRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="HostNodeHostNodeIdType" use="required"/>
+	<xsd:attribute name="Revision" type="HostNodeRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="HostNodeClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorHostNodeId" type="HostNodeHostNodeIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstRdByUDescrIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="Description" type="HostNodeDescriptionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstRdByHostNameIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostName" type="HostNodeHostNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="HostNodeClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorHostNodeId" type="HostNodeHostNodeIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstDelByUDescrIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="Description" type="HostNodeDescriptionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="HostNodeRqstDelByHostNameIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="HostNodeClusterIdType" use="required"/>
+	<xsd:attribute name="HostName" type="HostNodeHostNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstCreateType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCcyISOCcyIdType" use="required"/>
+	<xsd:attribute name="ISOCode" type="ISOCcyISOCodeType" use="required"/>
+	<xsd:attribute name="Name" type="ISOCcyNameType" use="required"/>
+	<xsd:attribute name="UnitSymbol" type="ISOCcyUnitSymbolType" use="optional"/>
+	<xsd:attribute name="Precis" type="ISOCcyPrecisType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCcyRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstReadType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstLockType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ISOCcyRqstUpdateType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCcyISOCcyIdType" use="required"/>
+	<xsd:attribute name="ISOCode" type="ISOCcyISOCodeType" use="required"/>
+	<xsd:attribute name="Name" type="ISOCcyNameType" use="required"/>
+	<xsd:attribute name="UnitSymbol" type="ISOCcyUnitSymbolType" use="optional"/>
+	<xsd:attribute name="Precis" type="ISOCcyPrecisType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCcyRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstDeleteType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCcyISOCcyIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCcyRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstRdByCcyCdIdxType" mixed="true">
+	<xsd:attribute name="ISOCode" type="ISOCcyISOCodeType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstRdByCcyNmIdxType" mixed="true">
+	<xsd:attribute name="Name" type="ISOCcyNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstDelByCcyCdIdxType" mixed="true">
+	<xsd:attribute name="ISOCode" type="ISOCcyISOCodeType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCcyRqstDelByCcyNmIdxType" mixed="true">
+	<xsd:attribute name="Name" type="ISOCcyNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstCreateType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCode" type="ISOCtryISOCodeType" use="required"/>
+	<xsd:attribute name="Name" type="ISOCtryNameType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstReadType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryISOCtryIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstLockType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryISOCtryIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ISOCtryRqstUpdateType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCode" type="ISOCtryISOCodeType" use="required"/>
+	<xsd:attribute name="Name" type="ISOCtryNameType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstDeleteType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryISOCtryIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstRdByISOCodeIdxType" mixed="true">
+	<xsd:attribute name="ISOCode" type="ISOCtryISOCodeType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstRdByNameIdxType" mixed="true">
+	<xsd:attribute name="Name" type="ISOCtryNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstDelByISOCodeIdxType" mixed="true">
+	<xsd:attribute name="ISOCode" type="ISOCtryISOCodeType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryRqstDelByNameIdxType" mixed="true">
+	<xsd:attribute name="Name" type="ISOCtryNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstCreateType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryCcyRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstReadType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstLockType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ISOCtryCcyRqstUpdateType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryCcyRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstDeleteType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryCcyRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstRdByCtryIdxType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstRdByCcyIdxType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstDelByCtryIdxType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryCcyISOCtryIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryCcyRqstDelByCcyIdxType" mixed="true">
+	<xsd:attribute name="ISOCcyId" type="ISOCtryCcyISOCcyIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstCreateType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryLangRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstReadType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstLockType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ISOCtryLangRqstUpdateType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryLangRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstDeleteType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOCtryLangRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstRdByCtryIdxType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstRdByLangIdxType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstDelByCtryIdxType" mixed="true">
+	<xsd:attribute name="ISOCtryId" type="ISOCtryLangISOCtryIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOCtryLangRqstDelByLangIdxType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOCtryLangISOLangIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstCreateType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOLangISOLangIdType" use="required"/>
+	<xsd:attribute name="ISO6392Code" type="ISOLangISO6392CodeType" use="required"/>
+	<xsd:attribute name="ISO6391Code" type="ISOLangISO6391CodeType" use="optional"/>
+	<xsd:attribute name="EnglishName" type="ISOLangEnglishNameType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOLangRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstReadType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOLangISOLangIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstLockType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOLangISOLangIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ISOLangRqstUpdateType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOLangISOLangIdType" use="required"/>
+	<xsd:attribute name="ISO6392Code" type="ISOLangISO6392CodeType" use="required"/>
+	<xsd:attribute name="ISO6391Code" type="ISOLangISO6391CodeType" use="optional"/>
+	<xsd:attribute name="EnglishName" type="ISOLangEnglishNameType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOLangRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstDeleteType" mixed="true">
+	<xsd:attribute name="ISOLangId" type="ISOLangISOLangIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOLangRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstRdByCode3IdxType" mixed="true">
+	<xsd:attribute name="ISO6392Code" type="ISOLangISO6392CodeType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstRdByCode2IdxType" mixed="true">
+	<xsd:attribute name="ISO6391Code" type="ISOLangISO6391CodeType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstDelByCode3IdxType" mixed="true">
+	<xsd:attribute name="ISO6392Code" type="ISOLangISO6392CodeType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOLangRqstDelByCode2IdxType" mixed="true">
+	<xsd:attribute name="ISO6391Code" type="ISOLangISO6391CodeType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstCreateType" mixed="true">
+	<xsd:attribute name="ISOTZoneId" type="ISOTZoneISOTZoneIdType" use="required"/>
+	<xsd:attribute name="Iso8601" type="ISOTZoneIso8601Type" use="required"/>
+	<xsd:attribute name="TZName" type="ISOTZoneTZNameType" use="required"/>
+	<xsd:attribute name="TZHourOffset" type="ISOTZoneTZHourOffsetType" use="required"/>
+	<xsd:attribute name="TZMinOffset" type="ISOTZoneTZMinOffsetType" use="required"/>
+	<xsd:attribute name="Description" type="ISOTZoneDescriptionType" use="required"/>
+	<xsd:attribute name="Visible" type="ISOTZoneVisibleType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOTZoneRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstReadType" mixed="true">
+	<xsd:attribute name="ISOTZoneId" type="ISOTZoneISOTZoneIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstLockType" mixed="true">
+	<xsd:attribute name="ISOTZoneId" type="ISOTZoneISOTZoneIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ISOTZoneRqstUpdateType" mixed="true">
+	<xsd:attribute name="ISOTZoneId" type="ISOTZoneISOTZoneIdType" use="required"/>
+	<xsd:attribute name="Iso8601" type="ISOTZoneIso8601Type" use="required"/>
+	<xsd:attribute name="TZName" type="ISOTZoneTZNameType" use="required"/>
+	<xsd:attribute name="TZHourOffset" type="ISOTZoneTZHourOffsetType" use="required"/>
+	<xsd:attribute name="TZMinOffset" type="ISOTZoneTZMinOffsetType" use="required"/>
+	<xsd:attribute name="Description" type="ISOTZoneDescriptionType" use="required"/>
+	<xsd:attribute name="Visible" type="ISOTZoneVisibleType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOTZoneRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstDeleteType" mixed="true">
+	<xsd:attribute name="ISOTZoneId" type="ISOTZoneISOTZoneIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ISOTZoneRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstRdByOffsetIdxType" mixed="true">
+	<xsd:attribute name="TZHourOffset" type="ISOTZoneTZHourOffsetType" use="required"/>
+	<xsd:attribute name="TZMinOffset" type="ISOTZoneTZMinOffsetType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstRdByUTZNameIdxType" mixed="true">
+	<xsd:attribute name="TZName" type="ISOTZoneTZNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstRdByIso8601IdxType" mixed="true">
+	<xsd:attribute name="Iso8601" type="ISOTZoneIso8601Type" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstDelByOffsetIdxType" mixed="true">
+	<xsd:attribute name="TZHourOffset" type="ISOTZoneTZHourOffsetType" use="required"/>
+	<xsd:attribute name="TZMinOffset" type="ISOTZoneTZMinOffsetType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstDelByUTZNameIdxType" mixed="true">
+	<xsd:attribute name="TZName" type="ISOTZoneTZNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ISOTZoneRqstDelByIso8601IdxType" mixed="true">
+	<xsd:attribute name="Iso8601" type="ISOTZoneIso8601Type" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecAppSecAppIdType" use="required"/>
+	<xsd:attribute name="JEEMountName" type="SecAppJEEMountNameType" use="required"/>
+	<xsd:attribute name="Revision" type="SecAppRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecAppSecAppIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecAppSecAppIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecAppRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecAppSecAppIdType" use="required"/>
+	<xsd:attribute name="JEEMountName" type="SecAppJEEMountNameType" use="required"/>
+	<xsd:attribute name="Revision" type="SecAppRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecAppSecAppIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecAppRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="SecAppClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecAppId" type="SecAppSecAppIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstRdByUJEEMountIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="JEEMountName" type="SecAppJEEMountNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecAppClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecAppId" type="SecAppSecAppIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecAppRqstDelByUJEEMountIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecAppClusterIdType" use="required"/>
+	<xsd:attribute name="JEEMountName" type="SecAppJEEMountNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstCreateType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+	<xsd:attribute name="PubKey" type="SecDevicePubKeyType" use="optional"/>
+	<xsd:attribute name="Revision" type="SecDeviceRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstReadType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstLockType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecDeviceRqstUpdateType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+	<xsd:attribute name="PubKey" type="SecDevicePubKeyType" use="optional"/>
+	<xsd:attribute name="Revision" type="SecDeviceRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstDeleteType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+	<xsd:attribute name="Revision" type="SecDeviceRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorSecUserId" type="SecDeviceSecUserIdType" use="optional"/>
+	<xsd:attribute name="PriorDevName" type="SecDeviceDevNameType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstRdByNameIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstRdByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstPageByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="PriorSecUserId" type="SecDeviceSecUserIdType" use="optional"/>
+	<xsd:attribute name="PriorDevName" type="SecDeviceDevNameType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstDelByNameIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+	<xsd:attribute name="DevName" type="SecDeviceDevNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecDeviceRqstDelByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecDeviceSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecFormSecFormIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+	<xsd:attribute name="JEEServletMapName" type="SecFormJEEServletMapNameType" use="required"/>
+	<xsd:attribute name="Revision" type="SecFormRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecFormSecFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecFormSecFormIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecFormRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecFormSecFormIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+	<xsd:attribute name="JEEServletMapName" type="SecFormJEEServletMapNameType" use="required"/>
+	<xsd:attribute name="Revision" type="SecFormRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecFormSecFormIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecFormRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="SecFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecFormId" type="SecFormSecFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstRdBySecAppIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstRdByUJEEServletIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+	<xsd:attribute name="JEEServletMapName" type="SecFormJEEServletMapNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecFormId" type="SecFormSecFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstPageBySecAppIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecFormId" type="SecFormSecFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstDelBySecAppIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecFormRqstDelByUJEEServletIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecFormSecAppIdType" use="required"/>
+	<xsd:attribute name="JEEServletMapName" type="SecFormJEEServletMapNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupSecGroupIdType" use="required"/>
+	<xsd:attribute name="Name" type="SecGroupNameType" use="required"/>
+	<xsd:attribute name="IsVisible" type="SecGroupIsVisibleType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGroupRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupSecGroupIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecGroupRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupSecGroupIdType" use="required"/>
+	<xsd:attribute name="Name" type="SecGroupNameType" use="required"/>
+	<xsd:attribute name="IsVisible" type="SecGroupIsVisibleType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGroupRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupSecGroupIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGroupRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstRdByClusterVisIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="IsVisible" type="SecGroupIsVisibleType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstRdByUNameIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="Name" type="SecGroupNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstDelByClusterVisIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="IsVisible" type="SecGroupIsVisibleType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupRqstDelByUNameIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupClusterIdType" use="required"/>
+	<xsd:attribute name="Name" type="SecGroupNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecGroupFormSecAppIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGroupFormRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecGroupFormRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecGroupFormSecAppIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGroupFormRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGroupFormRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="SecGroupFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstRdByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstRdByAppIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecGroupFormSecAppIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstRdByFormIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstRdByUFormIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGroupFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstPageByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGroupFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstPageByAppIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecGroupFormSecAppIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGroupFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstPageByFormIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGroupFormClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGroupFormId" type="SecGroupFormSecGroupFormIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstDelByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstDelByAppIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecAppId" type="SecGroupFormSecAppIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstDelByFormIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGroupFormRqstDelByUFormIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGroupFormClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGroupFormSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecFormId" type="SecGroupFormSecFormIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGrpIncRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecGrpIncRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGrpIncRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGrpIncRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="SecGrpIncClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstRdByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstRdByIncludeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstRdByUIncludeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGrpIncClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstPageByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGrpIncClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstPageByIncludeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGrpIncClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpIncId" type="SecGrpIncSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstDelByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstDelByIncludeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpIncRqstDelByUIncludeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpIncClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpIncSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="SecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGrpMembRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecGrpMembRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGrpMembRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecGrpMembRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="SecGrpMembClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstRdByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstRdByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstRdByUUserIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGrpMembClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstPageByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGrpMembClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstPageByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="SecGrpMembClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorSecGrpMembId" type="SecGrpMembSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstDelByGroupIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstDelByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecGrpMembRqstDelByUUserIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SecGrpMembClusterIdType" use="required"/>
+	<xsd:attribute name="SecGroupId" type="SecGrpMembSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="SecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstCreateType" mixed="true">
+	<xsd:attribute name="SecSessionId" type="SecSessionSecSessionIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="SecDevName" type="SecSessionSecDevNameType" use="optional"/>
+	<xsd:attribute name="Start" type="SecSessionStartType" use="required"/>
+	<xsd:attribute name="Finish" type="SecSessionFinishType" use="optional"/>
+	<xsd:attribute name="SecProxyId" type="SecSessionSecProxyIdType" use="optional"/>
+	<xsd:attribute name="Revision" type="SecSessionRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstReadType" mixed="true">
+	<xsd:attribute name="SecSessionId" type="SecSessionSecSessionIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstLockType" mixed="true">
+	<xsd:attribute name="SecSessionId" type="SecSessionSecSessionIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecSessionRqstUpdateType" mixed="true">
+	<xsd:attribute name="SecSessionId" type="SecSessionSecSessionIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="SecDevName" type="SecSessionSecDevNameType" use="optional"/>
+	<xsd:attribute name="Start" type="SecSessionStartType" use="required"/>
+	<xsd:attribute name="Finish" type="SecSessionFinishType" use="optional"/>
+	<xsd:attribute name="SecProxyId" type="SecSessionSecProxyIdType" use="optional"/>
+	<xsd:attribute name="Revision" type="SecSessionRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstDeleteType" mixed="true">
+	<xsd:attribute name="SecSessionId" type="SecSessionSecSessionIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecSessionRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorSecSessionId" type="SecSessionSecSessionIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstRdBySecUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstRdBySecDevIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="SecDevName" type="SecSessionSecDevNameType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstRdByStartIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="Start" type="SecSessionStartType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstRdByFinishIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="Finish" type="SecSessionFinishType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstRdBySecProxyIdxType" mixed="true">
+	<xsd:attribute name="SecProxyId" type="SecSessionSecProxyIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstPageBySecUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="PriorSecSessionId" type="SecSessionSecSessionIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstPageBySecDevIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="SecDevName" type="SecSessionSecDevNameType" use="optional"/>
+	<xsd:attribute name="PriorSecSessionId" type="SecSessionSecSessionIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstPageByFinishIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="Finish" type="SecSessionFinishType" use="optional"/>
+	<xsd:attribute name="PriorSecSessionId" type="SecSessionSecSessionIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstPageBySecProxyIdxType" mixed="true">
+	<xsd:attribute name="SecProxyId" type="SecSessionSecProxyIdType" use="optional"/>
+	<xsd:attribute name="PriorSecSessionId" type="SecSessionSecSessionIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstDelBySecUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstDelBySecDevIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="SecDevName" type="SecSessionSecDevNameType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstDelByStartIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="Start" type="SecSessionStartType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstDelByFinishIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecSessionSecUserIdType" use="required"/>
+	<xsd:attribute name="Finish" type="SecSessionFinishType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecSessionRqstDelBySecProxyIdxType" mixed="true">
+	<xsd:attribute name="SecProxyId" type="SecSessionSecProxyIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstCreateType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecUserSecUserIdType" use="required"/>
+	<xsd:attribute name="LoginId" type="SecUserLoginIdType" use="required"/>
+	<xsd:attribute name="EMailAddress" type="SecUserEMailAddressType" use="required"/>
+	<xsd:attribute name="EMailConfirmUuid" type="SecUserEMailConfirmUuidType" use="optional"/>
+	<xsd:attribute name="DfltDevUserId" type="SecUserDfltDevUserIdType" use="optional"/>
+	<xsd:attribute name="DfltDevName" type="SecUserDfltDevNameType" use="optional"/>
+	<xsd:attribute name="PasswordHash" type="SecUserPasswordHashType" use="required"/>
+	<xsd:attribute name="PasswordResetUuid" type="SecUserPasswordResetUuidType" use="optional"/>
+	<xsd:attribute name="Revision" type="SecUserRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstReadType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecUserSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstLockType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecUserSecUserIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SecUserRqstUpdateType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecUserSecUserIdType" use="required"/>
+	<xsd:attribute name="LoginId" type="SecUserLoginIdType" use="required"/>
+	<xsd:attribute name="EMailAddress" type="SecUserEMailAddressType" use="required"/>
+	<xsd:attribute name="EMailConfirmUuid" type="SecUserEMailConfirmUuidType" use="optional"/>
+	<xsd:attribute name="DfltDevUserId" type="SecUserDfltDevUserIdType" use="optional"/>
+	<xsd:attribute name="DfltDevName" type="SecUserDfltDevNameType" use="optional"/>
+	<xsd:attribute name="PasswordHash" type="SecUserPasswordHashType" use="required"/>
+	<xsd:attribute name="PasswordResetUuid" type="SecUserPasswordResetUuidType" use="optional"/>
+	<xsd:attribute name="Revision" type="SecUserRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstDeleteType" mixed="true">
+	<xsd:attribute name="SecUserId" type="SecUserSecUserIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SecUserRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorSecUserId" type="SecUserSecUserIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstRdByULoginIdxType" mixed="true">
+	<xsd:attribute name="LoginId" type="SecUserLoginIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstRdByEMConfIdxType" mixed="true">
+	<xsd:attribute name="EMailConfirmUuid" type="SecUserEMailConfirmUuidType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstRdByPwdResetIdxType" mixed="true">
+	<xsd:attribute name="PasswordResetUuid" type="SecUserPasswordResetUuidType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstRdByDefDevIdxType" mixed="true">
+	<xsd:attribute name="DfltDevUserId" type="SecUserDfltDevUserIdType" use="optional"/>
+	<xsd:attribute name="DfltDevName" type="SecUserDfltDevNameType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstPageByEMConfIdxType" mixed="true">
+	<xsd:attribute name="EMailConfirmUuid" type="SecUserEMailConfirmUuidType" use="optional"/>
+	<xsd:attribute name="PriorSecUserId" type="SecUserSecUserIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstPageByPwdResetIdxType" mixed="true">
+	<xsd:attribute name="PasswordResetUuid" type="SecUserPasswordResetUuidType" use="optional"/>
+	<xsd:attribute name="PriorSecUserId" type="SecUserSecUserIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstPageByDefDevIdxType" mixed="true">
+	<xsd:attribute name="DfltDevUserId" type="SecUserDfltDevUserIdType" use="optional"/>
+	<xsd:attribute name="DfltDevName" type="SecUserDfltDevNameType" use="optional"/>
+	<xsd:attribute name="PriorSecUserId" type="SecUserSecUserIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstDelByULoginIdxType" mixed="true">
+	<xsd:attribute name="LoginId" type="SecUserLoginIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstDelByEMConfIdxType" mixed="true">
+	<xsd:attribute name="EMailConfirmUuid" type="SecUserEMailConfirmUuidType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstDelByPwdResetIdxType" mixed="true">
+	<xsd:attribute name="PasswordResetUuid" type="SecUserPasswordResetUuidType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="SecUserRqstDelByDefDevIdxType" mixed="true">
+	<xsd:attribute name="DfltDevUserId" type="SecUserDfltDevUserIdType" use="optional"/>
+	<xsd:attribute name="DfltDevName" type="SecUserDfltDevNameType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="ServiceId" type="ServiceServiceIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+	<xsd:attribute name="HostPort" type="ServiceHostPortType" use="required"/>
+	<xsd:attribute name="Revision" type="ServiceRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstReadType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="ServiceId" type="ServiceServiceIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstLockType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="ServiceId" type="ServiceServiceIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ServiceRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="ServiceId" type="ServiceServiceIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+	<xsd:attribute name="HostPort" type="ServiceHostPortType" use="required"/>
+	<xsd:attribute name="Revision" type="ServiceRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstDeleteType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="ServiceId" type="ServiceServiceIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ServiceRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorClusterId" type="ServiceClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorServiceId" type="ServiceServiceIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstRdByHostIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstRdByTypeIdxType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstRdByUTypeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstRdByUHostPortIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="HostPort" type="ServiceHostPortType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="ServiceClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorServiceId" type="ServiceServiceIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstPageByHostIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="ServiceClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorServiceId" type="ServiceServiceIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstPageByTypeIdxType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+	<xsd:attribute name="PriorClusterId" type="ServiceClusterIdType" use="optional"/>
+	<xsd:attribute name="PriorServiceId" type="ServiceServiceIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstDelByHostIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstDelByTypeIdxType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstDelByUTypeIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="ServiceTypeId" type="ServiceServiceTypeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceRqstDelByUHostPortIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="ServiceClusterIdType" use="required"/>
+	<xsd:attribute name="HostNodeId" type="ServiceHostNodeIdType" use="required"/>
+	<xsd:attribute name="HostPort" type="ServiceHostPortType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstCreateType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceTypeServiceTypeIdType" use="required"/>
+	<xsd:attribute name="Description" type="ServiceTypeDescriptionType" use="required"/>
+	<xsd:attribute name="Revision" type="ServiceTypeRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstReadType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceTypeServiceTypeIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstLockType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceTypeServiceTypeIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="ServiceTypeRqstUpdateType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceTypeServiceTypeIdType" use="required"/>
+	<xsd:attribute name="Description" type="ServiceTypeDescriptionType" use="required"/>
+	<xsd:attribute name="Revision" type="ServiceTypeRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstDeleteType" mixed="true">
+	<xsd:attribute name="ServiceTypeId" type="ServiceTypeServiceTypeIdType" use="required"/>
+	<xsd:attribute name="Revision" type="ServiceTypeRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstRdByUDescrIdxType" mixed="true">
+	<xsd:attribute name="Description" type="ServiceTypeDescriptionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="ServiceTypeRqstDelByUDescrIdxType" mixed="true">
+	<xsd:attribute name="Description" type="ServiceTypeDescriptionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstCreateType" mixed="true">
+	<xsd:attribute name="SingletonId" type="SysClusterSingletonIdType" use="required"/>
+	<xsd:attribute name="ClusterId" type="SysClusterClusterIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SysClusterRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstReadType" mixed="true">
+	<xsd:attribute name="SingletonId" type="SysClusterSingletonIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstLockType" mixed="true">
+	<xsd:attribute name="SingletonId" type="SysClusterSingletonIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="SysClusterRqstUpdateType" mixed="true">
+	<xsd:attribute name="SingletonId" type="SysClusterSingletonIdType" use="required"/>
+	<xsd:attribute name="ClusterId" type="SysClusterClusterIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SysClusterRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstDeleteType" mixed="true">
+	<xsd:attribute name="SingletonId" type="SysClusterSingletonIdType" use="required"/>
+	<xsd:attribute name="Revision" type="SysClusterRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SysClusterClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="SysClusterRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="SysClusterClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstCreateType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGroupTSecGroupIdType" use="required"/>
+	<xsd:attribute name="Name" type="TSecGroupNameType" use="required"/>
+	<xsd:attribute name="IsVisible" type="TSecGroupIsVisibleType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGroupRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstReadType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGroupTSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstLockType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGroupTSecGroupIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="TSecGroupRqstUpdateType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGroupTSecGroupIdType" use="required"/>
+	<xsd:attribute name="Name" type="TSecGroupNameType" use="required"/>
+	<xsd:attribute name="IsVisible" type="TSecGroupIsVisibleType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGroupRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstDeleteType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGroupTSecGroupIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGroupRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstRdByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstRdByTenantVisIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="IsVisible" type="TSecGroupIsVisibleType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstRdByUNameIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="Name" type="TSecGroupNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstDelByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstDelByTenantVisIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="IsVisible" type="TSecGroupIsVisibleType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGroupRqstDelByUNameIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGroupTenantIdType" use="required"/>
+	<xsd:attribute name="Name" type="TSecGroupNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstCreateType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGrpIncRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstReadType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstLockType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="TSecGrpIncRqstUpdateType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGrpIncRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstDeleteType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGrpIncRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorTenantId" type="TSecGrpIncTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstRdByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstRdByGroupIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstRdByIncludeIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstRdByUIncludeIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstPageByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="PriorTenantId" type="TSecGrpIncTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstPageByGroupIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+	<xsd:attribute name="PriorTenantId" type="TSecGrpIncTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstPageByIncludeIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+	<xsd:attribute name="PriorTenantId" type="TSecGrpIncTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpIncId" type="TSecGrpIncTSecGrpIncIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstDelByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstDelByGroupIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstDelByIncludeIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpIncRqstDelByUIncludeIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpIncTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpIncTSecGroupIdType" use="required"/>
+	<xsd:attribute name="IncludeGroupId" type="TSecGrpIncIncludeGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstCreateType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGrpMembRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstReadType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstLockType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="TSecGrpMembRqstUpdateType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGrpMembRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstDeleteType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TSecGrpMembRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorTenantId" type="TSecGrpMembTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstRdByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstRdByGroupIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstRdByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstRdByUUserIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstPageByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="PriorTenantId" type="TSecGrpMembTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstPageByGroupIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+	<xsd:attribute name="PriorTenantId" type="TSecGrpMembTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstPageByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+	<xsd:attribute name="PriorTenantId" type="TSecGrpMembTenantIdType" use="optional"/>
+	<xsd:attribute name="PriorTSecGrpMembId" type="TSecGrpMembTSecGrpMembIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstDelByTenantIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstDelByGroupIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstDelByUserIdxType" mixed="true">
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TSecGrpMembRqstDelByUUserIdxType" mixed="true">
+	<xsd:attribute name="TenantId" type="TSecGrpMembTenantIdType" use="required"/>
+	<xsd:attribute name="TSecGroupId" type="TSecGrpMembTSecGroupIdType" use="required"/>
+	<xsd:attribute name="SecUserId" type="TSecGrpMembSecUserIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstCreateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+	<xsd:attribute name="Id" type="TenantIdType" use="required"/>
+	<xsd:attribute name="TenantName" type="TenantTenantNameType" use="required"/>
+	<xsd:attribute name="Revision" type="TenantRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstReadType" mixed="true">
+	<xsd:attribute name="Id" type="TenantIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstLockType" mixed="true">
+	<xsd:attribute name="Id" type="TenantIdType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="TenantRqstUpdateType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+	<xsd:attribute name="Id" type="TenantIdType" use="required"/>
+	<xsd:attribute name="TenantName" type="TenantTenantNameType" use="required"/>
+	<xsd:attribute name="Revision" type="TenantRevisionType" use="required"/>
+	<xsd:attribute name="CreatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="CreatedBy" type="xsd:string" use="optional" />
+	<xsd:attribute name="UpdatedAt" type="xsd:dateTime" use="optional" />
+	<xsd:attribute name="UpdatedBy" type="xsd:string" use="optional" />
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstDeleteType" mixed="true">
+	<xsd:attribute name="Id" type="TenantIdType" use="required"/>
+	<xsd:attribute name="Revision" type="TenantRevisionType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstReadAllType" mixed="true">
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstPageAllType" mixed="true">
+	<xsd:attribute name="PriorId" type="TenantIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstRdByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstRdByUNameIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+	<xsd:attribute name="TenantName" type="TenantTenantNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstPageByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+	<xsd:attribute name="PriorId" type="TenantIdType" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstDelByClusterIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="TenantRqstDelByUNameIdxType" mixed="true">
+	<xsd:attribute name="ClusterId" type="TenantClusterIdType" use="required"/>
+	<xsd:attribute name="TenantName" type="TenantTenantNameType" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="RqstFileImportType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="FileName" type="FileImportFileName" use="required" />
+	<xsd:attribute name="FileContent" type="FileImportFileContent" use="required" />
+</xsd:complexType>
+
+<xsd:complexType name="RqstLogInType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="LoginId" type="SecUserLoginIdType" use="required" />
+	<xsd:attribute name="DeviceName" type="DeviceNameType" use="required" />
+	<xsd:attribute name="DevEncPWHash" type="LogInDevEncPWHashType" use="required" />
+	<xsd:attribute name="ClusterName" type="ClusterFullDomNameType" use="required" />
+	<xsd:attribute name="TenantName" type="TenantTenantNameType" use="required" />
+</xsd:complexType>
+
+<xsd:complexType name="RqstLogOutType" mixed="true">
+	<xsd:sequence>
+	</xsd:sequence>
+	<xsd:attribute name="SecSessionId" type="LogOutSecSessionIdType" use="required" />
+</xsd:complexType>
+
+<!-- ************************************************************************
+ *
+ *	Schema Root Document
+ *
+ **************************************************************************-->
+
+<xsd:complexType name="CFSecRqstType" mixed="true">
+	<xsd:sequence>
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="RqstFileImport" type="RqstFileImportType" />
+			<xsd:element name="RqstLogIn" type="RqstLogInType" />
+			<xsd:element name="RqstLogOut" type="RqstLogOutType" />
+			<xsd:element name="RqstClusterCreate" type="ClusterRqstCreateType" />
+			<xsd:element name="RqstClusterRead" type="ClusterRqstReadType" />
+			<xsd:element name="RqstClusterLock" type="ClusterRqstLockType" />
+			<xsd:element name="RqstClusterUpdate" type="ClusterRqstUpdateType" />
+			<xsd:element name="RqstClusterDelete" type="ClusterRqstDeleteType" />
+			<xsd:element name="RqstClusterReadAll" type="ClusterRqstReadAllType" />
+			<xsd:element name="RqstClusterPageAll" type="ClusterRqstPageAllType" />
+			<xsd:element name="RqstClusterRdByUDomNameIdx" type="ClusterRqstRdByUDomNameIdxType" />
+			<xsd:element name="RqstClusterRdByUDescrIdx" type="ClusterRqstRdByUDescrIdxType" />
+			<xsd:element name="RqstClusterDelByUDomNameIdx" type="ClusterRqstDelByUDomNameIdxType" />
+			<xsd:element name="RqstClusterDelByUDescrIdx" type="ClusterRqstDelByUDescrIdxType" />
+			<xsd:element name="RqstHostNodeCreate" type="HostNodeRqstCreateType" />
+			<xsd:element name="RqstHostNodeRead" type="HostNodeRqstReadType" />
+			<xsd:element name="RqstHostNodeLock" type="HostNodeRqstLockType" />
+			<xsd:element name="RqstHostNodeUpdate" type="HostNodeRqstUpdateType" />
+			<xsd:element name="RqstHostNodeDelete" type="HostNodeRqstDeleteType" />
+			<xsd:element name="RqstHostNodeReadAll" type="HostNodeRqstReadAllType" />
+			<xsd:element name="RqstHostNodePageAll" type="HostNodeRqstPageAllType" />
+			<xsd:element name="RqstHostNodeRdByClusterIdx" type="HostNodeRqstRdByClusterIdxType" />
+			<xsd:element name="RqstHostNodeRdByUDescrIdx" type="HostNodeRqstRdByUDescrIdxType" />
+			<xsd:element name="RqstHostNodeRdByHostNameIdx" type="HostNodeRqstRdByHostNameIdxType" />
+			<xsd:element name="RqstHostNodePageByClusterIdx" type="HostNodeRqstPageByClusterIdxType" />
+			<xsd:element name="RqstHostNodeDelByClusterIdx" type="HostNodeRqstDelByClusterIdxType" />
+			<xsd:element name="RqstHostNodeDelByUDescrIdx" type="HostNodeRqstDelByUDescrIdxType" />
+			<xsd:element name="RqstHostNodeDelByHostNameIdx" type="HostNodeRqstDelByHostNameIdxType" />
+			<xsd:element name="RqstISOCcyCreate" type="ISOCcyRqstCreateType" />
+			<xsd:element name="RqstISOCcyRead" type="ISOCcyRqstReadType" />
+			<xsd:element name="RqstISOCcyLock" type="ISOCcyRqstLockType" />
+			<xsd:element name="RqstISOCcyUpdate" type="ISOCcyRqstUpdateType" />
+			<xsd:element name="RqstISOCcyDelete" type="ISOCcyRqstDeleteType" />
+			<xsd:element name="RqstISOCcyReadAll" type="ISOCcyRqstReadAllType" />
+			<xsd:element name="RqstISOCcyRdByCcyCdIdx" type="ISOCcyRqstRdByCcyCdIdxType" />
+			<xsd:element name="RqstISOCcyRdByCcyNmIdx" type="ISOCcyRqstRdByCcyNmIdxType" />
+			<xsd:element name="RqstISOCcyDelByCcyCdIdx" type="ISOCcyRqstDelByCcyCdIdxType" />
+			<xsd:element name="RqstISOCcyDelByCcyNmIdx" type="ISOCcyRqstDelByCcyNmIdxType" />
+			<xsd:element name="RqstISOCtryCreate" type="ISOCtryRqstCreateType" />
+			<xsd:element name="RqstISOCtryRead" type="ISOCtryRqstReadType" />
+			<xsd:element name="RqstISOCtryLock" type="ISOCtryRqstLockType" />
+			<xsd:element name="RqstISOCtryUpdate" type="ISOCtryRqstUpdateType" />
+			<xsd:element name="RqstISOCtryDelete" type="ISOCtryRqstDeleteType" />
+			<xsd:element name="RqstISOCtryReadAll" type="ISOCtryRqstReadAllType" />
+			<xsd:element name="RqstISOCtryRdByISOCodeIdx" type="ISOCtryRqstRdByISOCodeIdxType" />
+			<xsd:element name="RqstISOCtryRdByNameIdx" type="ISOCtryRqstRdByNameIdxType" />
+			<xsd:element name="RqstISOCtryDelByISOCodeIdx" type="ISOCtryRqstDelByISOCodeIdxType" />
+			<xsd:element name="RqstISOCtryDelByNameIdx" type="ISOCtryRqstDelByNameIdxType" />
+			<xsd:element name="RqstISOCtryCcyCreate" type="ISOCtryCcyRqstCreateType" />
+			<xsd:element name="RqstISOCtryCcyRead" type="ISOCtryCcyRqstReadType" />
+			<xsd:element name="RqstISOCtryCcyLock" type="ISOCtryCcyRqstLockType" />
+			<xsd:element name="RqstISOCtryCcyUpdate" type="ISOCtryCcyRqstUpdateType" />
+			<xsd:element name="RqstISOCtryCcyDelete" type="ISOCtryCcyRqstDeleteType" />
+			<xsd:element name="RqstISOCtryCcyReadAll" type="ISOCtryCcyRqstReadAllType" />
+			<xsd:element name="RqstISOCtryCcyRdByCtryIdx" type="ISOCtryCcyRqstRdByCtryIdxType" />
+			<xsd:element name="RqstISOCtryCcyRdByCcyIdx" type="ISOCtryCcyRqstRdByCcyIdxType" />
+			<xsd:element name="RqstISOCtryCcyDelByCtryIdx" type="ISOCtryCcyRqstDelByCtryIdxType" />
+			<xsd:element name="RqstISOCtryCcyDelByCcyIdx" type="ISOCtryCcyRqstDelByCcyIdxType" />
+			<xsd:element name="RqstISOCtryLangCreate" type="ISOCtryLangRqstCreateType" />
+			<xsd:element name="RqstISOCtryLangRead" type="ISOCtryLangRqstReadType" />
+			<xsd:element name="RqstISOCtryLangLock" type="ISOCtryLangRqstLockType" />
+			<xsd:element name="RqstISOCtryLangUpdate" type="ISOCtryLangRqstUpdateType" />
+			<xsd:element name="RqstISOCtryLangDelete" type="ISOCtryLangRqstDeleteType" />
+			<xsd:element name="RqstISOCtryLangReadAll" type="ISOCtryLangRqstReadAllType" />
+			<xsd:element name="RqstISOCtryLangRdByCtryIdx" type="ISOCtryLangRqstRdByCtryIdxType" />
+			<xsd:element name="RqstISOCtryLangRdByLangIdx" type="ISOCtryLangRqstRdByLangIdxType" />
+			<xsd:element name="RqstISOCtryLangDelByCtryIdx" type="ISOCtryLangRqstDelByCtryIdxType" />
+			<xsd:element name="RqstISOCtryLangDelByLangIdx" type="ISOCtryLangRqstDelByLangIdxType" />
+			<xsd:element name="RqstISOLangCreate" type="ISOLangRqstCreateType" />
+			<xsd:element name="RqstISOLangRead" type="ISOLangRqstReadType" />
+			<xsd:element name="RqstISOLangLock" type="ISOLangRqstLockType" />
+			<xsd:element name="RqstISOLangUpdate" type="ISOLangRqstUpdateType" />
+			<xsd:element name="RqstISOLangDelete" type="ISOLangRqstDeleteType" />
+			<xsd:element name="RqstISOLangReadAll" type="ISOLangRqstReadAllType" />
+			<xsd:element name="RqstISOLangRdByCode3Idx" type="ISOLangRqstRdByCode3IdxType" />
+			<xsd:element name="RqstISOLangRdByCode2Idx" type="ISOLangRqstRdByCode2IdxType" />
+			<xsd:element name="RqstISOLangDelByCode3Idx" type="ISOLangRqstDelByCode3IdxType" />
+			<xsd:element name="RqstISOLangDelByCode2Idx" type="ISOLangRqstDelByCode2IdxType" />
+			<xsd:element name="RqstISOTZoneCreate" type="ISOTZoneRqstCreateType" />
+			<xsd:element name="RqstISOTZoneRead" type="ISOTZoneRqstReadType" />
+			<xsd:element name="RqstISOTZoneLock" type="ISOTZoneRqstLockType" />
+			<xsd:element name="RqstISOTZoneUpdate" type="ISOTZoneRqstUpdateType" />
+			<xsd:element name="RqstISOTZoneDelete" type="ISOTZoneRqstDeleteType" />
+			<xsd:element name="RqstISOTZoneReadAll" type="ISOTZoneRqstReadAllType" />
+			<xsd:element name="RqstISOTZoneRdByOffsetIdx" type="ISOTZoneRqstRdByOffsetIdxType" />
+			<xsd:element name="RqstISOTZoneRdByUTZNameIdx" type="ISOTZoneRqstRdByUTZNameIdxType" />
+			<xsd:element name="RqstISOTZoneRdByIso8601Idx" type="ISOTZoneRqstRdByIso8601IdxType" />
+			<xsd:element name="RqstISOTZoneDelByOffsetIdx" type="ISOTZoneRqstDelByOffsetIdxType" />
+			<xsd:element name="RqstISOTZoneDelByUTZNameIdx" type="ISOTZoneRqstDelByUTZNameIdxType" />
+			<xsd:element name="RqstISOTZoneDelByIso8601Idx" type="ISOTZoneRqstDelByIso8601IdxType" />
+			<xsd:element name="RqstSecAppCreate" type="SecAppRqstCreateType" />
+			<xsd:element name="RqstSecAppRead" type="SecAppRqstReadType" />
+			<xsd:element name="RqstSecAppLock" type="SecAppRqstLockType" />
+			<xsd:element name="RqstSecAppUpdate" type="SecAppRqstUpdateType" />
+			<xsd:element name="RqstSecAppDelete" type="SecAppRqstDeleteType" />
+			<xsd:element name="RqstSecAppReadAll" type="SecAppRqstReadAllType" />
+			<xsd:element name="RqstSecAppPageAll" type="SecAppRqstPageAllType" />
+			<xsd:element name="RqstSecAppRdByClusterIdx" type="SecAppRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSecAppRdByUJEEMountIdx" type="SecAppRqstRdByUJEEMountIdxType" />
+			<xsd:element name="RqstSecAppPageByClusterIdx" type="SecAppRqstPageByClusterIdxType" />
+			<xsd:element name="RqstSecAppDelByClusterIdx" type="SecAppRqstDelByClusterIdxType" />
+			<xsd:element name="RqstSecAppDelByUJEEMountIdx" type="SecAppRqstDelByUJEEMountIdxType" />
+			<xsd:element name="RqstSecDeviceCreate" type="SecDeviceRqstCreateType" />
+			<xsd:element name="RqstSecDeviceRead" type="SecDeviceRqstReadType" />
+			<xsd:element name="RqstSecDeviceLock" type="SecDeviceRqstLockType" />
+			<xsd:element name="RqstSecDeviceUpdate" type="SecDeviceRqstUpdateType" />
+			<xsd:element name="RqstSecDeviceDelete" type="SecDeviceRqstDeleteType" />
+			<xsd:element name="RqstSecDeviceReadAll" type="SecDeviceRqstReadAllType" />
+			<xsd:element name="RqstSecDevicePageAll" type="SecDeviceRqstPageAllType" />
+			<xsd:element name="RqstSecDeviceRdByNameIdx" type="SecDeviceRqstRdByNameIdxType" />
+			<xsd:element name="RqstSecDeviceRdByUserIdx" type="SecDeviceRqstRdByUserIdxType" />
+			<xsd:element name="RqstSecDevicePageByUserIdx" type="SecDeviceRqstPageByUserIdxType" />
+			<xsd:element name="RqstSecDeviceDelByNameIdx" type="SecDeviceRqstDelByNameIdxType" />
+			<xsd:element name="RqstSecDeviceDelByUserIdx" type="SecDeviceRqstDelByUserIdxType" />
+			<xsd:element name="RqstSecFormCreate" type="SecFormRqstCreateType" />
+			<xsd:element name="RqstSecFormRead" type="SecFormRqstReadType" />
+			<xsd:element name="RqstSecFormLock" type="SecFormRqstLockType" />
+			<xsd:element name="RqstSecFormUpdate" type="SecFormRqstUpdateType" />
+			<xsd:element name="RqstSecFormDelete" type="SecFormRqstDeleteType" />
+			<xsd:element name="RqstSecFormReadAll" type="SecFormRqstReadAllType" />
+			<xsd:element name="RqstSecFormPageAll" type="SecFormRqstPageAllType" />
+			<xsd:element name="RqstSecFormRdByClusterIdx" type="SecFormRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSecFormRdBySecAppIdx" type="SecFormRqstRdBySecAppIdxType" />
+			<xsd:element name="RqstSecFormRdByUJEEServletIdx" type="SecFormRqstRdByUJEEServletIdxType" />
+			<xsd:element name="RqstSecFormPageByClusterIdx" type="SecFormRqstPageByClusterIdxType" />
+			<xsd:element name="RqstSecFormPageBySecAppIdx" type="SecFormRqstPageBySecAppIdxType" />
+			<xsd:element name="RqstSecFormDelByClusterIdx" type="SecFormRqstDelByClusterIdxType" />
+			<xsd:element name="RqstSecFormDelBySecAppIdx" type="SecFormRqstDelBySecAppIdxType" />
+			<xsd:element name="RqstSecFormDelByUJEEServletIdx" type="SecFormRqstDelByUJEEServletIdxType" />
+			<xsd:element name="RqstSecGroupCreate" type="SecGroupRqstCreateType" />
+			<xsd:element name="RqstSecGroupRead" type="SecGroupRqstReadType" />
+			<xsd:element name="RqstSecGroupLock" type="SecGroupRqstLockType" />
+			<xsd:element name="RqstSecGroupUpdate" type="SecGroupRqstUpdateType" />
+			<xsd:element name="RqstSecGroupDelete" type="SecGroupRqstDeleteType" />
+			<xsd:element name="RqstSecGroupReadAll" type="SecGroupRqstReadAllType" />
+			<xsd:element name="RqstSecGroupRdByClusterIdx" type="SecGroupRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSecGroupRdByClusterVisIdx" type="SecGroupRqstRdByClusterVisIdxType" />
+			<xsd:element name="RqstSecGroupRdByUNameIdx" type="SecGroupRqstRdByUNameIdxType" />
+			<xsd:element name="RqstSecGroupDelByClusterIdx" type="SecGroupRqstDelByClusterIdxType" />
+			<xsd:element name="RqstSecGroupDelByClusterVisIdx" type="SecGroupRqstDelByClusterVisIdxType" />
+			<xsd:element name="RqstSecGroupDelByUNameIdx" type="SecGroupRqstDelByUNameIdxType" />
+			<xsd:element name="RqstSecGroupFormCreate" type="SecGroupFormRqstCreateType" />
+			<xsd:element name="RqstSecGroupFormRead" type="SecGroupFormRqstReadType" />
+			<xsd:element name="RqstSecGroupFormLock" type="SecGroupFormRqstLockType" />
+			<xsd:element name="RqstSecGroupFormUpdate" type="SecGroupFormRqstUpdateType" />
+			<xsd:element name="RqstSecGroupFormDelete" type="SecGroupFormRqstDeleteType" />
+			<xsd:element name="RqstSecGroupFormReadAll" type="SecGroupFormRqstReadAllType" />
+			<xsd:element name="RqstSecGroupFormPageAll" type="SecGroupFormRqstPageAllType" />
+			<xsd:element name="RqstSecGroupFormRdByClusterIdx" type="SecGroupFormRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSecGroupFormRdByGroupIdx" type="SecGroupFormRqstRdByGroupIdxType" />
+			<xsd:element name="RqstSecGroupFormRdByAppIdx" type="SecGroupFormRqstRdByAppIdxType" />
+			<xsd:element name="RqstSecGroupFormRdByFormIdx" type="SecGroupFormRqstRdByFormIdxType" />
+			<xsd:element name="RqstSecGroupFormRdByUFormIdx" type="SecGroupFormRqstRdByUFormIdxType" />
+			<xsd:element name="RqstSecGroupFormPageByClusterIdx" type="SecGroupFormRqstPageByClusterIdxType" />
+			<xsd:element name="RqstSecGroupFormPageByGroupIdx" type="SecGroupFormRqstPageByGroupIdxType" />
+			<xsd:element name="RqstSecGroupFormPageByAppIdx" type="SecGroupFormRqstPageByAppIdxType" />
+			<xsd:element name="RqstSecGroupFormPageByFormIdx" type="SecGroupFormRqstPageByFormIdxType" />
+			<xsd:element name="RqstSecGroupFormDelByClusterIdx" type="SecGroupFormRqstDelByClusterIdxType" />
+			<xsd:element name="RqstSecGroupFormDelByGroupIdx" type="SecGroupFormRqstDelByGroupIdxType" />
+			<xsd:element name="RqstSecGroupFormDelByAppIdx" type="SecGroupFormRqstDelByAppIdxType" />
+			<xsd:element name="RqstSecGroupFormDelByFormIdx" type="SecGroupFormRqstDelByFormIdxType" />
+			<xsd:element name="RqstSecGroupFormDelByUFormIdx" type="SecGroupFormRqstDelByUFormIdxType" />
+			<xsd:element name="RqstSecGrpIncCreate" type="SecGrpIncRqstCreateType" />
+			<xsd:element name="RqstSecGrpIncRead" type="SecGrpIncRqstReadType" />
+			<xsd:element name="RqstSecGrpIncLock" type="SecGrpIncRqstLockType" />
+			<xsd:element name="RqstSecGrpIncUpdate" type="SecGrpIncRqstUpdateType" />
+			<xsd:element name="RqstSecGrpIncDelete" type="SecGrpIncRqstDeleteType" />
+			<xsd:element name="RqstSecGrpIncReadAll" type="SecGrpIncRqstReadAllType" />
+			<xsd:element name="RqstSecGrpIncPageAll" type="SecGrpIncRqstPageAllType" />
+			<xsd:element name="RqstSecGrpIncRdByClusterIdx" type="SecGrpIncRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSecGrpIncRdByGroupIdx" type="SecGrpIncRqstRdByGroupIdxType" />
+			<xsd:element name="RqstSecGrpIncRdByIncludeIdx" type="SecGrpIncRqstRdByIncludeIdxType" />
+			<xsd:element name="RqstSecGrpIncRdByUIncludeIdx" type="SecGrpIncRqstRdByUIncludeIdxType" />
+			<xsd:element name="RqstSecGrpIncPageByClusterIdx" type="SecGrpIncRqstPageByClusterIdxType" />
+			<xsd:element name="RqstSecGrpIncPageByGroupIdx" type="SecGrpIncRqstPageByGroupIdxType" />
+			<xsd:element name="RqstSecGrpIncPageByIncludeIdx" type="SecGrpIncRqstPageByIncludeIdxType" />
+			<xsd:element name="RqstSecGrpIncDelByClusterIdx" type="SecGrpIncRqstDelByClusterIdxType" />
+			<xsd:element name="RqstSecGrpIncDelByGroupIdx" type="SecGrpIncRqstDelByGroupIdxType" />
+			<xsd:element name="RqstSecGrpIncDelByIncludeIdx" type="SecGrpIncRqstDelByIncludeIdxType" />
+			<xsd:element name="RqstSecGrpIncDelByUIncludeIdx" type="SecGrpIncRqstDelByUIncludeIdxType" />
+			<xsd:element name="RqstSecGrpMembCreate" type="SecGrpMembRqstCreateType" />
+			<xsd:element name="RqstSecGrpMembRead" type="SecGrpMembRqstReadType" />
+			<xsd:element name="RqstSecGrpMembLock" type="SecGrpMembRqstLockType" />
+			<xsd:element name="RqstSecGrpMembUpdate" type="SecGrpMembRqstUpdateType" />
+			<xsd:element name="RqstSecGrpMembDelete" type="SecGrpMembRqstDeleteType" />
+			<xsd:element name="RqstSecGrpMembReadAll" type="SecGrpMembRqstReadAllType" />
+			<xsd:element name="RqstSecGrpMembPageAll" type="SecGrpMembRqstPageAllType" />
+			<xsd:element name="RqstSecGrpMembRdByClusterIdx" type="SecGrpMembRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSecGrpMembRdByGroupIdx" type="SecGrpMembRqstRdByGroupIdxType" />
+			<xsd:element name="RqstSecGrpMembRdByUserIdx" type="SecGrpMembRqstRdByUserIdxType" />
+			<xsd:element name="RqstSecGrpMembRdByUUserIdx" type="SecGrpMembRqstRdByUUserIdxType" />
+			<xsd:element name="RqstSecGrpMembPageByClusterIdx" type="SecGrpMembRqstPageByClusterIdxType" />
+			<xsd:element name="RqstSecGrpMembPageByGroupIdx" type="SecGrpMembRqstPageByGroupIdxType" />
+			<xsd:element name="RqstSecGrpMembPageByUserIdx" type="SecGrpMembRqstPageByUserIdxType" />
+			<xsd:element name="RqstSecGrpMembDelByClusterIdx" type="SecGrpMembRqstDelByClusterIdxType" />
+			<xsd:element name="RqstSecGrpMembDelByGroupIdx" type="SecGrpMembRqstDelByGroupIdxType" />
+			<xsd:element name="RqstSecGrpMembDelByUserIdx" type="SecGrpMembRqstDelByUserIdxType" />
+			<xsd:element name="RqstSecGrpMembDelByUUserIdx" type="SecGrpMembRqstDelByUUserIdxType" />
+			<xsd:element name="RqstSecSessionCreate" type="SecSessionRqstCreateType" />
+			<xsd:element name="RqstSecSessionRead" type="SecSessionRqstReadType" />
+			<xsd:element name="RqstSecSessionLock" type="SecSessionRqstLockType" />
+			<xsd:element name="RqstSecSessionUpdate" type="SecSessionRqstUpdateType" />
+			<xsd:element name="RqstSecSessionDelete" type="SecSessionRqstDeleteType" />
+			<xsd:element name="RqstSecSessionReadAll" type="SecSessionRqstReadAllType" />
+			<xsd:element name="RqstSecSessionPageAll" type="SecSessionRqstPageAllType" />
+			<xsd:element name="RqstSecSessionRdBySecUserIdx" type="SecSessionRqstRdBySecUserIdxType" />
+			<xsd:element name="RqstSecSessionRdBySecDevIdx" type="SecSessionRqstRdBySecDevIdxType" />
+			<xsd:element name="RqstSecSessionRdByStartIdx" type="SecSessionRqstRdByStartIdxType" />
+			<xsd:element name="RqstSecSessionRdByFinishIdx" type="SecSessionRqstRdByFinishIdxType" />
+			<xsd:element name="RqstSecSessionRdBySecProxyIdx" type="SecSessionRqstRdBySecProxyIdxType" />
+			<xsd:element name="RqstSecSessionPageBySecUserIdx" type="SecSessionRqstPageBySecUserIdxType" />
+			<xsd:element name="RqstSecSessionPageBySecDevIdx" type="SecSessionRqstPageBySecDevIdxType" />
+			<xsd:element name="RqstSecSessionPageByFinishIdx" type="SecSessionRqstPageByFinishIdxType" />
+			<xsd:element name="RqstSecSessionPageBySecProxyIdx" type="SecSessionRqstPageBySecProxyIdxType" />
+			<xsd:element name="RqstSecSessionDelBySecUserIdx" type="SecSessionRqstDelBySecUserIdxType" />
+			<xsd:element name="RqstSecSessionDelBySecDevIdx" type="SecSessionRqstDelBySecDevIdxType" />
+			<xsd:element name="RqstSecSessionDelByStartIdx" type="SecSessionRqstDelByStartIdxType" />
+			<xsd:element name="RqstSecSessionDelByFinishIdx" type="SecSessionRqstDelByFinishIdxType" />
+			<xsd:element name="RqstSecSessionDelBySecProxyIdx" type="SecSessionRqstDelBySecProxyIdxType" />
+			<xsd:element name="RqstSecUserCreate" type="SecUserRqstCreateType" />
+			<xsd:element name="RqstSecUserRead" type="SecUserRqstReadType" />
+			<xsd:element name="RqstSecUserLock" type="SecUserRqstLockType" />
+			<xsd:element name="RqstSecUserUpdate" type="SecUserRqstUpdateType" />
+			<xsd:element name="RqstSecUserDelete" type="SecUserRqstDeleteType" />
+			<xsd:element name="RqstSecUserReadAll" type="SecUserRqstReadAllType" />
+			<xsd:element name="RqstSecUserPageAll" type="SecUserRqstPageAllType" />
+			<xsd:element name="RqstSecUserRdByULoginIdx" type="SecUserRqstRdByULoginIdxType" />
+			<xsd:element name="RqstSecUserRdByEMConfIdx" type="SecUserRqstRdByEMConfIdxType" />
+			<xsd:element name="RqstSecUserRdByPwdResetIdx" type="SecUserRqstRdByPwdResetIdxType" />
+			<xsd:element name="RqstSecUserRdByDefDevIdx" type="SecUserRqstRdByDefDevIdxType" />
+			<xsd:element name="RqstSecUserPageByEMConfIdx" type="SecUserRqstPageByEMConfIdxType" />
+			<xsd:element name="RqstSecUserPageByPwdResetIdx" type="SecUserRqstPageByPwdResetIdxType" />
+			<xsd:element name="RqstSecUserPageByDefDevIdx" type="SecUserRqstPageByDefDevIdxType" />
+			<xsd:element name="RqstSecUserDelByULoginIdx" type="SecUserRqstDelByULoginIdxType" />
+			<xsd:element name="RqstSecUserDelByEMConfIdx" type="SecUserRqstDelByEMConfIdxType" />
+			<xsd:element name="RqstSecUserDelByPwdResetIdx" type="SecUserRqstDelByPwdResetIdxType" />
+			<xsd:element name="RqstSecUserDelByDefDevIdx" type="SecUserRqstDelByDefDevIdxType" />
+			<xsd:element name="RqstServiceCreate" type="ServiceRqstCreateType" />
+			<xsd:element name="RqstServiceRead" type="ServiceRqstReadType" />
+			<xsd:element name="RqstServiceLock" type="ServiceRqstLockType" />
+			<xsd:element name="RqstServiceUpdate" type="ServiceRqstUpdateType" />
+			<xsd:element name="RqstServiceDelete" type="ServiceRqstDeleteType" />
+			<xsd:element name="RqstServiceReadAll" type="ServiceRqstReadAllType" />
+			<xsd:element name="RqstServicePageAll" type="ServiceRqstPageAllType" />
+			<xsd:element name="RqstServiceRdByClusterIdx" type="ServiceRqstRdByClusterIdxType" />
+			<xsd:element name="RqstServiceRdByHostIdx" type="ServiceRqstRdByHostIdxType" />
+			<xsd:element name="RqstServiceRdByTypeIdx" type="ServiceRqstRdByTypeIdxType" />
+			<xsd:element name="RqstServiceRdByUTypeIdx" type="ServiceRqstRdByUTypeIdxType" />
+			<xsd:element name="RqstServiceRdByUHostPortIdx" type="ServiceRqstRdByUHostPortIdxType" />
+			<xsd:element name="RqstServicePageByClusterIdx" type="ServiceRqstPageByClusterIdxType" />
+			<xsd:element name="RqstServicePageByHostIdx" type="ServiceRqstPageByHostIdxType" />
+			<xsd:element name="RqstServicePageByTypeIdx" type="ServiceRqstPageByTypeIdxType" />
+			<xsd:element name="RqstServiceDelByClusterIdx" type="ServiceRqstDelByClusterIdxType" />
+			<xsd:element name="RqstServiceDelByHostIdx" type="ServiceRqstDelByHostIdxType" />
+			<xsd:element name="RqstServiceDelByTypeIdx" type="ServiceRqstDelByTypeIdxType" />
+			<xsd:element name="RqstServiceDelByUTypeIdx" type="ServiceRqstDelByUTypeIdxType" />
+			<xsd:element name="RqstServiceDelByUHostPortIdx" type="ServiceRqstDelByUHostPortIdxType" />
+			<xsd:element name="RqstServiceTypeCreate" type="ServiceTypeRqstCreateType" />
+			<xsd:element name="RqstServiceTypeRead" type="ServiceTypeRqstReadType" />
+			<xsd:element name="RqstServiceTypeLock" type="ServiceTypeRqstLockType" />
+			<xsd:element name="RqstServiceTypeUpdate" type="ServiceTypeRqstUpdateType" />
+			<xsd:element name="RqstServiceTypeDelete" type="ServiceTypeRqstDeleteType" />
+			<xsd:element name="RqstServiceTypeReadAll" type="ServiceTypeRqstReadAllType" />
+			<xsd:element name="RqstServiceTypeRdByUDescrIdx" type="ServiceTypeRqstRdByUDescrIdxType" />
+			<xsd:element name="RqstServiceTypeDelByUDescrIdx" type="ServiceTypeRqstDelByUDescrIdxType" />
+			<xsd:element name="RqstSysClusterCreate" type="SysClusterRqstCreateType" />
+			<xsd:element name="RqstSysClusterRead" type="SysClusterRqstReadType" />
+			<xsd:element name="RqstSysClusterLock" type="SysClusterRqstLockType" />
+			<xsd:element name="RqstSysClusterUpdate" type="SysClusterRqstUpdateType" />
+			<xsd:element name="RqstSysClusterDelete" type="SysClusterRqstDeleteType" />
+			<xsd:element name="RqstSysClusterReadAll" type="SysClusterRqstReadAllType" />
+			<xsd:element name="RqstSysClusterRdByClusterIdx" type="SysClusterRqstRdByClusterIdxType" />
+			<xsd:element name="RqstSysClusterDelByClusterIdx" type="SysClusterRqstDelByClusterIdxType" />
+			<xsd:element name="RqstTSecGroupCreate" type="TSecGroupRqstCreateType" />
+			<xsd:element name="RqstTSecGroupRead" type="TSecGroupRqstReadType" />
+			<xsd:element name="RqstTSecGroupLock" type="TSecGroupRqstLockType" />
+			<xsd:element name="RqstTSecGroupUpdate" type="TSecGroupRqstUpdateType" />
+			<xsd:element name="RqstTSecGroupDelete" type="TSecGroupRqstDeleteType" />
+			<xsd:element name="RqstTSecGroupReadAll" type="TSecGroupRqstReadAllType" />
+			<xsd:element name="RqstTSecGroupRdByTenantIdx" type="TSecGroupRqstRdByTenantIdxType" />
+			<xsd:element name="RqstTSecGroupRdByTenantVisIdx" type="TSecGroupRqstRdByTenantVisIdxType" />
+			<xsd:element name="RqstTSecGroupRdByUNameIdx" type="TSecGroupRqstRdByUNameIdxType" />
+			<xsd:element name="RqstTSecGroupDelByTenantIdx" type="TSecGroupRqstDelByTenantIdxType" />
+			<xsd:element name="RqstTSecGroupDelByTenantVisIdx" type="TSecGroupRqstDelByTenantVisIdxType" />
+			<xsd:element name="RqstTSecGroupDelByUNameIdx" type="TSecGroupRqstDelByUNameIdxType" />
+			<xsd:element name="RqstTSecGrpIncCreate" type="TSecGrpIncRqstCreateType" />
+			<xsd:element name="RqstTSecGrpIncRead" type="TSecGrpIncRqstReadType" />
+			<xsd:element name="RqstTSecGrpIncLock" type="TSecGrpIncRqstLockType" />
+			<xsd:element name="RqstTSecGrpIncUpdate" type="TSecGrpIncRqstUpdateType" />
+			<xsd:element name="RqstTSecGrpIncDelete" type="TSecGrpIncRqstDeleteType" />
+			<xsd:element name="RqstTSecGrpIncReadAll" type="TSecGrpIncRqstReadAllType" />
+			<xsd:element name="RqstTSecGrpIncPageAll" type="TSecGrpIncRqstPageAllType" />
+			<xsd:element name="RqstTSecGrpIncRdByTenantIdx" type="TSecGrpIncRqstRdByTenantIdxType" />
+			<xsd:element name="RqstTSecGrpIncRdByGroupIdx" type="TSecGrpIncRqstRdByGroupIdxType" />
+			<xsd:element name="RqstTSecGrpIncRdByIncludeIdx" type="TSecGrpIncRqstRdByIncludeIdxType" />
+			<xsd:element name="RqstTSecGrpIncRdByUIncludeIdx" type="TSecGrpIncRqstRdByUIncludeIdxType" />
+			<xsd:element name="RqstTSecGrpIncPageByTenantIdx" type="TSecGrpIncRqstPageByTenantIdxType" />
+			<xsd:element name="RqstTSecGrpIncPageByGroupIdx" type="TSecGrpIncRqstPageByGroupIdxType" />
+			<xsd:element name="RqstTSecGrpIncPageByIncludeIdx" type="TSecGrpIncRqstPageByIncludeIdxType" />
+			<xsd:element name="RqstTSecGrpIncDelByTenantIdx" type="TSecGrpIncRqstDelByTenantIdxType" />
+			<xsd:element name="RqstTSecGrpIncDelByGroupIdx" type="TSecGrpIncRqstDelByGroupIdxType" />
+			<xsd:element name="RqstTSecGrpIncDelByIncludeIdx" type="TSecGrpIncRqstDelByIncludeIdxType" />
+			<xsd:element name="RqstTSecGrpIncDelByUIncludeIdx" type="TSecGrpIncRqstDelByUIncludeIdxType" />
+			<xsd:element name="RqstTSecGrpMembCreate" type="TSecGrpMembRqstCreateType" />
+			<xsd:element name="RqstTSecGrpMembRead" type="TSecGrpMembRqstReadType" />
+			<xsd:element name="RqstTSecGrpMembLock" type="TSecGrpMembRqstLockType" />
+			<xsd:element name="RqstTSecGrpMembUpdate" type="TSecGrpMembRqstUpdateType" />
+			<xsd:element name="RqstTSecGrpMembDelete" type="TSecGrpMembRqstDeleteType" />
+			<xsd:element name="RqstTSecGrpMembReadAll" type="TSecGrpMembRqstReadAllType" />
+			<xsd:element name="RqstTSecGrpMembPageAll" type="TSecGrpMembRqstPageAllType" />
+			<xsd:element name="RqstTSecGrpMembRdByTenantIdx" type="TSecGrpMembRqstRdByTenantIdxType" />
+			<xsd:element name="RqstTSecGrpMembRdByGroupIdx" type="TSecGrpMembRqstRdByGroupIdxType" />
+			<xsd:element name="RqstTSecGrpMembRdByUserIdx" type="TSecGrpMembRqstRdByUserIdxType" />
+			<xsd:element name="RqstTSecGrpMembRdByUUserIdx" type="TSecGrpMembRqstRdByUUserIdxType" />
+			<xsd:element name="RqstTSecGrpMembPageByTenantIdx" type="TSecGrpMembRqstPageByTenantIdxType" />
+			<xsd:element name="RqstTSecGrpMembPageByGroupIdx" type="TSecGrpMembRqstPageByGroupIdxType" />
+			<xsd:element name="RqstTSecGrpMembPageByUserIdx" type="TSecGrpMembRqstPageByUserIdxType" />
+			<xsd:element name="RqstTSecGrpMembDelByTenantIdx" type="TSecGrpMembRqstDelByTenantIdxType" />
+			<xsd:element name="RqstTSecGrpMembDelByGroupIdx" type="TSecGrpMembRqstDelByGroupIdxType" />
+			<xsd:element name="RqstTSecGrpMembDelByUserIdx" type="TSecGrpMembRqstDelByUserIdxType" />
+			<xsd:element name="RqstTSecGrpMembDelByUUserIdx" type="TSecGrpMembRqstDelByUUserIdxType" />
+			<xsd:element name="RqstTenantCreate" type="TenantRqstCreateType" />
+			<xsd:element name="RqstTenantRead" type="TenantRqstReadType" />
+			<xsd:element name="RqstTenantLock" type="TenantRqstLockType" />
+			<xsd:element name="RqstTenantUpdate" type="TenantRqstUpdateType" />
+			<xsd:element name="RqstTenantDelete" type="TenantRqstDeleteType" />
+			<xsd:element name="RqstTenantReadAll" type="TenantRqstReadAllType" />
+			<xsd:element name="RqstTenantPageAll" type="TenantRqstPageAllType" />
+			<xsd:element name="RqstTenantRdByClusterIdx" type="TenantRqstRdByClusterIdxType" />
+			<xsd:element name="RqstTenantRdByUNameIdx" type="TenantRqstRdByUNameIdxType" />
+			<xsd:element name="RqstTenantPageByClusterIdx" type="TenantRqstPageByClusterIdxType" />
+			<xsd:element name="RqstTenantDelByClusterIdx" type="TenantRqstDelByClusterIdxType" />
+			<xsd:element name="RqstTenantDelByUNameIdx" type="TenantRqstDelByUNameIdxType" />
+		</xsd:choice>
+	</xsd:sequence>
+</xsd:complexType>
+
+<xsd:element name="CFSecRqst" type="CFSecRqstType" />
+
+</xsd:schema>

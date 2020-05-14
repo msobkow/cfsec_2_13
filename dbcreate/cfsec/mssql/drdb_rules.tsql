@@ -1,0 +1,366 @@
+--
+--	@(#) dbcreate/cfsec/mssql/drdb_rules.tsql
+--
+--	com.github.msobkow.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213AuditActionEnum' )
+begin
+	drop rule rul_CFSec213AuditActionEnum
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213AuditActionEnum' )
+begin
+	drop rule rul_CFSec213AuditActionEnum
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ClusterIdGenSeq' )
+begin
+	drop rule rul_CFSec213ClusterIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ClusterIdGenSeq' )
+begin
+	drop rule rul_CFSec213ClusterIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213DeviceName' )
+begin
+	drop rule rul_CFSec213DeviceName
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213DeviceName' )
+begin
+	drop rule rul_CFSec213DeviceName
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISO6391LangCode' )
+begin
+	drop rule rul_CFSec213ISO6391LangCode
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISO6391LangCode' )
+begin
+	drop rule rul_CFSec213ISO6391LangCode
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISO6392LangCode' )
+begin
+	drop rule rul_CFSec213ISO6392LangCode
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISO6392LangCode' )
+begin
+	drop rule rul_CFSec213ISO6392LangCode
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOCcyCode' )
+begin
+	drop rule rul_CFSec213ISOCcyCode
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOCcyCode' )
+begin
+	drop rule rul_CFSec213ISOCcyCode
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOCcyIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOCcyIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOCcyIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOCcyIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOCtryCode' )
+begin
+	drop rule rul_CFSec213ISOCtryCode
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOCtryCode' )
+begin
+	drop rule rul_CFSec213ISOCtryCode
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOCtryCode3' )
+begin
+	drop rule rul_CFSec213ISOCtryCode3
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOCtryCode3' )
+begin
+	drop rule rul_CFSec213ISOCtryCode3
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOCtryIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOCtryIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOCtryIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOCtryIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOLangIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOLangIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOLangIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOLangIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ISOTZoneIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOTZoneIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ISOTZoneIdGenSeq' )
+begin
+	drop rule rul_CFSec213ISOTZoneIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SHA512HexHash' )
+begin
+	drop rule rul_CFSec213SHA512HexHash
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SHA512HexHash' )
+begin
+	drop rule rul_CFSec213SHA512HexHash
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecSessionIdGen' )
+begin
+	drop rule rul_CFSec213SecSessionIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecSessionIdGen' )
+begin
+	drop rule rul_CFSec213SecSessionIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecUserIdGen' )
+begin
+	drop rule rul_CFSec213SecUserIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecUserIdGen' )
+begin
+	drop rule rul_CFSec213SecUserIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ServiceTypeIdGenSeq' )
+begin
+	drop rule rul_CFSec213ServiceTypeIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ServiceTypeIdGenSeq' )
+begin
+	drop rule rul_CFSec213ServiceTypeIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213TenantIdGenSeq' )
+begin
+	drop rule rul_CFSec213TenantIdGenSeq
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213TenantIdGenSeq' )
+begin
+	drop rule rul_CFSec213TenantIdGenSeq
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213HostNodeIdGen' )
+begin
+	drop rule rul_CFSec213HostNodeIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213HostNodeIdGen' )
+begin
+	drop rule rul_CFSec213HostNodeIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecAppIdGen' )
+begin
+	drop rule rul_CFSec213SecAppIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecAppIdGen' )
+begin
+	drop rule rul_CFSec213SecAppIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecFormIdGen' )
+begin
+	drop rule rul_CFSec213SecFormIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecFormIdGen' )
+begin
+	drop rule rul_CFSec213SecFormIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecGroupFormIdGen' )
+begin
+	drop rule rul_CFSec213SecGroupFormIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecGroupFormIdGen' )
+begin
+	drop rule rul_CFSec213SecGroupFormIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecGroupIdGen' )
+begin
+	drop rule rul_CFSec213SecGroupIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecGroupIdGen' )
+begin
+	drop rule rul_CFSec213SecGroupIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecGrpIncIdGen' )
+begin
+	drop rule rul_CFSec213SecGrpIncIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecGrpIncIdGen' )
+begin
+	drop rule rul_CFSec213SecGrpIncIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213SecGrpMembIdGen' )
+begin
+	drop rule rul_CFSec213SecGrpMembIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213SecGrpMembIdGen' )
+begin
+	drop rule rul_CFSec213SecGrpMembIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213ServiceIdGen' )
+begin
+	drop rule rul_CFSec213ServiceIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213ServiceIdGen' )
+begin
+	drop rule rul_CFSec213ServiceIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213TSecGroupIdGen' )
+begin
+	drop rule rul_CFSec213TSecGroupIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213TSecGroupIdGen' )
+begin
+	drop rule rul_CFSec213TSecGroupIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213TSecGrpIncIdGen' )
+begin
+	drop rule rul_CFSec213TSecGrpIncIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213TSecGrpIncIdGen' )
+begin
+	drop rule rul_CFSec213TSecGrpIncIdGen
+end
+go
+
+if exists ( select * from master.sys.sysobjects where name = 'rul_CFSec213TSecGrpMembIdGen' )
+begin
+	drop rule rul_CFSec213TSecGrpMembIdGen
+end
+go
+
+if exists ( select * from sysobjects where name = 'rul_CFSec213TSecGrpMembIdGen' )
+begin
+	drop rule rul_CFSec213TSecGrpMembIdGen
+end
+go
+
+quit
