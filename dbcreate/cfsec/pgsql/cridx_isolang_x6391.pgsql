@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/pgsql/cridx_isolang_x6391.pgsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

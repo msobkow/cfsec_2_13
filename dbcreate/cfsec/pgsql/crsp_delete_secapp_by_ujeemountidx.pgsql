@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/pgsql/crsp_delete_secapp_by_ujeemountidx.pgsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

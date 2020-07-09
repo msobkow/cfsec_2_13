@@ -1,7 +1,7 @@
 // Description: C++18 Object interface implementation for CFSec SecUser.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

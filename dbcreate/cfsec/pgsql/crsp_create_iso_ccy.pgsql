@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/pgsql/crsp_create_iso_ccy.pgsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

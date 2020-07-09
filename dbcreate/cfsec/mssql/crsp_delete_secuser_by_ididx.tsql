@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/mssql/crsp_delete_secuser_by_ididx.tsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

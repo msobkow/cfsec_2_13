@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/oracle/cridx_tsecinc_huincludeidx.plsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/pgsql/cridx_tsecinclude_xinc.pgsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

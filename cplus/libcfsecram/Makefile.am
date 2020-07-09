@@ -14,9 +14,9 @@ DEPDIR=debug
 
 LT_OBJDIR=.libs
 
-BIN=$(prefix)/bin/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)
+BIN=$(prefix)/bin/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)
 
-bindir=$(prefix)/bin/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)
+bindir=$(prefix)/bin/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)
 
 libcfsecramdir=${libdir}
 
@@ -24,7 +24,7 @@ libcfsecram_LTLIBRARIES=libcfsecram.la
 
 libcfsecram_ladir=
 
-libcfsecram_la_COREdir=$(prefix)/include/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)/cfsecram
+libcfsecram_la_COREdir=$(prefix)/include/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)/cfsecram
 
 libcfsecram_la_SOURCES= CFSecRamSchema.cpp CFSecRamPublic.cpp  CFSecRamClusterTable.cpp CFSecRamClusterId32Gen.cpp CFSecRamClusterId64Gen.cpp CFSecRamHostNodeTable.cpp CFSecRamISOCcyTable.cpp CFSecRamISOCtryTable.cpp CFSecRamISOCtryCcyTable.cpp CFSecRamISOCtryLangTable.cpp CFSecRamISOLangTable.cpp CFSecRamISOTZoneTable.cpp CFSecRamSecAppTable.cpp CFSecRamSecDeviceTable.cpp CFSecRamSecFormTable.cpp CFSecRamSecGroupTable.cpp CFSecRamSecGroupFormTable.cpp CFSecRamSecGrpIncTable.cpp CFSecRamSecGrpMembTable.cpp CFSecRamSecSessionTable.cpp CFSecRamSecUserTable.cpp CFSecRamServiceTable.cpp CFSecRamServiceTypeTable.cpp CFSecRamSysClusterTable.cpp CFSecRamTSecGroupTable.cpp CFSecRamTSecGrpIncTable.cpp CFSecRamTSecGrpMembTable.cpp CFSecRamTenantTable.cpp CFSecRamTenantId32Gen.cpp CFSecRamTenantId64Gen.cpp
 
@@ -34,6 +34,6 @@ libcfsecram_la_CORE_HEADERS= cfsecram/CFSecRamSchema.hpp cfsecram/CFSecRamPublic
 
 libcfsecram_la_LDFLAGS= -version-info $(MAJOR_VERSION):$(MINOR_VERSION) -lmpfr -lxerces-c -luuid -l:libcflib.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -l:libcfsec.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -l:libcfsecsaxloader.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -lstdc++fs
 
-libcfsecram_la_CXXFLAGS= -I$(top_srcdir) -I$(prefix)/include/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION) -I$(prefix)/include/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)
+libcfsecram_la_CXXFLAGS= -I$(top_srcdir) -I$(prefix)/include/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION) -I$(prefix)/include/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)
 
 ACLOCAL_AMFLAGS= -Im4

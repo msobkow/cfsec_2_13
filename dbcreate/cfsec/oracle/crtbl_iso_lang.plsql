@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/oracle/crtbl_iso_lang.plsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

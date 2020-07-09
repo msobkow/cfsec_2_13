@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/crsp_create_secsess.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

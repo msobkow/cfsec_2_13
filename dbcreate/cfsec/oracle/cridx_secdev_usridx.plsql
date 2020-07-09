@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/oracle/cridx_secdev_usridx.plsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

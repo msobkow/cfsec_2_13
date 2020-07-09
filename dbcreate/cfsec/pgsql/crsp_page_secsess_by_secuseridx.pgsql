@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/pgsql/crsp_page_secsess_by_secuseridx.pgsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

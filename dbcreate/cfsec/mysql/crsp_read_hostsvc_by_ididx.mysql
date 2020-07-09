@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/mysql/crsp_read_hostsvc_by_ididx.mysql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

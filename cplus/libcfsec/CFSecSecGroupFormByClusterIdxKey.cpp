@@ -1,7 +1,7 @@
 // Description: C++18 implementation for a SecGroupForm by ClusterIdx index key object.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

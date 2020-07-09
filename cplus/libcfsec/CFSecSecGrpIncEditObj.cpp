@@ -1,7 +1,7 @@
 // Description: C++18 edit object instance implementation for CFSec SecGrpInc.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

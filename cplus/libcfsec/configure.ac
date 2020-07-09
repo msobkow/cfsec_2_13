@@ -1,4 +1,4 @@
-AC_INIT([msobkow CFSec],2.13.11192,[msobkow@sasktel.net],[libcfsec],[http://msobkow.github.com/])
+AC_INIT([msscf CFSec],2.13.11192,[msobkow@sasktel.net],[libcfsec],[http://msscf.org/])
 AC_COPYRIGHT([Copyright (c) 2020 Mark Stephen Sobkow])
 AC_REVISION(2.13.11192)
 AM_INIT_AUTOMAKE([foreign])

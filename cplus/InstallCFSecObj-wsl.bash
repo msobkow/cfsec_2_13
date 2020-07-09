@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#	com.github.msobkow.CFSec
+#	org.msscf.msscf.CFSec
 #
 #	Copyright (c) 2020 Mark Stephen Sobkow
 #	
@@ -27,18 +27,18 @@ MAJOR_VERSION=2
 MINOR_VERSION=13
 pushd libcfsec
 	sudo make install
-	sudo chmod 755 /usr/include/msobkow
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsec
-	sudo sh -c "cd /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsec && chmod 644 *.hpp"
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsecobj
-	sudo sh -c "cd /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsecobj && chmod 644 *.hpp"
+	sudo chmod 755 /usr/include/msscf
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsec
+	sudo sh -c "cd /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsec && chmod 644 *.hpp"
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsecobj
+	sudo sh -c "cd /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfsecobj && chmod 644 *.hpp"
 	#sudo chmod 755 /usr/bin/*cfsec*
 	sudo chmod 755 /usr/lib/*cfsec.la
 	sudo chmod 755 /usr/lib/*cfsec.so*
-	sudo chmod 755 /usr/share/msobkow
-	sudo chmod 755 /usr/share/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
-	sudo chmod 755 /usr/share/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd
-	sudo chmod 644 /usr/share/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd/*cfsec*.xsd
+	sudo chmod 755 /usr/share/msscf
+	sudo chmod 755 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd
+	sudo chmod 644 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd/*cfsec*.xsd
 	sudo ldconfig
 popd

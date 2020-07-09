@@ -1,7 +1,7 @@
 // Description: C++18 implementation of a ISOCtryLang history buffer object.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

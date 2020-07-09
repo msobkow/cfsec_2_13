@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/pgsql/crsp_read_clus_by_udomnameidx.pgsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

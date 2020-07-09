@@ -2,7 +2,7 @@
 // Description: C++18 Implementation for an in-memory RAM DbIO for SecDevice.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

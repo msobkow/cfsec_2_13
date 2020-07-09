@@ -1,7 +1,7 @@
 @ECHO OFF
 REM	@(#) dbcreate/cfsec/mssql/crprocs_cfsec213.bat
 REM
-REM	com.github.msobkow.CFSec
+REM	org.msscf.msscf.CFSec
 REM
 REM	Copyright (c) 2020 Mark Stephen Sobkow
 REM	

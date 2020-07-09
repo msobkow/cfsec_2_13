@@ -1,7 +1,7 @@
 // Description: C++18 implementation for a ISOTZone by Iso8601Idx index key object.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/cridx_secgrpfrm_h_clusteridx.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/crsp_delete_secsess_by_startidx.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

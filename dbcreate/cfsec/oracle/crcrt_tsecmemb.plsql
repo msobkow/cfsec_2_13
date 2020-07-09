@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/oracle/crcrt_tsecmemb.plsql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

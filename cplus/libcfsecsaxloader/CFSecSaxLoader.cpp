@@ -1,7 +1,7 @@
 // Description: C++18 XML SAX Parser implementation for CFSec.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	
@@ -181,7 +181,7 @@ namespace cfsec {
 
 	const std::string CFSecSaxLoader::CLASS_NAME( "CFSecSaxLoader" );
 	const std::string CFSecSaxLoader::SCHEMA_XMLNS( "uri://cfsec/cfsecloader" );
-	const std::string CFSecSaxLoader::SCHEMA_URI( "/usr/share/msobkow/2.0.13/xsd/cfsec-structured.xsd" );
+	const std::string CFSecSaxLoader::SCHEMA_URI( "/usr/share/msscf/2.0.13/xsd/cfsec-structured.xsd" );
 	bool CFSecSaxLoader::grammarLoaded = false;
 
 	CFSecSaxLoader::CFSecSaxLoader()

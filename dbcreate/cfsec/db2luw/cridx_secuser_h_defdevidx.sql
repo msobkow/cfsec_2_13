@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/cridx_secuser_h_defdevidx.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

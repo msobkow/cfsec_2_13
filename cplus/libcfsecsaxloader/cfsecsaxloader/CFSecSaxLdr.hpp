@@ -3,7 +3,7 @@
 // Description: C++18 XML Command Line Interface common core specification for CFSec.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

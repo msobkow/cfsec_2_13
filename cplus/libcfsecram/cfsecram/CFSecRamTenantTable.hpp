@@ -3,7 +3,7 @@
 // Description: C++18 Interface for an in-memory RAM DbIO declementation for Tenant.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

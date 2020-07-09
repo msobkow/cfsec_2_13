@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/crsp_page_secgrpfrm_by_formidx.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

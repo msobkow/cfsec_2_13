@@ -2,7 +2,7 @@
 #
 #	@(#) dbcreate/cfsec/db2luw/crtbl_cfsec213.bash
 #
-#	com.github.msobkow.CFSec
+#	org.msscf.msscf.CFSec
 #
 #	Copyright (c) 2020 Mark Stephen Sobkow
 #	

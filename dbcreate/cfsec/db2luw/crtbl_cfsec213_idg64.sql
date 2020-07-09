@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/crtbl_cfsec213_idg64.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

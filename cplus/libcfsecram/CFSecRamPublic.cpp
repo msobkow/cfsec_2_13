@@ -1,7 +1,7 @@
 // Description: C++18 Implementation of the interface for the in-memory RAM CFSec schema.
 
 /*
- *	com.github.msobkow.CFSec
+ *	org.msscf.msscf.CFSec
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

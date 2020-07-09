@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfsec/db2luw/cridx_clus_h_udomnameidx.sql
 --
---	com.github.msobkow.CFSec
+--	org.msscf.msscf.CFSec
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	
