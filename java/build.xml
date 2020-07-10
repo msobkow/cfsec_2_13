@@ -111,11 +111,11 @@
 		<move file="${lib}/postgresql-42.2.10.jar" tofile="${lib}/org.postgresql.jar" />
 		<copy todir="${bin}">
 			<fileset dir="../../cflib_2_13/java/bin">
-				<include name="com.github.msobkow.cflib.CFLib.jar" />
-				<include name="com.github.msobkow.cflib.CFLib.JavaFX.jar" />
+				<include name="org.msscf.msscf.cflib.CFLib.jar" />
+				<include name="org.msscf.msscf.cflib.CFLib.JavaFX.jar" />
 			</fileset>
 			<fileset dir="../../cfcore_2_13/java/bin">
-				<include name="com.github.msobkow.cfcore.jar" />
+				<include name="org.msscf.msscf.cfcore.jar" />
 			</fileset>
 		</copy>
 		<mkdir dir="${bin}/xsd" />
@@ -166,19 +166,19 @@
 	<!-- Build the core -->
 
 	<target name="compilecore" depends="init" description="Compile the core package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="corejar" depends="compilecore" description="Package the core jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.jar" basedir="${build}/com.github.msobkow.cfsec" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.jar" basedir="${build}/org.msscf.msscf.cfsec" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSec/*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecObj/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSec/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecObj/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec" />
@@ -195,18 +195,18 @@
 				<include name="*.xsd" />
 			</fileset>
 		</copy>
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxloaderjar" depends="compilesaxloader" description="Package the saxloader jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxLoader" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxLoader" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxLoader/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxLoader/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxLoader" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxLoader" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec SAX Ldr" />
@@ -218,18 +218,18 @@
 	<!-- Build the RAM Persistence Implementation -->
 
 	<target name="compileram" depends="saxloaderjar" description="Compile the ram package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecramsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecramsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="ramjar" depends="compileram" description="Package the ram jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecRam.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecRam" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecRam.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecRam" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecRam/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecRam/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecRam" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecRam" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec RAM Persistence Implementation" />
@@ -241,18 +241,18 @@
 	<!-- Build the various JDBC Persistence Implementations -->
 
 	<target name="compiledb2luw" depends="corejar,saxloaderjar" description="Compile the db2luw package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecdb2luwsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecdb2luwsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="db2luwjar" depends="compiledb2luw" description="Package the db2luw jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecDb2LUW.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecDb2LUW" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecDb2LUW.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecDb2LUW" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecDb2LUW/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecDb2LUW/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecDb2LUW" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecDb2LUW" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec DB/2 LUW Persistence Implementation" />
@@ -262,18 +262,18 @@
 	</target>
 
 	<target name="compilemssql" depends="corejar,saxloaderjar" description="Compile the mssql package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecmssqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecmssqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="mssqljar" depends="compilemssql" description="Package the mssql jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecMSSql.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecMSSql" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecMSSql.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecMSSql" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecMSSql/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecMSSql/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecMSSql" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecMSSql" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Microsoft SQL Server Persistence Implementation" />
@@ -283,18 +283,18 @@
 	</target>
 
 	<target name="compilemysql" depends="corejar,saxloaderjar" description="Compile the mysql package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecmysqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecmysqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="mysqljar" depends="compilemysql" description="Package the mysql jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecMySql.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecMySql" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecMySql.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecMySql" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecMySql/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecMySql/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecMySql" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecMySql" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec MySql Persistence Implementation" />
@@ -304,18 +304,18 @@
 	</target>
 
 	<target name="compileoracle" depends="corejar,saxloaderjar" description="Compile the oracle package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecoraclesrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecoraclesrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="oraclejar" depends="compileoracle" description="Package the oracle jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecOracle.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecOracle" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecOracle.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecOracle" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecOracle/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecOracle/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecOracle" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecOracle" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Oracle Persistence Implementation" />
@@ -325,18 +325,18 @@
 	</target>
 
 	<target name="compilepgsql" depends="corejar,saxloaderjar" description="Compile the pgsql package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecpgsqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecpgsqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="pgsqljar" depends="compilepgsql" description="Package the pgsql jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecPgSql.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecPgSql" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecPgSql.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecPgSql" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecPgSql/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecPgSql/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecPgSql" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecPgSql" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Postgresql Persistence Implementation" />
@@ -348,18 +348,18 @@
 	<!-- Build the SAX Ldr Executables -->
 
 	<target name="compilesaxdb2luwloader" depends="corejar,saxloaderjar,db2luwjar" description="Compile the saxdb2luwloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxdb2luwloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecDb2LUW.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxdb2luwloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecDb2LUW.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxdb2luwloaderjar" depends="compilesaxdb2luwloader" description="Package the saxdb2luwloader executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxDb2LUWLdr.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxDb2LUWLdr" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxDb2LUWLdr.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxDb2LUWLdr" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxDb2LUWLdr/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxDb2LUWLdr/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxDb2LUWLdr" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxDb2LUWLdr" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec DB/2 LUW SAX Ldr Executable" />
@@ -369,18 +369,18 @@
 	</target>
 
 	<target name="compilesaxmssqlloader" depends="compilesaxloader,compilemysql" description="Compile the saxmssqlloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxmssqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecMSSql.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxmssqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecMSSql.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxmssqlloaderjar" depends="compilesaxmssqlloader" description="Package the saxmssqlloader executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxMSSqlLdr.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxMSSqlLdr" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxMSSqlLdr.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxMSSqlLdr" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxMSSqlLdr/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxMSSqlLdr/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxMSSqlLdr" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxMSSqlLdr" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Microsoft SQL Server SAX Ldr Executable" />
@@ -390,18 +390,18 @@
 	</target>
 
 	<target name="compilesaxmysqlloader" depends="corejar,saxloaderjar,mysqljar" description="Compile the saxmysqlloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxmysqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecMySql.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxmysqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecMySql.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxmysqlloaderjar" depends="compilesaxmysqlloader" description="Package the saxmysqlloader executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxMySqlLdr.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxMySqlLdr" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxMySqlLdr.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxMySqlLdr" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxMySqlLdr/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxMySqlLdr/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxMySqlLdr" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxMySqlLdr" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec MySql SAX Ldr Executable" />
@@ -411,18 +411,18 @@
 	</target>
 
 	<target name="compilesaxoracleloader" depends="compilesaxloader,compileoracle" description="Compile the saxoracleloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxoracleloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecOracle.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxoracleloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecOracle.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxoracleloaderjar" depends="compilesaxoracleloader" description="Package the saxoracleloader executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxOracleLdr.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxOracleLdr" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxOracleLdr.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxOracleLdr" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxOracleLdr/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxOracleLdr/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxOracleLdr" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxOracleLdr" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Oracle SAX Ldr Executable" />
@@ -432,18 +432,18 @@
 	</target>
 
 	<target name="compilesaxpgsqlloader" depends="corejar,saxloaderjar,pgsqljar" description="Compile the saxpgsqlloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxpgsqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecPgSql.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxpgsqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecPgSql.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxpgsqlloaderjar" depends="compilesaxpgsqlloader" description="Package the saxpgsqlloader executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxPgSqlLdr.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxPgSqlLdr" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxPgSqlLdr.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxPgSqlLdr" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxPgSqlLdr/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxPgSqlLdr/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxPgSqlLdr" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxPgSqlLdr" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Postgresql SAX Ldr Executable" />
@@ -453,18 +453,18 @@
 	</target>
 
 	<target name="compilesaxramloader" depends="corejar,saxloaderjar,ramjar" description="Compile the saxramloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxramloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecRam.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsaxramloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecRam.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="saxramloaderjar" depends="compilesaxramloader" description="Package the saxramloader executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecSaxRamLdr.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecSaxRamLdr" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecSaxRamLdr.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecSaxRamLdr" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecSaxRamLdr/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecSaxRamLdr/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecSaxRamLdr" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecSaxRamLdr" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec RAM SAX Ldr Executable" />
@@ -476,18 +476,18 @@
 	<!-- Build the X(ml)Msg layers -->
 
 	<target name="compilexmsg" depends="corejar" description="Compile the xmsg package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${tomcatlib}:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="xmsgjar" depends="compilexmsg" description="Package the xmsg jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecXMsg" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecXMsg" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecXMsg/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecXMsg/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecXMsg" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecXMsg" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec XMsg Formatting Implementation" />
@@ -502,18 +502,18 @@
 				<include name="*.xsd" />
 			</fileset>
 		</copy>
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgrqstsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgrqstsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="xmsgrqstjar" depends="compilexmsgrqst" description="Package the xmsgrqst jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecXMsgRqst.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecXMsgRqst" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRqst.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecXMsgRqst" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecXMsgRqst/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecXMsgRqst/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecXMsgRqst" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecXMsgRqst" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec XMsg Request Handler Implementation" />
@@ -528,18 +528,18 @@
 				<include name="*.xsd" />
 			</fileset>
 		</copy>
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgrspnsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgrspnsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="xmsgrspnjar" depends="compilexmsgrspn" description="Package the xmsgrspn jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecXMsgRspn.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecXMsgRspn" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRspn.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecXMsgRspn" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecXMsgRspn/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecXMsgRspn/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecXMsgRspn" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecXMsgRspn" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec XMsg Response Handler Implementation" />
@@ -549,18 +549,18 @@
 	</target>
 
 	<target name="compilexmsgclnt" depends="corejar,xmsgjar,xmsgrspnjar" description="Compile the xmsgclnt package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgclntsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecXMsgRspn.jar:${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgclntsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRspn.jar:${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="xmsgclntjar" depends="compilexmsgclnt" description="Package the xmsgclnt jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecXMsgClnt.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecXMsgClnt" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecXMsgClnt.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecXMsgClnt" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecXMsgClnt/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecXMsgClnt/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecXMsgClnt" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecXMsgClnt" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec XMsg Client Implementation" />
@@ -572,18 +572,18 @@
 	<!-- Build the JavaFX GUI CRUD -->
 
 	<target name="compilejavafx" depends="corejar" description="Compile the javafx package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecjavafxsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecjavafxsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.JavaFX.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="javafxjar" depends="compilejavafx" description="Package the javafx jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar" basedir="${build}/com.github.msobkow.cfsec.CFSecJavaFX" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfsec.CFSecJavaFX.jar" basedir="${build}/org.msscf.msscf.cfsec.CFSecJavaFX" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfsec/CFSecJavaFX/*.class" />
+			<include name="org/msscf/msscf/cfsec/CFSecJavaFX/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfsec.CFSecJavaFX" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfsec.CFSecJavaFX" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec JavaFX Implementation" />
@@ -595,18 +595,18 @@
 	<!-- Build the JavaFX Cust User Interface -->
 
 	<target name="compilecust" depends="corejar,javafxjar" description="Compile the cust package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfseccustsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfseccustsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/org.msscf.msscf.cfsec.CFSecJavaFX.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.JavaFX.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="custjar" depends="compilecust" description="Package the cust jar">
-		<jar jarfile="${bin}/com.github.msobkow.cfseccust.CFSecCust.jar" basedir="${build}/com.github.msobkow.cfseccust.CFSecCust" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfseccust.CFSecCust.jar" basedir="${build}/org.msscf.msscf.cfseccust.CFSecCust" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfseccust/CFSecCust/*.class" />
+			<include name="org/msscf/msscf/cfseccust/CFSecCust/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfseccust.CFSecCust" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfseccust.CFSecCust" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Cust JavaFX Implementation" />
@@ -618,18 +618,18 @@
 	<!-- Build the Cust HTTP Client for accessing the Tomcat XMsg WAR server -->
 
 	<target name="compilecusthttp" depends="corejar,javafxjar,custjar" description="Compile the cust HTTP Client package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfseccusthttpsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/com.github.msobkow.cfseccust.CFSecCust.jar:${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar:${bin}/com.github.msobkow.cfsec.CFSecXMsgClnt.jar:${bin}/com.github.msobkow.cfsec.CFSecXMsgRspn.jar:${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfseccusthttpsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/org.msscf.msscf.cfseccust.CFSecCust.jar:${bin}/org.msscf.msscf.cfsec.CFSecJavaFX.jar:${bin}/org.msscf.msscf.cfsec.CFSecXMsgClnt.jar:${bin}/org.msscf.msscf.cfsec.CFSecXMsgRspn.jar:${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.JavaFX.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
 	</target>
 
 	<target name="custhttpjar" depends="compilecusthttp" description="Package the cust HTTP Client executable">
-		<jar jarfile="${bin}/com.github.msobkow.cfseccust.CFSecCustHttp.jar" basedir="${build}/com.github.msobkow.cfseccust.CFSecCustHttp" >
+		<jar jarfile="${bin}/org.msscf.msscf.cfseccust.CFSecCustHttp.jar" basedir="${build}/org.msscf.msscf.cfseccust.CFSecCustHttp" >
 			<include name="*.class" />
-			<include name="com/github/msobkow/cfseccust/CFSecCustHttp/*.class" />
+			<include name="org/msscf/msscf/cfseccust/CFSecCustHttp/*.class" />
 			<manifest>
-				<attribute name="Codebase" value="com.github.msobkow.cfseccust.CFSecCustHttp" />
+				<attribute name="Codebase" value="org.msscf.msscf.cfseccust.CFSecCustHttp" />
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
 				<attribute name="Implementation-Title" value="MSS Code Factory CFSec Cust HTTP Client Executable" />
@@ -663,14 +663,14 @@
 				<!-- include name="org.postgresql.jar" / -->
 			</fileset>
 			<fileset dir="${bin}">
-				<include name="com.github.msobkow.cflib.CFLib.jar" />
-				<include name="com.github.msobkow.cfsec.CFSec.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecDb2luw.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecMSSql.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecMySql.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecOracle.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecPgSql.jar" />
+				<include name="org.msscf.msscf.cflib.CFLib.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSec.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecSaxLoader.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecDb2luw.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecMSSql.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecMySql.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecOracle.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecPgSql.jar" />
 			</fileset>
 		</copy>
 		<copy todir="cfsecxmsgsrvwar/WebContent/WEB-INF/lib">
@@ -692,16 +692,16 @@
 				<!-- include name="org.postgresql.jar" / -->
 			</fileset>
 			<fileset dir="${bin}">
-				<include name="com.github.msobkow.cflib.CFLib.jar" />
-				<include name="com.github.msobkow.cfsec.CFSec.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecDb2luw.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecMSSql.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecMySql.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecOracle.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecPgSql.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecXmsg.jar" />
-				<include name="com.github.msobkow.cfsec.CFSecXmsgRqst.jar" />
+				<include name="org.msscf.msscf.cflib.CFLib.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSec.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecSaxLoader.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecDb2luw.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecMSSql.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecMySql.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecOracle.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecPgSql.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecXmsg.jar" />
+				<include name="org.msscf.msscf.cfsec.CFSecXmsgRqst.jar" />
 			</fileset>
 		</copy>
 	</target>
@@ -709,7 +709,7 @@
 	<!-- Compile the Sec Management WAR to be deployed via Tomcat HTTPS -->
 
 	<target name="compilesmwar" depends="alljars" description="Compile the smwar package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsmwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecDb2LUW.jar:${bin}/com.github.msobkow.cfsec.CFSecMSSql.jar:${bin}/com.github.msobkow.cfsec.CFSecMySql.jar:${bin}/com.github.msobkow.cfsec.CFSecOracle.jar:${bin}/com.github.msobkow.cfsec.CFSecPgSql.jar:${bin}/com.github.msobkow.cfsec.CFSecRam.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${tomcatlib}:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecsmwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecDb2LUW.jar:${bin}/org.msscf.msscf.cfsec.CFSecMSSql.jar:${bin}/org.msscf.msscf.cfsec.CFSecMySql.jar:${bin}/org.msscf.msscf.cfsec.CFSecOracle.jar:${bin}/org.msscf.msscf.cfsec.CFSecPgSql.jar:${bin}/org.msscf.msscf.cfsec.CFSecRam.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
@@ -718,7 +718,7 @@
 	<!-- Compile the X(ml)Msg Server WAR to be deployed via Tomcat HTTP -->
 
 	<target name="compilexmsgsrvwar" depends="alljars" description="Compile the xmsgsrvwar package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgsrvwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.CFSecDb2LUW.jar:${bin}/com.github.msobkow.cfsec.CFSecMSSql.jar:${bin}/com.github.msobkow.cfsec.CFSecMySql.jar:${bin}/com.github.msobkow.cfsec.CFSecOracle.jar:${bin}/com.github.msobkow.cfsec.CFSecPgSql.jar:${bin}/com.github.msobkow.cfsec.CFSecRam.jar:${bin}/com.github.msobkow.cfsec.CFSecXMsgRqst.jar:${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${tomcatlib}:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfsecxmsgsrvwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfsec.CFSecDb2LUW.jar:${bin}/org.msscf.msscf.cfsec.CFSecMSSql.jar:${bin}/org.msscf.msscf.cfsec.CFSecMySql.jar:${bin}/org.msscf.msscf.cfsec.CFSecOracle.jar:${bin}/org.msscf.msscf.cfsec.CFSecPgSql.jar:${bin}/org.msscf.msscf.cfsec.CFSecRam.jar:${bin}/org.msscf.msscf.cfsec.CFSecXMsgRqst.jar:${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar:${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
@@ -727,7 +727,7 @@
 	<!-- Package the WARs -->
 
 	<target name="packagewars" depends="alljars,compilesmwar,compilexmsgsrvwar" description="Package the WARs">
-		<war destfile="${bin}/com.github.msobkow.cfsec.CFSecSMWar.war" webxml="${cfsecsmwarwebsrc}/WEB-INF/web.xml" basedir="${build}/com.github.msobkow.cfsec.CFSecSMWar" >
+		<war destfile="${bin}/org.msscf.msscf.cfsec.CFSecSMWar.war" webxml="${cfsecsmwarwebsrc}/WEB-INF/web.xml" basedir="${build}/org.msscf.msscf.cfsec.CFSecSMWar" >
 			<fileset dir="${cfsecsmwarwebsrc}">
 				<include name="**/*.html" />
 				<include name="**/*.xml" />
@@ -738,12 +738,12 @@
 			</fileset>
 			<lib dir="${cfsecsmwarwebsrc}/WEB-INF/lib">
 			</lib>
-			<classes dir="${build}/com.github.msobkow.cfsec.CFSecSMWar" >
+			<classes dir="${build}/org.msscf.msscf.cfsec.CFSecSMWar" >
 				<include name="*.class" />
-				<include name="com/github/msobkow/cfsec/CFSecSMWar/*.class" />
+				<include name="org/msscf/msscf/cfsec/CFSecSMWar/*.class" />
 			</classes>
 		</war>
-		<war destfile="${bin}/com.github.msobkow.cfsec.CFSecXMsgSrvWar.jar" webxml="${cfsecxmsgsrvwarwebsrc}/WEB-INF/web.xml" basedir="${build}/com.github.msobkow.cfsec.CFSecXMsgSrvWar" >
+		<war destfile="${bin}/org.msscf.msscf.cfsec.CFSecXMsgSrvWar.jar" webxml="${cfsecxmsgsrvwarwebsrc}/WEB-INF/web.xml" basedir="${build}/org.msscf.msscf.cfsec.CFSecXMsgSrvWar" >
 			<fileset dir="${cfsecxmsgsrvwarwebsrc}">
 				<include name="**/*.html" />
 				<include name="**/*.xml" />
@@ -754,9 +754,9 @@
 			</fileset>
 			<lib dir="${cfsecxmsgsrvwarwebsrc}/WEB-INF/lib">
 			</lib>
-			<classes dir="${build}/com.github.msobkow.cfsec.CFSecXMsgSrvWar" >
+			<classes dir="${build}/org.msscf.msscf.cfsec.CFSecXMsgSrvWar" >
 				<include name="*.class" />
-				<include name="com/github/msobkow/cfsec/CFSecXMsgSrvWar/*.class" />
+				<include name="org/msscf/msscf/cfsec/CFSecXMsgSrvWar/*.class" />
 			</classes>
 		</war>
 	</target>
@@ -768,36 +768,36 @@
 		<delete dir="${lib}" />
 		<delete dir="${bin}/xsd" />
 		<delete dir="${bin}/tomcatlib" />
-		<delete file="${bin}/com.github.msobkow.cflib.CFLib.jar" />
-		<delete file="${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar" />
-		<delete file="${bin}/com.github.msobkow.cfcore.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecMssCF.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecDb2LUW.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecMSSql.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecMySql.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecOracle.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecPgSql.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecRam.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxDb2LUWLdr.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxMSSqlLdr.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxMySqlLdr.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxOracleLdr.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxPgSqlLdr.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxRamLdr.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsg.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgRqst.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgRspn.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgClnt.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar" />
-		<delete file="${bin}/com.github.msobkow.cfseccust.CFSecCust.jar" />
-		<delete file="${bin}/com.github.msobkow.cfseccust.CFSecCustHttp.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgRqst.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgRspn.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgSrvWar.jar" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSMWar.war" />
-		<delete file="${bin}/com.github.msobkow.cfsec.CFSecXMsgSrvWar.war" />
+		<delete file="${bin}/org.msscf.msscf.cflib.CFLib.jar" />
+		<delete file="${bin}/org.msscf.msscf.cflib.CFLib.JavaFX.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfcore.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxLoader.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecMssCF.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecDb2LUW.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecMSSql.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecMySql.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecOracle.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecPgSql.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecRam.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxDb2LUWLdr.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxMSSqlLdr.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxMySqlLdr.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxOracleLdr.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxPgSqlLdr.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSaxRamLdr.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsg.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRqst.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRspn.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgClnt.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecJavaFX.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfseccust.CFSecCust.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfseccust.CFSecCustHttp.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRqst.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgRspn.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgSrvWar.jar" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecSMWar.war" />
+		<delete file="${bin}/org.msscf.msscf.cfsec.CFSecXMsgSrvWar.war" />
 		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.apache.commons.codec.jar" />
 		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.apache.commons.io.jar" />
 		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.apache.commons.logging.jar" />
@@ -806,15 +806,15 @@
 		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.core.jar" />
 		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.apache.xercesImpl.xml.schema.jar" />
 		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.eclipse.wst.xml.xpath2.processor.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cflib.CFLib.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSec.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecDb2LUW.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecMSSql.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecMySql.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecOracle.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecPgSql.jar" />
-		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecRam.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cflib.CFLib.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSec.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecSaxLoader.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecDb2LUW.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecMSSql.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecMySql.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecOracle.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecPgSql.jar" />
+		<delete file="cfsecsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecRam.jar" />
 		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.codec.jar" />
 		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.io.jar" />
 		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.logging.jar" />
@@ -823,17 +823,17 @@
 		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.core.jar" />
 		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.xercesImpl.xml.schema.jar" />
 		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.eclipse.wst.xml.xpath2.processor.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cflib.CFLib.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSec.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecDb2LUW.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecMSSql.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecMySql.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecOracle.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecPgSql.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecRam.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecXMsg.jar" />
-		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.CFSecXMsgRqst.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cflib.CFLib.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSec.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecSaxLoader.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecDb2LUW.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecMSSql.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecMySql.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecOracle.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecPgSql.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecRam.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecXMsg.jar" />
+		<delete file="cfsecxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.CFSecXMsgRqst.jar" />
 	</target>
 
 	<!-- Make It So! -->

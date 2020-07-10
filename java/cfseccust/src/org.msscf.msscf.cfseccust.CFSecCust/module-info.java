@@ -16,12 +16,12 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfseccust.CFSecCust {
-	exports com.github.msobkow.cfseccust.CFSecCust;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cflib.CFLib.JavaFX;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecJavaFX;
+module org.msscf.msscf.cfseccust.CFSecCust {
+	exports org.msscf.msscf.cfseccust.CFSecCust;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cflib.CFLib.JavaFX;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecJavaFX;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

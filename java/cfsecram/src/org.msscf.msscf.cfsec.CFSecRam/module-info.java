@@ -16,11 +16,11 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfsec.CFSecRam {
-	exports com.github.msobkow.cfsec.CFSecRam;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
+module org.msscf.msscf.cfsec.CFSecRam {
+	exports org.msscf.msscf.cfsec.CFSecRam;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

@@ -16,19 +16,19 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfsec.CFSecXMsgSrvWar {
-	exports com.github.msobkow.cfsec.CFSecXMsgSrvWar;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecDb2LUW;
-	requires transitive com.github.msobkow.cfsec.CFSecMSSql;
-	requires transitive com.github.msobkow.cfsec.CFSecMySql;
-	requires transitive com.github.msobkow.cfsec.CFSecOracle;
-	requires transitive com.github.msobkow.cfsec.CFSecPgSql;
-	requires transitive com.github.msobkow.cfsec.CFSecRam;
-	requires transitive com.github.msobkow.cfsec.CFSecXMsg;
-	requires transitive com.github.msobkow.cfsec.CFSecXMsgRqst;
+module org.msscf.msscf.cfsec.CFSecXMsgSrvWar {
+	exports org.msscf.msscf.cfsec.CFSecXMsgSrvWar;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecDb2LUW;
+	requires transitive org.msscf.msscf.cfsec.CFSecMSSql;
+	requires transitive org.msscf.msscf.cfsec.CFSecMySql;
+	requires transitive org.msscf.msscf.cfsec.CFSecOracle;
+	requires transitive org.msscf.msscf.cfsec.CFSecPgSql;
+	requires transitive org.msscf.msscf.cfsec.CFSecRam;
+	requires transitive org.msscf.msscf.cfsec.CFSecXMsg;
+	requires transitive org.msscf.msscf.cfsec.CFSecXMsgRqst;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

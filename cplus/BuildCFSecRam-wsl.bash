@@ -70,7 +70,7 @@ pushd libcfsecram
 	#sudo chmod 755 /usr/bin/*cfsec*ram
 	sudo chmod 755 /usr/lib/*cfsecram.la
 	sudo chmod 755 /usr/lib/*cfsecram.so*
-	sudo chmod 755 /usr/share/msscf
-	sudo chmod 755 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /opt/msscf
+	sudo chmod 755 /opt/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
 	sudo ldconfig
 popd

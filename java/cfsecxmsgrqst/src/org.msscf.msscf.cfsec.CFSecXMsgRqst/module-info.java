@@ -16,12 +16,12 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfsec.CFSecXMsgRqst {
-	exports com.github.msobkow.cfsec.CFSecXMsgRqst;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecXMsg;
+module org.msscf.msscf.cfsec.CFSecXMsgRqst {
+	exports org.msscf.msscf.cfsec.CFSecXMsgRqst;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecXMsg;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

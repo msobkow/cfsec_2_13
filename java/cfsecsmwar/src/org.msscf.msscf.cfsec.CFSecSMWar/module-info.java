@@ -16,17 +16,17 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfsec.CFSecSMWar {
-	exports com.github.msobkow.cfsec.CFSecSMWar;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecDb2LUW;
-	requires transitive com.github.msobkow.cfsec.CFSecMSSql;
-	requires transitive com.github.msobkow.cfsec.CFSecMySql;
-	requires transitive com.github.msobkow.cfsec.CFSecOracle;
-	requires transitive com.github.msobkow.cfsec.CFSecPgSql;
-	requires transitive com.github.msobkow.cfsec.CFSecRam;
+module org.msscf.msscf.cfsec.CFSecSMWar {
+	exports org.msscf.msscf.cfsec.CFSecSMWar;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecDb2LUW;
+	requires transitive org.msscf.msscf.cfsec.CFSecMSSql;
+	requires transitive org.msscf.msscf.cfsec.CFSecMySql;
+	requires transitive org.msscf.msscf.cfsec.CFSecOracle;
+	requires transitive org.msscf.msscf.cfsec.CFSecPgSql;
+	requires transitive org.msscf.msscf.cfsec.CFSecRam;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

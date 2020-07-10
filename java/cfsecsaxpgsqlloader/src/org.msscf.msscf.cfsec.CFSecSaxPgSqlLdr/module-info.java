@@ -16,12 +16,12 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfsec.CFSecSaxPgSqlLdr {
-	exports com.github.msobkow.cfsec.CFSecSaxPgSqlLdr;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecPgSql;
+module org.msscf.msscf.cfsec.CFSecSaxPgSqlLdr {
+	exports org.msscf.msscf.cfsec.CFSecSaxPgSqlLdr;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecPgSql;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

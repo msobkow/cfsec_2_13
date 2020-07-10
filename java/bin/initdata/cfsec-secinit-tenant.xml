@@ -3,7 +3,7 @@
 		xmlns="uri://cfsec/cfsecloader"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
-		xsi:schemaLocation="uri://cfsec/cfsecloader file:/usr/share/xsd/cfsec-structured.xsd" >
+		xsi:schemaLocation="uri://cfsec/cfsecloader file:/opt/$refernce ParentMajVer reference ParentSPrj reference ParentTPrj Name$/2.0.13/cfsec-structured.xsd" >
 	<Cluster FullDomName="system" Description="system">
 		<Tenant TenantName="tenant">
 			<TSecGroup Name="TenantAdmin" IsVisible="true" >

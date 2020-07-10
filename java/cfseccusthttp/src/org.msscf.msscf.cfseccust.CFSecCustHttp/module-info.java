@@ -16,16 +16,16 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfseccust.CFSecCustHttp {
-	exports com.github.msobkow.cfseccust.CFSecCustHttp;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cflib.CFLib.JavaFX;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecJavaFX;
-	requires transitive com.github.msobkow.cfsec.CFSecXMsg;
-	requires transitive com.github.msobkow.cfsec.CFSecXMsgRspn;
-	requires transitive com.github.msobkow.cfsec.CFSecXMsgClnt;
-	requires transitive com.github.msobkow.cfseccust.CFSecCust;
+module org.msscf.msscf.cfseccust.CFSecCustHttp {
+	exports org.msscf.msscf.cfseccust.CFSecCustHttp;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cflib.CFLib.JavaFX;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecJavaFX;
+	requires transitive org.msscf.msscf.cfsec.CFSecXMsg;
+	requires transitive org.msscf.msscf.cfsec.CFSecXMsgRspn;
+	requires transitive org.msscf.msscf.cfsec.CFSecXMsgClnt;
+	requires transitive org.msscf.msscf.cfseccust.CFSecCust;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

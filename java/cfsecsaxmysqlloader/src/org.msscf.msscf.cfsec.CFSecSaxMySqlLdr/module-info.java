@@ -16,12 +16,12 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfsec.CFSecSaxMySqlLdr {
-	exports com.github.msobkow.cfsec.CFSecSaxMySqlLdr;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecMySql;
+module org.msscf.msscf.cfsec.CFSecSaxMySqlLdr {
+	exports org.msscf.msscf.cfsec.CFSecSaxMySqlLdr;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecMySql;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;
