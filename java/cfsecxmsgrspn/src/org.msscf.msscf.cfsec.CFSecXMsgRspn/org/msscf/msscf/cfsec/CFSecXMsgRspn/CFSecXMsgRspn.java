@@ -52,8 +52,8 @@ public class CFSecXMsgRspn
 	public final static String	SCHEMA_XMLNS = "uri://xsd/cfsecrspn";
 
 	// The source for loading the supported schema
-	public final static String	SCHEMA_URI = "../bin/xsd/cfsec-rspn.xsd";
-	public final static String	SCHEMA_ROOT_URI = "/xsd/cfsec-rspn.xsd";
+	public final static String	SCHEMA_URI = "/opt/msscf/2.0.13/xsd/cfsec-rspn.xsd";
+	public final static String	SCHEMA_ROOT_URI = "/xsd/cfsec-rqst.rspn";
 	protected static Grammar myGrammar = null;
 
 	// The schema instance to load in to

@@ -54,7 +54,7 @@ public class CFSecXMsgRqst
 	public final static String	SCHEMA_XMLNS = "uri://xsd/cfsecrqst";
 
 	// The source for loading the supported schema
-	public final static String	SCHEMA_URI = "../bin/xsd/cfsec-rqst.xsd";
+	public final static String	SCHEMA_URI = "/opt/msscf/2.0.13/xsd/cfsec-rqst.xsd";
 	public final static String	SCHEMA_ROOT_URI = "/xsd/cfsec-rqst.xsd";
 	protected static Grammar myGrammar = null;
 

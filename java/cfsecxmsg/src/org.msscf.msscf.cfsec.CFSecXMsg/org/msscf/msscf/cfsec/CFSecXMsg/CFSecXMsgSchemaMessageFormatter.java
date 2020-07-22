@@ -68,10 +68,10 @@ public class CFSecXMsgSchemaMessageFormatter
 		String retval =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+	"<CFSecRqst\n"
-			+	"\t\txmlns=\"uri://cfsec/cfsecrqst\"\n"
+			+	"\t\txmlns=\"uri://org.msscf/msscf/2.0.13/cfsecrqst\"\n"
 			+	"\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
 			+	"\t\txmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n"
-			+	"\t\txsi:schemaLocation=\"uri://cfsec/cfsecrqst file:../bin/xsd/cfsec-rqst.xsd\" >";
+			+	"\t\txsi:schemaLocation=\"uri://org.msscf/msscf/2.0.13/cfsecrqst file:../bin/xsd/cfsec-rqst.xsd\" >";
 		return( retval );
 	}
 

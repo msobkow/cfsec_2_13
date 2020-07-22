@@ -180,7 +180,7 @@ namespace cfsec {
 	}
 
 	const std::string CFSecSaxLoader::CLASS_NAME( "CFSecSaxLoader" );
-	const std::string CFSecSaxLoader::SCHEMA_XMLNS( "uri://cfsec/cfsecloader" );
+	const std::string CFSecSaxLoader::SCHEMA_XMLNS( "uri://org.msscf/msscf/2.0.13/cfsecloader" );
 	const std::string CFSecSaxLoader::SCHEMA_URI( "/opt/msscf/2.0.13/xsd/cfsec-structured.xsd" );
 	bool CFSecSaxLoader::grammarLoaded = false;
 

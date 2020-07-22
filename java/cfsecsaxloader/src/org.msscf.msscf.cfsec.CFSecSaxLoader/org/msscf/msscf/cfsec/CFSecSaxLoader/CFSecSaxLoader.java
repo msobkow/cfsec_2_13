@@ -53,10 +53,10 @@ public class CFSecSaxLoader
 {
 
 	// The namespace URI of the supported schema
-	public final static String	SCHEMA_XMLNS = "uri://cfsec/cfsecloader";
+	public final static String	SCHEMA_XMLNS = "uri://org.msscf/msscf/2.0.13/cfsecloader";
 
 	// The source for loading the supported schema
-	public final static String	SCHEMA_URI = "/opt/$eference MinorVersion reference ParentMajVer reference ParentSPrj reference ParentTPrj Name$/2.0.13/cfsec-structured.xsd";
+	public final static String	SCHEMA_URI = "/opt/msscf/2.0.13/xsd/cfsec-structured.xsd";
 	public final static String	SCHEMA_ROOT_URI = "/xsd/cfsec-structured.xsd";
 	protected Grammar myGrammar = null;
 

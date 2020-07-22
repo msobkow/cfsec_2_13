@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="uri://cfsec/cfsecrspn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="uri://cfsec/cfsecrspn" version="$Revision$">
+<xsd:schema xmlns="uri://org.msscf/msscf/2.0.13/cfsecrspn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="uri://org.msscf/msscf/2.0.13/cfsecrspn" version="2.13">
 
 <xsd:annotation>
 	<xsd:documentation xml:lang="en">

@@ -1,3 +1,118 @@
+commit 17a68463199280e2ab138c5f39b2a452e5c0370b
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Fri Jul 10 13:58:35 2020 +0000
+
+    Refactor the directories from com.github.msobkow to org.msscf.msscf.
+
+commit 0b3c804770008d7be3d0338f568328756583d2e2
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Thu Jul 9 12:24:06 2020 +0000
+
+    Initial checkin of remanufactured code targetting org.msscf.msscf
+    instead of com.github.msobkow.  There is finally a project domain set
+    up, with three years of unlimited hosting prepaid.  All I need to do
+    is pay for DNS renewals, and .orgs aren't all that expensive.
+    
+    The project website will be shifting to http://msscf.org/
+    from the sourceforge.io servers.  I'll leave the github
+    archives on the github servers; I only have web hosting with PHP
+    and MySQL options, not gitserver options.
+
+commit e1ff28db0f496ff796193fff7824766fef823ff4
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Thu Jul 2 07:59:45 2020 +0000
+
+    2020-07-02 MSS Code Factory CFAll 2.13.11192-202007020214 Remanufactured by 2.12.11191-202007020200 to modify Java module .gitignore files
+    
+    Modify the module .gitignore files to ignore the Eclipse module/bin directories.
+
+commit bc1c9c17b1006d7827b0ce3eb990246e51158166
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Thu Jul 2 07:51:32 2020 +0000
+
+    Update .gitignore files for modules to prevent Eclipse module/bin
+    directories from being added to the git repositories.
+
+commit f19cb515829c4edf9c63b5aa9fe605a6296ef7dc
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Sat Jun 6 07:24:34 2020 +0000
+
+    All of the 2.13 Java projects clean compile at this point.  CFBam is unlikely to
+    compile for very long...
+
+commit eba24c263396699cc7a565b9353dcaf2a3e2ffe1
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Thu Jun 4 05:42:25 2020 +0000
+
+    2020-06-03 MSS Code Factory CFAll 2.13.11192-202006032345 Manufacturing run by 2.12.11191, Phase 1 complete
+    
+    This is the initial manufacturing run by 2.12.11191 with today's data file changes
+    (see the 2.12 release notes for timestamp information.)
+    
+    The Phase 1 changes for 2.13.11192 have been made to the models in the 2.12 release.
+    Features 1-3 will go ahead for 2.13.11192, but 4-7 are being deferred until 3.1 itself.
+    
+            CFBam 2.13 Feature 1: SchemaDef License Attributes
+            CFBam 2.13 Feature 2: Polymorphic Columns
+            CFBam 2.13 Feature 3: Mutable Tables
+            CFBam 2.13 DEFERRED 4: Active Files
+            CFBam 2.13 DEFERRED 5: Tablespaces
+            CFBam 2.13 DEFERRED 6: Table Configurations
+            CFBam 2.13 DEFERRED 7: Index Configurations
+    
+    Portions of Phase 5 have also been completed; the private 3.1 github repositories exist.
+
+commit a15d8d547029aed584d440d53e3c78d6fe186cd6
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Thu May 28 01:14:15 2020 +0000
+
+    Update project name headers to be consistent with new names set for 3.1 release.
+
+commit f5d25a56bcea9d0de09e621b94346b4b3d824d3a
+Author: Mark Stephen Sobkow <msobkow@sasktel.net>
+Date:   Tue May 19 13:50:08 2020 -0600
+
+    2020-05-19 MSS Code Factory CFAll 2.13.11190 Remanufactured by 2.12.11189; there will be no more C++ builds until 3.1
+    
+    Given the breadth of the changes I'll have to make to the C++ code to address performance
+    problems, and the delays in features I need to do C++ development under WSL, I've decided
+    to shelve C++ work until the 3.1 release is being produced by 2.13 in the future.
+    
+    Although I've added a couple of attributes to the CFBam 2.13 model, the main change with this
+    release is that the licensing is cleaned up, things have been build with JDK 11.0.7, and it is
+    out the door for now so I can focus on other things for the moment.
+    
+    The sha512sums for this release are:
+    
+            7dfbc074a909cb0be99f06d9ab0d33cd305c3ea98d30ef25e8da29dd8e74e7a631f6cfa7f8ebb7ca7bfca1203bb8c7934f00bdf9b4c3ecdc81078319b6e8fb6b  cfacc_2_13_11190-GPLv3-db_scripts.zip
+            f4615296d53d122c3d802214c439f100ce3671064da9ffd6953fbc4512621da033f9786f7b1cb8d7d6d692cae3f2aea020ba04837ff7f8264eb7d48f92b21839  cfacc_2_13_11190-GPLv3-java-installer.zip
+            13d5ad3e8ca1bfcba629700409f359eba1e3938d243306094249397c034a5a9b5d81307d09023dc98a4b875a9e43f74a47297b5e343fca3f4e8a2f52eda37ca0  cfacc_2_13_11190-GPLv3-src.zip
+            1adf5ba3d93944fb154ed2ae140bdba573df5b41a60562333fc4114ae16cbcafa5778279fb9a8150b0d6fa9696e116fec081ad063213ef6d9f12f834b1e2e4f2  cfast_2_13_11190-GPLv3-src.zip
+            e7b73269375f2c4f4387d1e0205daa6ea200ed7cf74eeb51ab21e1e420f0b2f648baa5d77102af569fbfcbc046b95b17c1edde7a31f92676fa9a8fbf2a7ea85e  cfbam_2_13_11190-GPLv3-db_scripts.zip
+            981a07fb170d58e9ff7cb519a90cee3d7c24c5ca61f03f04ff4046f2b00da9af318f5ac1cff695e030ef2044c106be0fadca7ca6ab9ddb7aefefa61d5890b495  cfbam_2_13_11190-GPLv3-java-installer.zip
+            11f986a3cd861e643a33df5d3490b2dff16909eba17eb28dcc6c87afe2764bbb4dfa53895398194a606cc66ff0e70fd747bfb8326be7612a2cf61501e9025ff2  cfbam_2_13_11190-GPLv3-src.zip
+            2e6eb4de5462e5d1649bacd31bc92fdc159544e30e75eb5964eaa8b1da7ea6d273233637cdb5083dc9e13618b81e5e69e2ffcc955f31e6752b96316eeeb36768  cfcore_2_13_11190-LGPLv3-src.zip
+            c40034201876eb18445487c20929586b1af6a695bc84ec78896160fde7deb457f3b8f862ef7d458e0155a98e5f9861d9a3e02d22bb44461d56709f3c87de11d4  cfcore_2_13_11190-java-installer.zip
+            2b7be8267b8ae34accd26d14de53cd41c02426cf493c257da9a52a0088e592367c304199bc9fd32d6893afc87f1920a770bda12d70237bb4daa948ad2a09fd55  cfcrm_2_13_11190-ApacheV2-db_scripts.zip
+            5087114d879313ff1a4f00b3e8cf098a4fdfd22f23f5409bf7570f5744e9c00b9cca31ad5378fa49f449557d6e113b52478746c4d514f8b80e8e3c17d43b13b1  cfcrm_2_13_11190-ApacheV2-java-installer.zip
+            f456d6ffd9ca0d8cf9acdacbb52e264af30ec3e1d1a1aef6ce8270459903a87be7f2a210fc7e6d0f81ce0f42db2ded1e029a591868b9a86d47927b43619d89b0  cfcrm_2_13_11190-ApacheV2-src.zip
+            b31c3f3af42dc4e7da4bbabd6dace1ead66c90fe7df7519354a657d56b2ffc46fb120c0570772a3e5959025b630a6f43173eadebf02211b4f3a4e57f4990a2dc  cfdbtst_2_13_11190-GPLv3-db_scripts.zip
+            7f9b4a8257c6c81822cb402bcaa88045614e8a6359ee89998939b8a7da9198c3990a63f81e2f3e7978123e84f51f92e479006ca06b01aab9506f6efff062f0a9  cfdbtst_2_13_11190-GPLv3-java-installer.zip
+            553e9d33d328ee40268755d1d73c0990b4578aa27d550ec216a55f56a70218b08c69dd3771a52725edc69847a254055a72fbef92f6cff2965dbdf14ea62175c8  cfdbtst_2_13_11190-GPLv3-src.zip
+            05b317e57fde94545f4ea9e160e1d76d2f0456542a9d0468ab68fbd5d92e1ba234f5c3cf7e4250e420299b508d91f9bed7ca5d94d2ab1a54614f37046961c429  cffrsw_2_13_11190-GPLv3-src.zip
+            68fe9ef7c2724780957a19383e3e5cb95c8e20a3314f102d37f9059e2e4549e3dba524d1b20ec73915f0ab377994565380696796a96d646f37e3cab321efbba9  cfint_2_13_11190-ApacheV2-db_scripts.zip
+            8e7f2d69b0447a6556467191f2a280688d5694ffde8eee862ba6da73f1ca5d5b1a89229a2ce75283b020b22511418344b43aded0fe94779132dba7041988e7d9  cfint_2_13_11190-ApacheV2-java-installer.zip
+            2ed48e49a27a0d1339187964ae68428fb21c6690e0133f73ffac398815f7b662946b5fd5751f864bb756ac5f5e91398a3480917fcbd0ac1f8da2474a3f6db4dc  cfint_2_13_11190-ApacheV2-src.zip
+            a4be583ee0ce8ac464fb50b141a8ae98927f56f5e3f290d8bb7550fdd241b34d7c2d3f7560225de89ce2c9998409c4d17899c34c72beef771b9f9510f63afb3e  cflib_2_13_11190-LGPLv3-java-installer.zip
+            389e9ee13feeb6fab9cd0a034f982e8aa3d2f367fb5525124f8d56a22e1964a1c355d01018a3f3b09b7955919da1e70d57a1bc9c302823340ac9892b0c9324c8  cflib_2_13_11190-LGPLv3-src.zip
+            e5d3072f872442e7515bffaec9979b508ec0dc6c45cf42c86eb1daa395d65f249921c61f210abce013400f3b7d93afe9da3c805208079329788e50a403c5d570  cfsec_2_13_11190-ApacheV2-db_scripts.zip
+            5686e125142a23ba782ad8a0d811afbae161cc0b1f6f709a73463fb7782bbde3034ee7ae9c884c751c5c839612ba340e296b01d108079b3fc69634c496535c51  cfsec_2_13_11190-ApacheV2-java-installer.zip
+            22702fb12e113183a07a06f52d446932347db68a0c89ce1b338b142426869f8e9a63dec13112445f69fe3b0bfed6b03efc64c96cb9b95aaed026bfcf6fa8bac1  cfsec_2_13_11190-ApacheV2-src.zip
+            08f5af9679035af87523f61247dc4dfcca16dcfa6f7852c67292adc5325bb2f9086f8ad20baaae425a16fbaf6394fdcff94bda3a9c1d2527488dbf459093a014  cfuniv_2_13_11190-GPLv3-src.zip
+            21544f50ecfc97d11412a60f53200f79774c799d136b30d4b4e939fc23c40b883cd5992ed77d8575660a73664eed0d91872de403852caf54f946983db81562fc  msscf_2_13_11190-GPLv3-data.zip
+            27585d3ed6498021a1f87d5fe057a593ba3501f7406d49ef2aa01f0c69ecee0f37d48e9ef28fc2cd88f945fe9f67ac637083639a5606b7b92f61941f61535085  msscf_2_13_11190-GPLv3-java-installer.zip
+            c52e2b4da158975a1b642c2bc0fb5022c7d2bee544db08f822430e1a62e885afa89d1a74936840b03e8b8631b67eed62e990c017d9c552478763db2d3b1ee141  msscf_2_13_11190-GPLv3-src.zip
+
 commit bd7642f62a40be327365d039f23d1416d57d2e89
 Author: Mark Stephen Sobkow <msobkow@sasktel.net>
 Date:   Thu May 14 05:06:31 2020 -0600

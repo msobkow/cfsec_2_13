@@ -121,8 +121,8 @@
 		<mkdir dir="${bin}/xsd" />
 		<copy todir="${bin}/xsd">
 			<fileset dir="../../cflib_2_13/java/cflib/xsd">
-				<include name="cftip-envelope.xsd" />
-				<include name="cftip-serverinfo.xsd" />
+				<include name="cftip-2.13-envelope.xsd" />
+				<include name="cftip-2.13-serverinfo.xsd" />
 			</fileset>
 			<fileset dir="../../cfcore_2_13/java/cfcore/xsd">
 				<include name="cfgenkb-2.13-cartridge.xsd" />
@@ -143,8 +143,8 @@
 		<mkdir dir="${build}/xsd" />
 		<copy todir="${build}/xsd">
 			<fileset dir="../../cflib_2_13/java/cflib/xsd">
-				<include name="cftip-envelope.xsd" />
-				<include name="cftip-serverinfo.xsd" />
+				<include name="cftip-2.13-envelope.xsd" />
+				<include name="cftip-2.13-serverinfo.xsd" />
 			</fileset>
 			<fileset dir="../../cfcore_2_13/java/cfcore/xsd">
 				<include name="cfgenkb-2.13-cartridge.xsd" />
