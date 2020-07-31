@@ -21,10 +21,6 @@ module org.msscf.msscf.cfsec.CFSecXMsgSrvWar {
 	requires transitive org.msscf.msscf.cflib.CFLib;
 	requires transitive org.msscf.msscf.cfsec;
 	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
-	requires transitive org.msscf.msscf.cfsec.CFSecDb2LUW;
-	requires transitive org.msscf.msscf.cfsec.CFSecMSSql;
-	requires transitive org.msscf.msscf.cfsec.CFSecMySql;
-	requires transitive org.msscf.msscf.cfsec.CFSecOracle;
 	requires transitive org.msscf.msscf.cfsec.CFSecPgSql;
 	requires transitive org.msscf.msscf.cfsec.CFSecRam;
 	requires transitive org.msscf.msscf.cfsec.CFSecXMsg;
