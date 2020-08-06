@@ -1,0 +1,258 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_secgrp.tsql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_secgrp
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClusterId decimal(21,0),
+	@argSecGroupId integer,
+	@argRevision int
+as
+	declare @oldRevision int
+	declare @oldClusterId decimal(21,0)
+	declare @oldAuditCreatedAt datetime2
+	declare @oldAuditCreatedBy varchar(36)
+	declare @oldAuditUpdatedAt datetime2
+	declare @oldAuditUpdatedBy varchar(36)
+	declare @permissionFlag int
+	declare @delsecgroupformsClusterId decimal(21,0)
+	declare @delsecgroupformsSecGroupFormId decimal(21,0)
+	declare @delsecgrpincbygroupClusterId decimal(21,0)
+	declare @delsecgrpincbygroupSecGrpIncId decimal(21,0)
+	declare @delsecgrpmembsClusterId decimal(21,0)
+	declare @delsecgrpmembsSecGrpMembId decimal(21,0)
+	declare @delsecgrpincsClusterId decimal(21,0)
+	declare @delsecgrpincsSecGrpIncId decimal(21,0)
+	declare cursDelSecGroupForms cursor local for
+		select
+			a00d.clusid,
+			a00d.secgrpfrmid
+		from cfsec213..SecGrp as a00c
+			inner join cfsec213..secgrpfrm a00d on
+				a00c.clusterid = a00d.clusid
+				and a00c.secgroupid = a00d.secgrpid
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.secgroupid = @argSecGroupId
+	declare cursDelSecGrpIncByGroup cursor local for
+		select
+			a00e.clusid,
+			a00e.secgrpincid
+		from cfsec213..SecGrp as a00c
+			inner join cfsec213..secinc a00e on
+				a00c.clusterid = a00e.clusid
+				and a00c.secgroupid = a00e.incgrpid
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.secgroupid = @argSecGroupId
+	declare cursDelSecGrpMembs cursor local for
+		select
+			a00f.clusterid,
+			a00f.secgrpmembid
+		from cfsec213..SecGrp as a00c
+			inner join cfsec213..secmemb a00f on
+				a00c.clusterid = a00f.clusterid
+				and a00c.secgroupid = a00f.secgroupid
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.secgroupid = @argSecGroupId
+	declare cursDelSecGrpIncs cursor local for
+		select
+			a00e.clusid,
+			a00e.secgrpincid
+		from cfsec213..SecGrp as a00c
+			inner join cfsec213..secinc a00e on
+				a00c.clusterid = a00e.clusid
+				and a00c.secgroupid = a00e.secgrpid
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.secgroupid = @argSecGroupId
+begin
+	update cfsec213..SecGrp
+	set forcesynclock = forcesynclock + 1
+	where
+			clusterid = @argClusterId
+		and secgroupid = @argSecGroupId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	select
+		@oldClusterId = a00c.clusterid,
+		@oldRevision = a00c.revision
+	from cfsec213..SecGrp as a00c
+	where
+			a00c.clusterid = @argClusterId
+			and a00c.secgroupid = @argSecGroupId
+
+	exec sp_is_cluster_user @permissionFlag output, @secClusterId, 'DeleteSecGroup', @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- User not found in cluster SecGroup for DeleteSecGroup',
+			15,
+			1 )
+	end
+
+	insert into cfsec213..SecGrp_h (
+			clusterid,
+			secgroupid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			safe_name,
+			isvisible,
+			revision,
+			auditaction )
+		select
+			a00c.clusterid,
+			a00c.secgroupid,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a00c.safe_name,
+			a00c.isvisible,
+			@argRevision + 1,
+			2
+		from cfsec213..SecGrp as a00c
+		where
+			a00c.clusterid = @argClusterId
+			and a00c.secgroupid = @argSecGroupId
+
+	open cursDelSecGroupForms
+	fetch next from cursDelSecGroupForms into
+			@delsecgroupformsClusterId,
+			@delsecgroupformsSecGroupFormId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_secgrpfrm_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delsecgroupformsClusterId,
+			@delsecgroupformsSecGroupFormId
+		fetch next from cursDelSecGroupForms into
+			@delsecgroupformsClusterId,
+			@delsecgroupformsSecGroupFormId
+	end
+	close cursDelSecGroupForms
+	deallocate cursDelSecGroupForms
+
+	open cursDelSecGrpIncByGroup
+	fetch next from cursDelSecGrpIncByGroup into
+			@delsecgrpincbygroupClusterId,
+			@delsecgrpincbygroupSecGrpIncId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_secinc_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delsecgrpincbygroupClusterId,
+			@delsecgrpincbygroupSecGrpIncId
+		fetch next from cursDelSecGrpIncByGroup into
+			@delsecgrpincbygroupClusterId,
+			@delsecgrpincbygroupSecGrpIncId
+	end
+	close cursDelSecGrpIncByGroup
+	deallocate cursDelSecGrpIncByGroup
+
+	open cursDelSecGrpMembs
+	fetch next from cursDelSecGrpMembs into
+			@delsecgrpmembsClusterId,
+			@delsecgrpmembsSecGrpMembId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_secmemb_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delsecgrpmembsClusterId,
+			@delsecgrpmembsSecGrpMembId
+		fetch next from cursDelSecGrpMembs into
+			@delsecgrpmembsClusterId,
+			@delsecgrpmembsSecGrpMembId
+	end
+	close cursDelSecGrpMembs
+	deallocate cursDelSecGrpMembs
+
+	open cursDelSecGrpIncs
+	fetch next from cursDelSecGrpIncs into
+			@delsecgrpincsClusterId,
+			@delsecgrpincsSecGrpIncId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_secinc_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delsecgrpincsClusterId,
+			@delsecgrpincsSecGrpIncId
+		fetch next from cursDelSecGrpIncs into
+			@delsecgrpincsClusterId,
+			@delsecgrpincsSecGrpIncId
+	end
+	close cursDelSecGrpIncs
+	deallocate cursDelSecGrpIncs
+
+	delete from cfsec213..SecGrp
+	where
+		clusterid = @argClusterId
+		and secgroupid = @argSecGroupId
+	if @@rowcount != 1
+	begin
+		raiserror( 'sp_delete_secgrp() Data collision detected',
+			15,
+			1 )
+	end
+
+end
+go
+
+quit

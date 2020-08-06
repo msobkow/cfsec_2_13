@@ -1,0 +1,161 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_update_iso_lang.mysql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+
+create procedure cfsec213.sp_update_iso_lang(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argISOLangId smallint,
+	argISO6392Code varchar(3),
+	argISO6391Code varchar(2),
+	argEnglishName varchar(64),
+	argRevision integer )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldISOLangId smallint;
+	declare oldISO6392Code varchar(3);
+	declare oldISO6391Code varchar(2);
+	declare oldEnglishName varchar(64);
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	if( argClassCode = 'a007' )
+	then
+		select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+		if( permissionFlag = false )
+		then
+			signal sqlstate '45001'
+			set message_text = 'sp_update_iso_lang() Permission denied, not identified as system',
+				schema_name = 'cfsec213',
+				table_name = 'iso_lang';
+		end if;
+	end if;
+
+	select
+			ISOLangId,
+		iso_code3,
+		iso_code2,
+		eng_name,
+			revision
+	into
+		oldISOLangId,
+			oldISO6392Code,
+			oldISO6391Code,
+			oldEnglishName,
+		oldRevision
+	from cfsec213.iso_lang
+	where
+		ISOLangId = argISOLangId
+	for update;
+	if argRevision != oldRevision
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_update_iso_lang() Data collision detected',
+			schema_name = 'cfsec213',
+			table_name = 'iso_lang';
+	end if;
+
+	update cfsec213.iso_lang
+	set
+		revision = argRevision + 1,
+		updatedby = argAuditUserId,
+		updatedat = now(),
+		iso_code3 = argISO6392Code,
+		iso_code2 = argISO6391Code,
+		eng_name = argEnglishName
+	where
+		ISOLangId = argISOLangId
+		and revision = oldRevision;
+
+	select row_count()
+	into RowsAffected;
+	if RowsAffected != 1
+	then
+		signal sqlstate '02003'
+		set message_text = 'sp_update_iso_lang() Expected to affect 1 iso_lang',
+			schema_name = 'cfsec213',
+			table_name = 'iso_lang';
+	end if;
+
+
+	insert into cfsec213.iso_lang_h (
+			isolangid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			iso_code3,
+			iso_code2,
+			eng_name,
+			revision,
+			auditaction )
+		select
+			a007.isolangid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a007.iso_code3,
+			a007.iso_code2,
+			a007.eng_name,
+			a007.revision,
+			2
+		from cfsec213.iso_lang as a007
+		where
+			a007.isolangid = argISOLangId;
+
+	select
+
+			date_format( a007.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a007.createdby as createdby,
+			date_format( a007.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a007.updatedby as updatedby,
+			a007.isolangid as isolangid,
+			a007.iso_code3 as iso_code3,
+			a007.iso_code2 as iso_code2,
+			a007.eng_name as eng_name,
+		a007.revision as revision
+	from cfsec213.iso_lang as a007
+	where
+		a007.isolangid = argISOLangId;
+end;////
+

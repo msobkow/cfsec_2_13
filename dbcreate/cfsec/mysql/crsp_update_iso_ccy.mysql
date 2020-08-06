@@ -1,0 +1,169 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_update_iso_ccy.mysql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+
+create procedure cfsec213.sp_update_iso_ccy(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argISOCcyId smallint,
+	argISOCode varchar(3),
+	argName varchar(64),
+	argUnitSymbol varchar(4),
+	argPrecis smallint,
+	argRevision integer )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldISOCcyId smallint;
+	declare oldISOCode varchar(3);
+	declare oldName varchar(64);
+	declare oldUnitSymbol varchar(4);
+	declare oldPrecis smallint;
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	if( argClassCode = 'a003' )
+	then
+		select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+		if( permissionFlag = false )
+		then
+			signal sqlstate '45001'
+			set message_text = 'sp_update_iso_ccy() Permission denied, not identified as system',
+				schema_name = 'cfsec213',
+				table_name = 'iso_ccy';
+		end if;
+	end if;
+
+	select
+			ISOCcyId,
+		iso_code,
+		ccy_name,
+		unit_symbol,
+		precis,
+			revision
+	into
+		oldISOCcyId,
+			oldISOCode,
+			oldName,
+			oldUnitSymbol,
+			oldPrecis,
+		oldRevision
+	from cfsec213.iso_ccy
+	where
+		ISOCcyId = argISOCcyId
+	for update;
+	if argRevision != oldRevision
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_update_iso_ccy() Data collision detected',
+			schema_name = 'cfsec213',
+			table_name = 'iso_ccy';
+	end if;
+
+	update cfsec213.iso_ccy
+	set
+		revision = argRevision + 1,
+		updatedby = argAuditUserId,
+		updatedat = now(),
+		iso_code = argISOCode,
+		ccy_name = argName,
+		unit_symbol = argUnitSymbol,
+		precis = argPrecis
+	where
+		ISOCcyId = argISOCcyId
+		and revision = oldRevision;
+
+	select row_count()
+	into RowsAffected;
+	if RowsAffected != 1
+	then
+		signal sqlstate '02003'
+		set message_text = 'sp_update_iso_ccy() Expected to affect 1 iso_ccy',
+			schema_name = 'cfsec213',
+			table_name = 'iso_ccy';
+	end if;
+
+
+	insert into cfsec213.iso_ccy_h (
+			isoccyid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			iso_code,
+			ccy_name,
+			unit_symbol,
+			precis,
+			revision,
+			auditaction )
+		select
+			a003.isoccyid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a003.iso_code,
+			a003.ccy_name,
+			a003.unit_symbol,
+			a003.precis,
+			a003.revision,
+			2
+		from cfsec213.iso_ccy as a003
+		where
+			a003.isoccyid = argISOCcyId;
+
+	select
+
+			date_format( a003.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a003.createdby as createdby,
+			date_format( a003.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a003.updatedby as updatedby,
+			a003.isoccyid as isoccyid,
+			a003.iso_code as iso_code,
+			a003.ccy_name as ccy_name,
+			a003.unit_symbol as unit_symbol,
+			a003.precis as precis,
+		a003.revision as revision
+	from cfsec213.iso_ccy as a003
+	where
+		a003.isoccyid = argISOCcyId;
+end;////
+

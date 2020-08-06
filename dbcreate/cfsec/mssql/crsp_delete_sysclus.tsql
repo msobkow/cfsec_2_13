@@ -1,0 +1,91 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_sysclus.tsql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_sysclus
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argSingletonId integer,
+	@argRevision int
+as
+	declare @oldRevision int
+	declare @permissionFlag int
+begin
+	update cfsec213..sysclus
+	set forcesynclock = forcesynclock + 1
+	where
+			sgltn_id = @argSingletonId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	select
+		@oldRevision = a014.revision
+	from cfsec213..sysclus as a014
+	where
+			a014.sgltn_id = @argSingletonId
+
+	exec sp_is_system_user @permissionFlag output, @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- only system user can delete SysCluster records',
+			10,
+			1 )
+	end
+
+	delete from cfsec213..sysclus
+	where
+		sgltn_id = @argSingletonId
+	if @@rowcount != 1
+	begin
+		raiserror( 'sp_delete_sysclus() Data collision detected',
+			15,
+			1 )
+	end
+
+end
+go
+
+quit

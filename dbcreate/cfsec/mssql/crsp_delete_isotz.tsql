@@ -1,0 +1,125 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_isotz.tsql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_isotz
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argISOTZoneId smallint,
+	@argRevision int
+as
+	declare @oldRevision int
+	declare @oldAuditCreatedAt datetime2
+	declare @oldAuditCreatedBy varchar(36)
+	declare @oldAuditUpdatedAt datetime2
+	declare @oldAuditUpdatedBy varchar(36)
+	declare @permissionFlag int
+begin
+	update cfsec213..ISOTz
+	set forcesynclock = forcesynclock + 1
+	where
+			isotzoneid = @argISOTZoneId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	select
+		@oldRevision = a008.revision
+	from cfsec213..ISOTz as a008
+	where
+			a008.isotzoneid = @argISOTZoneId
+
+	exec sp_is_system_user @permissionFlag output, @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- only system user can delete ISOTZone records',
+			10,
+			1 )
+	end
+
+	insert into cfsec213..ISOTz_h (
+			isotzoneid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			iso8601,
+			tzname,
+			tzhouroffset,
+			tzminoffset,
+			description,
+			visible,
+			revision,
+			auditaction )
+		select
+			a008.isotzoneid,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a008.iso8601,
+			a008.tzname,
+			a008.tzhouroffset,
+			a008.tzminoffset,
+			a008.description,
+			a008.visible,
+			@argRevision + 1,
+			2
+		from cfsec213..ISOTz as a008
+		where
+			a008.isotzoneid = @argISOTZoneId
+
+	delete from cfsec213..ISOTz
+	where
+		isotzoneid = @argISOTZoneId
+	if @@rowcount != 1
+	begin
+		raiserror( 'sp_delete_isotz() Data collision detected',
+			15,
+			1 )
+	end
+
+end
+go
+
+quit

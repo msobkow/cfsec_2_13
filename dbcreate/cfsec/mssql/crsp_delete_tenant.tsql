@@ -1,0 +1,250 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_tenant.tsql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_tenant
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argId decimal(21,0),
+	@argRevision int
+as
+	declare @oldRevision int
+	declare @oldAuditCreatedAt datetime2
+	declare @oldAuditCreatedBy varchar(36)
+	declare @oldAuditUpdatedAt datetime2
+	declare @oldAuditUpdatedBy varchar(36)
+	declare @permissionFlag int
+	declare @delincludedbygroupTenantId decimal(21,0)
+	declare @delincludedbygroupTSecGrpIncId decimal(21,0)
+	declare @delgrpmembsTenantId decimal(21,0)
+	declare @delgrpmembsTSecGrpMembId decimal(21,0)
+	declare @delgrpincsTenantId decimal(21,0)
+	declare @delgrpincsTSecGrpIncId decimal(21,0)
+	declare @deltsecgroupsTenantId decimal(21,0)
+	declare @deltsecgroupsTSecGroupId integer
+	declare cursDelIncludedByGroup cursor local for
+		select
+			a017.tenantid,
+			a017.tsecgrpincid
+		from cfsec213..tenant as a015
+			inner join cfsec213..tsecgrp a016 on
+				a015.id = a016.tenantid
+			inner join cfsec213..tsecinc a017 on
+				a016.tenantid = a017.tenantid
+				and a016.tsecgroupid = a017.incgrpid
+		where
+			a015.id = @argId
+	declare cursDelGrpMembs cursor local for
+		select
+			a018.tenantid,
+			a018.tsecgrpmembid
+		from cfsec213..tenant as a015
+			inner join cfsec213..tsecgrp a016 on
+				a015.id = a016.tenantid
+			inner join cfsec213..tsecmemb a018 on
+				a016.tenantid = a018.tenantid
+				and a016.tsecgroupid = a018.tsecgroupid
+		where
+			a015.id = @argId
+	declare cursDelGrpIncs cursor local for
+		select
+			a017.tenantid,
+			a017.tsecgrpincid
+		from cfsec213..tenant as a015
+			inner join cfsec213..tsecgrp a016 on
+				a015.id = a016.tenantid
+			inner join cfsec213..tsecinc a017 on
+				a016.tenantid = a017.tenantid
+				and a016.tsecgroupid = a017.tsecgrpid
+		where
+			a015.id = @argId
+	declare cursDelTSecGroups cursor local for
+		select
+			a016.tenantid,
+			a016.tsecgroupid
+		from cfsec213..tenant as a015
+			inner join cfsec213..tsecgrp a016 on
+				a015.id = a016.tenantid
+		where
+			a015.id = @argId
+begin
+	update cfsec213..tenant
+	set forcesynclock = forcesynclock + 1
+	where
+			id = @argId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	select
+		@oldRevision = a015.revision
+	from cfsec213..tenant as a015
+	where
+			a015.id = @argId
+
+	exec sp_is_system_user @permissionFlag output, @argAuditUserId
+	if( @permissionFlag = 0 )
+	begin
+		raiserror( 'Permission denied -- only system user can delete Tenant records',
+			10,
+			1 )
+	end
+
+	insert into cfsec213..tenant_h (
+			id,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			clusterid,
+			tenantname,
+			revision,
+			auditaction )
+		select
+			a015.id,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a015.clusterid,
+			a015.tenantname,
+			@argRevision + 1,
+			2
+		from cfsec213..tenant as a015
+		where
+			a015.id = @argId
+
+	open cursDelIncludedByGroup
+	fetch next from cursDelIncludedByGroup into
+			@delincludedbygroupTenantId,
+			@delincludedbygroupTSecGrpIncId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_tsecinc_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delincludedbygroupTenantId,
+			@delincludedbygroupTSecGrpIncId
+		fetch next from cursDelIncludedByGroup into
+			@delincludedbygroupTenantId,
+			@delincludedbygroupTSecGrpIncId
+	end
+	close cursDelIncludedByGroup
+	deallocate cursDelIncludedByGroup
+
+	open cursDelGrpMembs
+	fetch next from cursDelGrpMembs into
+			@delgrpmembsTenantId,
+			@delgrpmembsTSecGrpMembId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_tsecmemb_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delgrpmembsTenantId,
+			@delgrpmembsTSecGrpMembId
+		fetch next from cursDelGrpMembs into
+			@delgrpmembsTenantId,
+			@delgrpmembsTSecGrpMembId
+	end
+	close cursDelGrpMembs
+	deallocate cursDelGrpMembs
+
+	open cursDelGrpIncs
+	fetch next from cursDelGrpIncs into
+			@delgrpincsTenantId,
+			@delgrpincsTSecGrpIncId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_tsecinc_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@delgrpincsTenantId,
+			@delgrpincsTSecGrpIncId
+		fetch next from cursDelGrpIncs into
+			@delgrpincsTenantId,
+			@delgrpincsTSecGrpIncId
+	end
+	close cursDelGrpIncs
+	deallocate cursDelGrpIncs
+
+	open cursDelTSecGroups
+	fetch next from cursDelTSecGroups into
+			@deltsecgroupsTenantId,
+			@deltsecgroupsTSecGroupId
+	while ( @@fetch_status = 0 )
+	begin
+		exec sp_delete_tsecgrp_by_ididx @argAuditClusterId,
+			@argAuditUserId,
+			@argAuditSessionId,
+			@secClusterId,
+			@secTenantId,
+			@deltsecgroupsTenantId,
+			@deltsecgroupsTSecGroupId
+		fetch next from cursDelTSecGroups into
+			@deltsecgroupsTenantId,
+			@deltsecgroupsTSecGroupId
+	end
+	close cursDelTSecGroups
+	deallocate cursDelTSecGroups
+
+	delete from cfsec213..tenant
+	where
+		id = @argId
+	if @@rowcount != 1
+	begin
+		raiserror( 'sp_delete_tenant() Data collision detected',
+			15,
+			1 )
+	end
+
+end
+go
+
+quit

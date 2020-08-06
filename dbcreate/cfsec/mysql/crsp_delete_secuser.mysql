@@ -1,0 +1,315 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_delete_secuser.mysql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_delete_secuser(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argSecUserId varchar(36),
+	argRevision int )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldSecUserId varchar(36);
+	declare oldLoginId varchar(32);
+	declare oldEMailAddress varchar(192);
+	declare oldEMailConfirmUuid varchar(36);
+	declare oldDfltDevUserId varchar(36);
+	declare oldDfltDevName varchar(127);
+	declare oldPasswordHash varchar(256);
+	declare oldPasswordResetUuid varchar(36);
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare done int default false;
+	declare clearsecuserdefdevSecUserId varchar(36);
+	declare clearsecuserdefdevDevName varchar(127);
+	declare deltsecgrpmembsTenantId bigint;
+	declare deltsecgrpmembsTSecGrpMembId bigint;
+	declare delsecgrpmembsClusterId bigint;
+	declare delsecgrpmembsSecGrpMembId bigint;
+	declare delsecsessionsSecSessionId varchar(36);
+	declare delsecproxysessionsSecSessionId varchar(36);
+	declare delsecdevicesSecUserId varchar(36);
+	declare delsecdevicesDevName varchar(127);
+	declare cur_clearsecuserdefdev cursor for
+		select
+			a011.secuserid as secuserid
+		from cfsec213.SecUser as a011
+		where
+			a011.secuserid = argSecUserId;
+	declare cur_deltsecgrpmembs cursor for
+		select
+			a018.tenantid,
+			a018.tsecgrpmembid
+		from cfsec213.SecUser as a011
+			inner join cfsec213.TSecMemb a018 on
+				a011.secuserid = a018.secuserid
+		where
+			a011.secuserid = argSecUserId;
+	declare cur_delsecgrpmembs cursor for
+		select
+			a00f.clusterid,
+			a00f.secgrpmembid
+		from cfsec213.SecUser as a011
+			inner join cfsec213.SecMemb a00f on
+				a011.secuserid = a00f.secuserid
+		where
+			a011.secuserid = argSecUserId;
+	declare cur_delsecsessions cursor for
+		select
+			a010.secsessionid
+		from cfsec213.SecUser as a011
+			inner join cfsec213.SecSess a010 on
+				a011.secuserid = a010.secuserid
+		where
+			a011.secuserid = argSecUserId;
+	declare cur_delsecproxysessions cursor for
+		select
+			a010.secsessionid
+		from cfsec213.SecUser as a011
+			inner join cfsec213.SecSess a010 on
+				a011.secuserid = a010.secproxyid
+		where
+			a011.secuserid = argSecUserId;
+	declare cur_delsecdevices cursor for
+		select
+			a00a.secuserid,
+			a00a.devname
+		from cfsec213.SecUser as a011
+			inner join cfsec213.SecDev a00a on
+				a011.secuserid = a00a.secuserid
+		where
+			a011.secuserid = argSecUserId;
+	declare continue handler for not found set done = true;
+	select
+			SecUserId,
+		login_id,
+		email_addr,
+		em_confuuid,
+		DefDevUserId,
+		DefDevName,
+		pwd_hash,
+		pwdrstuuid,
+			revision
+	into
+		oldSecUserId,
+			oldLoginId,
+			oldEMailAddress,
+			oldEMailConfirmUuid,
+			oldDfltDevUserId,
+			oldDfltDevName,
+			oldPasswordHash,
+			oldPasswordResetUuid,
+		oldRevision
+	from cfsec213.SecUser
+	where
+		SecUserId = argSecUserId
+	for update;
+	select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+
+	if( permissionFlag = false )
+	then
+		signal sqlstate '45001'
+		set message_text = 'sp_delete_secuser() Permission denied, not identified as system',
+			schema_name = 'cfsec213',
+			table_name = 'SecUser';
+	end if;
+
+	insert into cfsec213.SecUser_h (
+			secuserid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			login_id,
+			email_addr,
+			em_confuuid,
+			defdevuserid,
+			defdevname,
+			pwd_hash,
+			pwdrstuuid,
+			revision,
+			auditaction )
+		select
+			a011.secuserid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a011.login_id,
+			a011.email_addr,
+			a011.em_confuuid,
+			a011.defdevuserid,
+			a011.defdevname,
+			a011.pwd_hash,
+			a011.pwdrstuuid,
+			a011.revision + 1,
+			3
+		from cfsec213.SecUser as a011
+		where
+			a011.secuserid = argSecUserId;
+
+	set done = false;
+	open cur_clearsecuserdefdev;
+	read_loop_clearsecuserdefdev: loop
+		fetch cur_clearsecuserdefdev into
+			clearsecuserdefdevSecUserId;
+		if done then
+			leave read_loop_clearsecuserdefdev;
+		end if;
+		update cfsec213.SecUser
+		set
+			defdevuserid = null,
+			defdevname = null
+		where
+			secuserid = clearsecuserdefdevSecUserId;
+
+	end loop;
+	close cur_clearsecuserdefdev;
+
+	update cfsec213.SecUser
+	set
+		secuserid = argSecUserId,
+		defdevuserid = null,
+		defdevname = null
+	where
+		SecUserId = argSecUserId;
+
+	set done = false;
+	open cur_deltsecgrpmembs;
+	read_loop_deltsecgrpmembs: loop
+		fetch cur_deltsecgrpmembs into
+			deltsecgrpmembsTenantId,
+			deltsecgrpmembsTSecGrpMembId;
+		if done then
+			leave read_loop_deltsecgrpmembs;
+		end if;
+		call cfsec213.sp_delete_tsecmemb_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			deltsecgrpmembsTenantId,
+			deltsecgrpmembsTSecGrpMembId );
+	end loop;
+	close cur_deltsecgrpmembs;
+	set done = false;
+	open cur_delsecgrpmembs;
+	read_loop_delsecgrpmembs: loop
+		fetch cur_delsecgrpmembs into
+			delsecgrpmembsClusterId,
+			delsecgrpmembsSecGrpMembId;
+		if done then
+			leave read_loop_delsecgrpmembs;
+		end if;
+		call cfsec213.sp_delete_secmemb_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delsecgrpmembsClusterId,
+			delsecgrpmembsSecGrpMembId );
+	end loop;
+	close cur_delsecgrpmembs;
+	set done = false;
+	open cur_delsecsessions;
+	read_loop_delsecsessions: loop
+		fetch cur_delsecsessions into
+			delsecsessionsSecSessionId;
+		if done then
+			leave read_loop_delsecsessions;
+		end if;
+		call cfsec213.sp_delete_secsess_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delsecsessionsSecSessionId );
+	end loop;
+	close cur_delsecsessions;
+	set done = false;
+	open cur_delsecproxysessions;
+	read_loop_delsecproxysessions: loop
+		fetch cur_delsecproxysessions into
+			delsecproxysessionsSecSessionId;
+		if done then
+			leave read_loop_delsecproxysessions;
+		end if;
+		call cfsec213.sp_delete_secsess_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delsecproxysessionsSecSessionId );
+	end loop;
+	close cur_delsecproxysessions;
+	set done = false;
+	open cur_delsecdevices;
+	read_loop_delsecdevices: loop
+		fetch cur_delsecdevices into
+			delsecdevicesSecUserId,
+			delsecdevicesDevName;
+		if done then
+			leave read_loop_delsecdevices;
+		end if;
+		call cfsec213.sp_delete_secdev_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delsecdevicesSecUserId,
+			delsecdevicesDevName );
+	end loop;
+	close cur_delsecdevices;
+	delete from cfsec213.SecUser
+	where
+		secuserid = argSecUserId;
+	select row_count()
+	into RowsAffected;
+
+	if RowsAffected != 1 and RowsAffected != 0
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_delete_secuser() Expected to affect 1 SecUser',
+			schema_name = 'cfsec213',
+			table_name = 'SecUser';
+	end if;
+
+end;////

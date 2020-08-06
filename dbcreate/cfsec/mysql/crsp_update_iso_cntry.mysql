@@ -1,0 +1,153 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_update_iso_cntry.mysql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+
+create procedure cfsec213.sp_update_iso_cntry(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argISOCtryId smallint,
+	argISOCode varchar(2),
+	argName varchar(64),
+	argRevision integer )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldISOCtryId smallint;
+	declare oldISOCode varchar(2);
+	declare oldName varchar(64);
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	if( argClassCode = 'a004' )
+	then
+		select cfsec213.sp_is_system_user( argAuditUserId ) into permissionFlag;
+		if( permissionFlag = false )
+		then
+			signal sqlstate '45001'
+			set message_text = 'sp_update_iso_cntry() Permission denied, not identified as system',
+				schema_name = 'cfsec213',
+				table_name = 'iso_cntry';
+		end if;
+	end if;
+
+	select
+			ISOCtryId,
+		iso_code,
+		country_name,
+			revision
+	into
+		oldISOCtryId,
+			oldISOCode,
+			oldName,
+		oldRevision
+	from cfsec213.iso_cntry
+	where
+		ISOCtryId = argISOCtryId
+	for update;
+	if argRevision != oldRevision
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_update_iso_cntry() Data collision detected',
+			schema_name = 'cfsec213',
+			table_name = 'iso_cntry';
+	end if;
+
+	update cfsec213.iso_cntry
+	set
+		revision = argRevision + 1,
+		updatedby = argAuditUserId,
+		updatedat = now(),
+		iso_code = argISOCode,
+		country_name = argName
+	where
+		ISOCtryId = argISOCtryId
+		and revision = oldRevision;
+
+	select row_count()
+	into RowsAffected;
+	if RowsAffected != 1
+	then
+		signal sqlstate '02003'
+		set message_text = 'sp_update_iso_cntry() Expected to affect 1 iso_cntry',
+			schema_name = 'cfsec213',
+			table_name = 'iso_cntry';
+	end if;
+
+
+	insert into cfsec213.iso_cntry_h (
+			isoctryid,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			iso_code,
+			country_name,
+			revision,
+			auditaction )
+		select
+			a004.isoctryid,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a004.iso_code,
+			a004.country_name,
+			a004.revision,
+			2
+		from cfsec213.iso_cntry as a004
+		where
+			a004.isoctryid = argISOCtryId;
+
+	select
+
+			date_format( a004.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a004.createdby as createdby,
+			date_format( a004.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a004.updatedby as updatedby,
+			a004.isoctryid as isoctryid,
+			a004.iso_code as iso_code,
+			a004.country_name as country_name,
+		a004.revision as revision
+	from cfsec213.iso_cntry as a004
+	where
+		a004.isoctryid = argISOCtryId;
+end;////
+

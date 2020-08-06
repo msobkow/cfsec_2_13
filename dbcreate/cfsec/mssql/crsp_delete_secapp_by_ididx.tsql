@@ -1,0 +1,127 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crsp_delete_secapp_by_ididx.tsql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+create proc sp_delete_secapp_by_ididx(
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClusterId decimal(21,0),
+	@argSecAppId integer )
+as
+	declare @varClusterId CFSec213ClusterIdGenSeq
+	declare @varSecAppId CFSec213SecAppIdGen
+	declare @varRevision int
+	declare @retval int
+	declare cursNormalSecAppIdIdx cursor local for
+		select
+			a009.clusterid as clusterid,
+			a009.secappid as secappid,
+			a009.revision as revision
+		from cfsec213..SecApp as a009
+		where
+			a009.clusterid = @argClusterId
+			and a009.secappid = @argSecAppId
+	declare cursRestrictSecAppIdIdx cursor local for
+		select
+			a009.clusterid as clusterid,
+			a009.secappid as secappid,
+			a009.revision as revision
+		from cfsec213..SecApp as a009
+		where
+			a009.clusterid = @argClusterId
+			and a009.secappid = @argSecAppId
+			and a009.clusterid = @secClusterId
+begin
+	exec sp_is_system_user @retval output, @argAuditUserId
+	if( @retval = 1 )
+	begin
+		open cursNormalSecAppIdIdx
+		fetch next from cursNormalSecAppIdIdx into
+				@varClusterId,
+				@varSecAppId,
+				@varRevision
+		while ( @@fetch_status = 0 )
+		begin
+				exec sp_delete_secapp @argAuditClusterId,
+						@argAuditUserId,
+						@argAuditSessionId,
+						@secClusterId,
+						@secTenantId,
+						@varClusterId,
+						@varSecAppId,
+						@varRevision
+			fetch next from cursNormalSecAppIdIdx into
+				@varClusterId,
+				@varSecAppId,
+				@varRevision
+		end
+		close cursNormalSecAppIdIdx
+		deallocate cursNormalSecAppIdIdx
+	end
+	else begin
+		open cursRestrictSecAppIdIdx
+		fetch next from cursRestrictSecAppIdIdx into
+				@varClusterId,
+				@varSecAppId,
+				@varRevision
+		while ( @@fetch_status = 0 )
+		begin
+				exec sp_delete_secapp @argAuditClusterId,
+						@argAuditUserId,
+						@argAuditSessionId,
+						@secClusterId,
+						@secTenantId,
+						@varClusterId,
+						@varSecAppId,
+						@varRevision
+			fetch next from cursRestrictSecAppIdIdx into
+				@varClusterId,
+				@varSecAppId,
+				@varRevision
+		end
+		close cursRestrictSecAppIdIdx
+		deallocate cursRestrictSecAppIdIdx
+	end
+end
+go
+
+quit

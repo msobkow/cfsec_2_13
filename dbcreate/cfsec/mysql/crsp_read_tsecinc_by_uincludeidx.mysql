@@ -1,0 +1,104 @@
+--
+--	@(#) dbcreate/cfsec/mysql/crsp_read_tsecinc_by_uincludeidx.mysql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfsec213.sp_read_tsecinc_by_uincludeidx(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argTenantId bigint,
+	argTSecGroupId integer,
+	argIncludeGroupId integer )
+not deterministic
+reads sql data
+begin
+	declare done boolean default false;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare continue handler for not found set done = true;
+	select cfsec213.sp_is_tenant_user( secTenantId,
+			'ReadTSecGrpInc',
+			argAuditUserId ),
+		cfsec213.sp_is_system_user( argAuditUserId )
+	into permissionFlag, isSystemUser;
+	if( permissionFlag = false )
+	then
+		signal sqlstate '45003'
+		set message_text = 'sp_read_tsecinc() Permission denied for ReadTSecGrpInc access for current Tenant',
+			schema_name = 'cfsec213',
+			table_name = 'TSecInc';
+	end if;
+	if( isSystemUser )
+	then
+		select
+
+			date_format( a017.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a017.createdby as createdby,
+			date_format( a017.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a017.updatedby as updatedby,
+			a017.tenantid as tenantid,
+			a017.tsecgrpincid as tsecgrpincid,
+			a017.tsecgrpid as tsecgrpid,
+			a017.incgrpid as incgrpid,
+			a017.revision as revision
+		from cfsec213.TSecInc as a017
+		where
+			a017.tenantid = argTenantId
+		and a017.tsecgrpid = argTSecGroupId
+		and a017.incgrpid = argIncludeGroupId;
+	else
+		select
+
+			date_format( a017.createdat, '%Y-%m-%d %H:%i:%S' ) as createdat,
+			a017.createdby as createdby,
+			date_format( a017.updatedat, '%Y-%m-%d %H:%i:%S' ) as updatedat,
+			a017.updatedby as updatedby,
+			a017.tenantid as tenantid,
+			a017.tsecgrpincid as tsecgrpincid,
+			a017.tsecgrpid as tsecgrpid,
+			a017.incgrpid as incgrpid,
+			a017.revision as revision
+		from cfsec213.TSecInc as a017
+		where
+			a017.tenantid = argTenantId
+		and a017.tsecgrpid = argTSecGroupId
+		and a017.incgrpid = argIncludeGroupId
+			and a017.tenantid = secTenantId;
+	end if;
+end;////

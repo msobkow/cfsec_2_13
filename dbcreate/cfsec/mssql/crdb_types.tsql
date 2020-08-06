@@ -1,0 +1,119 @@
+--
+--	@(#) dbcreate/cfsec/mssql/crdb_types.tsql
+--
+--	org.msscf.msscf.CFSec
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFSec 2.13 Security Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfsec213
+go
+
+exec sp_addtype cfsec213ClassCode, "CHAR(4)"
+go
+
+exec sp_addtype CFSec213AuditActionEnum, "SMALLINT"
+go
+
+exec sp_addtype CFSec213ClusterIdGenSeq, "DECIMAL(21,0)"
+go
+exec sp_addtype CFSec213DeviceName, "VARCHAR(127)"
+go
+exec sp_addtype CFSec213ISO6391LangCode, "VARCHAR(2)"
+go
+exec sp_addtype CFSec213ISO6392LangCode, "VARCHAR(3)"
+go
+exec sp_addtype CFSec213ISOCcyCode, "VARCHAR(3)"
+go
+
+exec sp_addtype CFSec213ISOCcyIdGenSeq, "SMALLINT"
+go
+exec sp_addtype CFSec213ISOCtryCode, "VARCHAR(2)"
+go
+exec sp_addtype CFSec213ISOCtryCode3, "VARCHAR(3)"
+go
+
+exec sp_addtype CFSec213ISOCtryIdGenSeq, "SMALLINT"
+go
+
+exec sp_addtype CFSec213ISOLangIdGenSeq, "SMALLINT"
+go
+
+exec sp_addtype CFSec213ISOTZoneIdGenSeq, "SMALLINT"
+go
+exec sp_addtype CFSec213SHA512HexHash, "VARCHAR(256)"
+go
+exec sp_addtype CFSec213SecSessionIdGen, "CHAR(36)"
+go
+exec sp_addtype CFSec213SecUserIdGen, "CHAR(36)"
+go
+
+exec sp_addtype CFSec213ServiceTypeIdGenSeq, "INT"
+go
+
+exec sp_addtype CFSec213TenantIdGenSeq, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213HostNodeIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213SecAppIdGen, "INT"
+go
+
+exec sp_addtype CFSec213SecFormIdGen, "INT"
+go
+
+exec sp_addtype CFSec213SecGroupFormIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213SecGroupIdGen, "INT"
+go
+
+exec sp_addtype CFSec213SecGrpIncIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213SecGrpMembIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213ServiceIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213TSecGroupIdGen, "INT"
+go
+
+exec sp_addtype CFSec213TSecGrpIncIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFSec213TSecGrpMembIdGen, "DECIMAL(21,0)"
+go
+
+quit
