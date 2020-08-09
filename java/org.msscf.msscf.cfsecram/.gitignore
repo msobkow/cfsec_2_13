@@ -1,9 +1,0 @@
-marktemp
-installer
-*.log
-*.swp
-*~
-.classpath
-.project
-.settings
-bin
