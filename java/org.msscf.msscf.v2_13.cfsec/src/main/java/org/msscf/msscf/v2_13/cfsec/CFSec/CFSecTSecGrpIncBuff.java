@@ -7,31 +7,19 @@
  *	
  *	MSS Code Factory CFSec 2.13 Security Essentials
  *	
- *	Copyright 2020 Mark Stephen Sobkow
+ *	Copyright 2020 Mark Stephen Sobkow msobkow@sasktel.net
  *	
- *		This file is part of MSS Code Factory.
+ *	Licensed under the Apache License, Version 2.0 (the "License");
+ *	you may not use this file except in compliance with the License.
+ *	You may obtain a copy of the License at
  *	
- *		MSS Code Factory is available under dual commercial license from Mark Stephen
- *		Sobkow, or under the terms of the GNU General Public License, Version 3
- *		or later.
+ *	http://www.apache.org/licenses/LICENSE-2.0
  *	
- *	    MSS Code Factory is free software: you can redistribute it and/or modify
- *	    it under the terms of the GNU General Public License as published by
- *	    the Free Software Foundation, either version 3 of the License, or
- *	    (at your option) any later version.
- *	
- *	    MSS Code Factory is distributed in the hope that it will be useful,
- *	    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	    GNU General Public License for more details.
- *	
- *	    You should have received a copy of the GNU General Public License
- *	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
- *	
- *	Donations to support MSS Code Factory can be made at
- *	https://www.paypal.com/paypalme2/MarkSobkow
- *	
- *	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+ *	Unless required by applicable law or agreed to in writing, software
+ *	distributed under the License is distributed on an "AS IS" BASIS,
+ *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *	See the License for the specific language governing permissions and
+ *	limitations under the License.
  *
  *	Manufactured by MSS Code Factory 2.12
  */
