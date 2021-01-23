@@ -12,7 +12,7 @@
   <version>2.13.11197</version>
   <name>org.msscf.msscf.v2_13.cfsec.CFSecSaxLoader</name>
   <description>msscf CFSecSaxLoader 2.13 CFSec SAX Loader</description>
-  <url>https://msscf.org/msscf/</url>
+  <url>https://msscode.com/msscf/</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
